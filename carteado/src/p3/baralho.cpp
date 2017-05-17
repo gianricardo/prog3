@@ -55,24 +55,4 @@ Carta Baralho::pega_topo(void){
 	return c;
 }
 
-void Baralho::distribuir(unsigned int qtd_cartas, std::vector<Jogador> jogadores, bool cima=true){
-	if(qtd_cartas*jogadores.size()>_numerocartas){
-		std::cout<<"Erro";
-		return;
-	}
-	if(cima){
-		for(auto k=qtd_cartas;k>0;k--){
-			for(auto i=jogadores.size();i>0;i--){
-				jogadores[i].recebe_carta(pega_topo());
-			}
-		}
-	}else{
-		for(auto k=qtd_cartas;k>0;k--){
-			for(auto i=jogadores.size();i>0;i--){
-				jogadores[i].recebe_carta(pega_baixo());
-			}
-		}
-	}
-}
-
 } /* namespace p3 */

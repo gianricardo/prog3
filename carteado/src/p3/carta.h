@@ -7,6 +7,7 @@
 
 #ifndef CARTA_H_
 #define CARTA_H_
+#include <string>
 
 namespace p3 {
 

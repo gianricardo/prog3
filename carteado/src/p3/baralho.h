@@ -26,7 +26,7 @@ public:
 	void embaralhar();
 	Carta pega_topo(void);
 	Carta pega_baixo(void);
-	void distribuir(unsigned int qtd_cartas,std::vector<Jogador> jogadores, bool cima);
+
 private:
 	int _numerocartas;
 	std::vector<Carta> _monte;

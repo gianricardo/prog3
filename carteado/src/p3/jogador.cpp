@@ -4,19 +4,24 @@
  *  Created on: 15 de mai de 2017
  *      Author: aluno
  */
-
+#include <iostream>
 #include "jogador.h"
 
 namespace p3 {
 
-Jogador::Jogador(std::string name) {
+/* Recebe o nome no construtor */
+Jogador::Jogador(std::string name, int posicao) {
+	_posicao=pos;
 	_nome=name;
+	_apto_para_jogar=true;
 }
 
 Jogador::~Jogador() {
 
 }
 
+/* Recebe uma carta como argumento e insere no final
+ * do vector _mao. */
 void Jogador::recebe_carta(Carta card){
 	_mao.push_back(card);
 }
@@ -28,6 +33,7 @@ Carta Jogador::joga_carta(){
 	return c;
 }
 
+/* Recebe a asdas */
 int Jogador::seleciona_carta(){
 	int number, count=0;
 	Carta::Naipe np;
@@ -45,4 +51,24 @@ int Jogador::seleciona_carta(){
 	return count;
 }
 
+int Jogador::pontuacao(){
+
+	return _pontuacao;
+}
+
+void Jogador::soma_pontuacao(int soma){
+
+	_pontuacao = _pontuacao + soma;
+}
+
+void Jogador::muda_aptidao(){
+	 _apto_para_jogar = !( _apto_para_jogar);
+}
+
+bool Jogador::esta_apto(){
+	return _apto_para_jogar;
+
+}
 } /* namespace p3 */
+
+
