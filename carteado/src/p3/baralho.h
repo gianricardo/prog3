@@ -32,6 +32,8 @@ private:
 	std::vector<Carta> _monte;
 };
 
+    //
+    
 } /* namespace p3 */
 
 #endif /* BARALHO_H_ */
