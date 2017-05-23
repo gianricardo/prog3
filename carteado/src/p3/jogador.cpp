@@ -10,14 +10,16 @@
 namespace p3 {
 
 /* Recebe o nome no construtor */
-Jogador::Jogador(std::string name, int posicao) {
-	_posicao=pos;
-	_nome=name;
-	_apto_para_jogar=true;
+Jogador::Jogador(std::string name/* = "" */) : _nome{name}, _pontuacao{0}, _apto_para_jogar{true}{
 }
 
 Jogador::~Jogador() {
 
+}
+
+std::string Jogador::nome() const {
+
+	return _nome;
 }
 
 /* Recebe uma carta como argumento e insere no final
@@ -26,49 +28,49 @@ void Jogador::recebe_carta(Carta card){
 	_mao.push_back(card);
 }
 
-Carta Jogador::joga_carta(){
-	int car=seleciona_carta();
-	Carta c=_mao[car];
-	_mao.erase(_mao.begin()+car);
-	return c;
+bool Jogador::tira_carta(Carta card, bool cmp_face /* = false */){
+
+	for(auto it = _mao.begin(); it != _mao.end(); it++){
+
+		if(*it == card){
+
+			if(cmp_face) if(it->mostra() != card.mostra()) continue;
+
+			_mao.erase(it);
+
+			return true;
+		}
+	}
+	
+	return false;
 }
 
-/* Recebe a asdas */
-int Jogador::seleciona_carta(){
-	int number, count=0;
-	Carta::Naipe np;
-	std::cin>>number;
-	std::cin>>np;
-	Carta card(number,np,);
-	Carta aux=_mao[count];
-	while(card!=*aux && count<_mao.size()){
-		count++;
-		aux=_mao[count];
-	}
-	if(count==_mao.size){
-		return seleciona_carta();
-	}
-	return count;
-}
-
-int Jogador::pontuacao(){
+int Jogador::pontuacao() const {
 
 	return _pontuacao;
 }
 
-void Jogador::soma_pontuacao(int soma){
+void Jogador::pontuacao(int p){
 
-	_pontuacao = _pontuacao + soma;
+	_pontuacao = p;
 }
 
 void Jogador::muda_aptidao(){
 	 _apto_para_jogar = !( _apto_para_jogar);
 }
 
-bool Jogador::esta_apto(){
+bool Jogador::esta_apto() const {
+	
 	return _apto_para_jogar;
-
 }
+
+
+const std::vector<Carta> Jogador::mostra_mao() const {
+
+	return _mao;
+}
+
+
 } /* namespace p3 */
 
 

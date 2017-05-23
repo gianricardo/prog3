@@ -14,12 +14,19 @@ namespace p3 {
 class Carta {
 public:
 	enum class Naipe{Espadas,Copas,Paus,Ouros};
-	Carta(int num, Naipe np,bool f);
+
+	static const int n_naipes = 4;
+
+	Carta(int num, Naipe np, bool f = false);
 	virtual ~Carta();
-	int numero();
-	Naipe naipe();
+	int numero() const;
+	Naipe naipe() const;
 	void vira();
-	bool mostra();
+	bool mostra() const;
+
+	bool operator==(const Carta& c) const;
+	bool operator!=(const Carta& c) const;
+
 private:
 	int _numero;
 	Naipe _naipe;
