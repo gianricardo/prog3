@@ -11,6 +11,7 @@
 int main(void) {
     // insert code here...
     #include "../carteado/src/p3/baralho.h"
+    //
     
     return 0;
 }
