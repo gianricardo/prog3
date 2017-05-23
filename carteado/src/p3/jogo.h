@@ -47,32 +47,32 @@ public:
 	/*
 	 *	Retorna o nome do jogador atual
 	 */
-	std::string nome_jog() const;
+	std::string nome_jogador_atual() const;
 
 	/*
 	 *	Retorna a posicao na mesa do jogador atual
 	 */
-	std::size_t pos_jog() const;
+	std::size_t posicao_jogador_atual() const;
 
 	/*
 	 *	Retorna um vetor contendo as cartas do jogador atual
 	 */
-	std::vector<Carta> ver_cartas_jog() const;
+	std::vector<Carta> mostra_mao_jogador_atual() const;
 
 	/*
 	 *	Retorna a pontucao do jogador atual
 	 */
-	int pont_jog() const;
+	int pontuacao_jogador_atual() const;
 
 	/*
 	 *	Aumenta a pontucao do jogador atual em "pontos" pontos
 	 */
-	void jog_ganha_pontos(int pontos);
+	void jogador_soma_pontos(int pontos);
 
 	/*
 	 *	Diminui a pontucao do jogador atual em "pontos" pontos
 	 */
-	void jog_perde_pontos(int pontos);
+	void jogador_subtrai_pontos(int pontos);
 
 	 // move carta do jogador atual para outro jogador
 	bool move_carta_j(Carta carta, std::size_t j);

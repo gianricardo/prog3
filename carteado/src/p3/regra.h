@@ -32,7 +32,7 @@ public:
 	std::size_t numero_de_jogadores() const;
 	int cartas_inicial() const; //retorna numero de cartas do monte
 	int cartas_jogadores() const; //retorna cartas iniciais por jogadores
-	int rodadas() const; //retorna numero maximo de rodadas
+	int max_rodadas() const; //retorna numero maximo de rodadas
 	int pontuacao_max() const; //retorna numero de pontos para termino
 	modo_fim fim() const;
 	condicao_vitoria cond_vit() const;
