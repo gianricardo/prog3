@@ -20,9 +20,7 @@ public:
 //
 
 	
-	/*
-	 *	Construtor
-	 */
+    //Construtor
 	template<typename... Args> Jogo(Regra *regra, Args... args);
 	
 	virtual ~Jogo();
@@ -35,44 +33,28 @@ public:
 
 	void reiniciar(); // TODO
 
-	/*
-	 *	Termina a jogada do jogador atual, caso ele seja o ultimo jogador, muda a rodada
-	 */
+	 //Termina a jogada do jogador atual, caso ele seja o ultimo jogador, muda a rodada
 	void fim_jogada();
 
-	/*
-	 *	Retorna se o jogo esta em andamento
-	 */
+    //Retorna se o jogo esta em andamento
 	bool jogando() const;
 
-	/*
-	 *	Retorna o nome do jogador atual
-	 */
+    //Retorna o nome do jogador atual
 	std::string nome_jogador_atual() const;
 
-	/*
-	 *	Retorna a posicao na mesa do jogador atual
-	 */
+    //Retorna a posicao na mesa do jogador atual
 	std::size_t posicao_jogador_atual() const;
 
-	/*
-	 *	Retorna um vetor contendo as cartas do jogador atual
-	 */
+    //Retorna um vetor contendo as cartas do jogador atual
 	std::vector<Carta> mostra_mao_jogador_atual() const;
 
-	/*
-	 *	Retorna a pontucao do jogador atual
-	 */
+    //Retorna a pontucao do jogador atual
 	int pontuacao_jogador_atual() const;
 
-	/*
-	 *	Aumenta a pontucao do jogador atual em "pontos" pontos
-	 */
+	 //Aumenta a pontucao do jogador atual em "pontos" pontos
 	void jogador_soma_pontos(int pontos);
 
-	/*
-	 *	Diminui a pontucao do jogador atual em "pontos" pontos
-	 */
+    //Diminui a pontucao do jogador atual em "pontos" pontos
 	void jogador_subtrai_pontos(int pontos);
 
 	 // move carta do jogador atual para outro jogador
@@ -93,14 +75,11 @@ public:
 	 // move carta entre montes
 	bool move_carta_mm(std::size_t m1, std::size_t m2 = 0, bool m1_cima = true, bool m2_cima = true);
 
-	/*
-	 *	Cria um novo monte na mesa
-	 */
+	
+    //Cria um novo monte na mesa
 	void novo_monte();
 
-	/*
-	 *	Deleta um monte da mesa especificada em "i"
-	 */
+    //Deleta um monte da mesa especificada em "i"
 	void deleta_monte(std::size_t i);
 
 private:

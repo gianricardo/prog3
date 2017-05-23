@@ -157,7 +157,7 @@ void Jogo::deleta_monte(std::size_t i){
 void Jogo::verifica_vitoria() {
 
 	if(!_jogando) return;
-
+    
 	verifica_derrota();
 
 	if(_regra->cond_der() != Regra::condicao_derrota::nenhuma && numero_de_jogadores() != 1){

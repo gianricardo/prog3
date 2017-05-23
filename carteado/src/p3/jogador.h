@@ -16,43 +16,32 @@ namespace p3 {
 class Jogador {
 public:
 
-	/*
-	 *	Cria um jogador com o nome "name"
-	 */
+    //Cria um jogador com o nome "name"
 	Jogador(std::string name = "");
 	virtual ~Jogador();
 
-	/*
-	 *	Retorna o nome do jogador
-	 */
+    //Retorna o nome do jogador
 	std::string nome() const;
 
-	/*
-	 * Acrescenta uma carta a mao do jogador
-	 */
+    //Acrescenta uma carta a mao do jogador
 	void recebe_carta(Carta card);
 
-	/*
-	 * Retira uma carta da mao do jogador, retorna false caso a carta nao esteja na mao
-	 */
+    //Retira uma carta da mao do jogador, retorna false caso a carta nao esteja na mao
 	bool tira_carta(Carta card, bool cmp_face = false);
 
-	/*
-	 * Retorna a pontuacao atual do jogador
-	 */
+    //Retorna a pontuacao atual do jogador
 	int pontuacao() const;
 
-	/*
-	 * Atribui um valor a pontuacao atual do jogador
-	 */
+    //Atribui um valor a pontuacao atual do jogador
 	void pontuacao(int p);
+    
+    // jogadores aptos viram espectadores, e espectadores viram jogadores aptos
+	void muda_aptidao();
+    
+    // informa se jogador esta apto
+	bool esta_apto() const;
 
-	void muda_aptidao(); // jogadores aptos viram espectadores, e espectadores viram jogadores aptos
-	bool esta_apto() const; // informa se jogador esta apto
-
-	/*
-	 *	Retorna um vetor das cartas contidas na mao do jogador
-	 */
+    //Retorna um vetor das cartas contidas na mao do jogador
 	const std::vector<Carta> mostra_mao() const ;
 
 private:
