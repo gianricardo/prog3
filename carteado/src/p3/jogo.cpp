@@ -103,8 +103,6 @@ bool Jogo::move_carta_jj(Carta carta, std::size_t j1, std::size_t j2 /* = jogado
 	if(j1 == jogador_atual) j1 = _jog_atual;
 	if(j2 == jogador_atual) j2 = _jog_atual;
 
-	if(!carta.mostra()) carta.vira();
-
 	if(_mesa.jogador_tira_carta(carta, j1)){
 
 		_mesa.jogador_recebe_carta(carta, j2);

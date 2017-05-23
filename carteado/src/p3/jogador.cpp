@@ -73,4 +73,3 @@ const std::vector<Carta> Jogador::mostra_mao() const {
 
 } /* namespace p3 */
 
-

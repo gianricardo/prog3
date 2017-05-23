@@ -16,9 +16,15 @@ namespace p3 {
 class Jogador {
 public:
 
+	/*
+	 *	Cria um jogador com o nome "name"
+	 */
 	Jogador(std::string name = "");
 	virtual ~Jogador();
 
+	/*
+	 *	Retorna o nome do jogador
+	 */
 	std::string nome() const;
 
 	/*
@@ -44,6 +50,9 @@ public:
 	void muda_aptidao(); // jogadores aptos viram espectadores, e espectadores viram jogadores aptos
 	bool esta_apto() const; // informa se jogador esta apto
 
+	/*
+	 *	Retorna um vetor das cartas contidas na mao do jogador
+	 */
 	const std::vector<Carta> mostra_mao() const ;
 
 private:

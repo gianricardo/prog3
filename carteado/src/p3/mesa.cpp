@@ -28,11 +28,7 @@ void Mesa::distribuir(unsigned int qtd_cartas, bool cima/* = true */){
 	for(auto k=qtd_cartas;k>0;k--){
 		for(std::size_t i = 0; i < _jogadores.size(); i++){
 
-			Carta c = cima ? _monte.pega_topo() : _monte.pega_baixo();
-			
-			if(!c.mostra()) c.vira();
-
-			_jogadores[i].recebe_carta(c);
+			_jogadores[i].recebe_carta(cima ? _monte.pega_topo() : _monte.pega_baixo());
 		}
 	}
 }
