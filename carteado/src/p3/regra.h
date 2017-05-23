@@ -30,20 +30,20 @@ public:
 
 	virtual ~Regra();
 	std::size_t numero_de_jogadores() const;
-	int cartas_inicial() const; //retorna numero de cartas do monte
-	int cartas_jogadores() const; //retorna cartas iniciais por jogadores
-	int max_rodadas() const; //retorna numero maximo de rodadas
-	int pontuacao_max() const; //retorna numero de pontos para termino
+	int cartas_inicial() const; 		//retorna numero de cartas do monte
+	int cartas_jogadores() const; 		//retorna cartas iniciais por jogadores
+	int max_rodadas() const; 			//retorna numero maximo de rodadas
+	int pontuacao_max() const; 			//retorna numero de pontos para termino
 	modo_fim fim() const;
 	condicao_vitoria cond_vit() const;
 	condicao_derrota cond_der() const;
 
 protected:
 	std::size_t _numero_de_jogadores;
-	int _cartas_inicial; // numero de cartas do monte
-	int _cartas_jogadores; // cartas iniciais por jogadores
-	int _rodadas; // numero maximo de rodadas
-	int _pontuacao_max; // numero de pontos para termino
+	int _cartas_inicial; 				// numero de cartas do monte
+	int _cartas_jogadores; 				// cartas iniciais por jogadores
+	int _rodadas; 						// numero maximo de rodadas
+	int _pontuacao_max; 				// numero de pontos para termino
 
 	modo_fim _fim;
 	condicao_vitoria _vit;

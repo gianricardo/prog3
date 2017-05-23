@@ -17,40 +17,26 @@ public:
 
 	static const int n_naipes = 4; // numero de naipes
 
-	/*
-	 *  Cria uma carta recebendo o valor do numero, naipe e um booleano indicando se a carta esta virada para cima
-	 */
+	//Cria uma carta recebendo o valor do numero, naipe e um booleano indicando se a carta esta virada para cima
 	Carta(int num, Naipe np, bool f = false);
 	virtual ~Carta();
 
-	/*
-	 *	Retorna o valor da carta
-	 */
+	//Retorna o valor da carta
 	int numero() const;
 
-	/*
-	 * Retorna o naipe da carta
-	 */
+	// Retorna o naipe da carta
 	Naipe naipe() const;
 
-	/*
-	 * Vira a carta
-	 */
+	//Vira a carta
 	void vira();
 
-	/*
-	 *	Indica se a face da carta esta virada para cima
-	 */
+	//Indica se a face da carta esta virada para cima
 	bool mostra() const;
 
-	/*
-	 *	Retorna true se a carta for igual a "c"
-	 */
+	//Retorna true se a carta for igual a "c"
 	bool operator==(const Carta& c) const;
 
-	/*
-	 *	Retorna true se a carta for diferente de "c"
-	 */
+	//Retorna true se a carta for diferente de "c"
 	bool operator!=(const Carta& c) const;
 
 private:
