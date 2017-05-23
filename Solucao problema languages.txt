@@ -1,0 +1,2 @@
+Caso haja problema com o arquivo language.settings.xml, delete ele da pasta prog3/carteado/.settings/ e dê pull novamente.
+Se a pasta .settings não aparecer, aperte CTRL + H.
