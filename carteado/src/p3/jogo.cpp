@@ -9,6 +9,24 @@
 
 namespace p3 {
 
+Jogo::Jogo(Regra *regra, std::vector<std::string> nomes) : _regra{regra}, _mesa{ (unsigned int) regra->cartas_inicial() },
+										 _jog_atual{0}, _rodada{1}, _jogando{true} {
+
+	if(nomes.size() != numero_de_jogadores()) std::cerr << "Jogo::Jogo -- Numero incorreto de nomes passado\n";
+
+	auto it = nomes.begin();
+
+	for(std::size_t i = 0; i < numero_de_jogadores(); i++){
+
+		_mesa.add_jogador((it != nomes.end()) ? *it : "");
+
+		it++;
+	}
+
+	_mesa.distribuir(cartas_jogadores());
+
+}
+
 Jogo::~Jogo() {}
 
 std::size_t Jogo::numero_de_jogadores() const {
@@ -231,16 +249,6 @@ Carta Jogo::_pega_monte(std::size_t m, bool topo){
 
 	if(topo) return _mesa.pega_topo(m);
 	else return _mesa.pega_baixo(m);
-}
-
-void Jogo::construct_players(){
-
-	if(numero_de_jogadores() != _mesa.numero_jogadores()){
-
-		std::cerr << "Jogo::Jogo -- Numero incorreto de nomes passado\n";
-
-		while(numero_de_jogadores() > _mesa.numero_jogadores()) _mesa.add_jogador();
-	}
 }
 
 } /* namespace p3 */

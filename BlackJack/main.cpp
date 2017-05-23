@@ -18,5 +18,10 @@ int main(void) {
     
     //
     
+    p3::Regra *r = new p3::Regra(3, 4, 0, 0, 16);
+    
+    p3::Jogo j(r, {"j1", "j2", "j3"});
+    
+    
     return 0;
 }

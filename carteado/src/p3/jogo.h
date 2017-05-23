@@ -17,11 +17,9 @@ namespace p3 {
 
 class Jogo {
 public:
-//
 
-	
     //Construtor
-	template<typename... Args> Jogo(Regra *regra, Args... args);
+	Jogo(Regra *regra, std::vector<std::string> nomes);
 	
 	virtual ~Jogo();
 
@@ -102,9 +100,6 @@ private:
 
 	Carta _pega_monte(std::size_t m, bool topo);
 
-	void construct_players();
-	template<typename... Args> void construct_players(std::string str, Args... args);
-
 	std::unique_ptr<Regra> _regra;
 	Mesa _mesa;
 
@@ -114,26 +109,6 @@ private:
 	bool _jogando;
 
 };
-
-
-template<typename... Args> Jogo::Jogo(Regra *regra, Args... args) : _regra{regra}, _mesa{ (unsigned int) regra->cartas_inicial() },
-										 _jog_atual{0}, _rodada{1}, _jogando{true} {
-
-	construct_players(args...);
-
-	_mesa.distribuir(cartas_jogadores());
-}
-
-template<typename... Args> void Jogo::construct_players(std::string str, Args... args){
-	
-	if(numero_de_jogadores() > _mesa.numero_jogadores()){
-
-		_mesa.add_jogador(str);
-
-		construct_players(args...);
-	}
-	else std::cerr << "Jogo::Jogo -- Numero incorreto de nomes passado\n";
-}
 
 
 } /* namespace p3 */
