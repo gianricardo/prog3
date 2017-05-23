@@ -24,7 +24,7 @@ int Jogo::cartas_jogadores() const {
 }
 
 int Jogo::max_rodadas() const {
-	return _regra->rodadas();
+	return _regra->max_rodadas();
 }
 
 int Jogo::pontuacao_max() const {
@@ -58,34 +58,34 @@ bool Jogo::jogando() const {
 	return _jogando;
 }
 
-std::size_t Jogo::pos_jog() const {
+std::size_t Jogo::posicao_jogador_atual() const {
 
 	return _jog_atual;
 }
 
-std::string Jogo::nome_jog() const {
+std::string Jogo::nome_jogador_atual() const {
 
 	return _mesa.ver_jogador(_jog_atual).nome();
 }
 
-std::vector<Carta> Jogo::ver_cartas_jog() const {
+std::vector<Carta> Jogo::mostra_mao_jogador_atual() const {
 
 	return _mesa.ver_jogador(_jog_atual).mostra_mao();
 }
 
-int Jogo::pont_jog() const {
+int Jogo::pontuacao_jogador_atual() const {
 
 	return _mesa.ver_jogador(_jog_atual).pontuacao();
 }
 
-void Jogo::jog_ganha_pontos(int pontos){
+void Jogo::jogador_soma_pontos(int pontos){
 
 	_mesa.jogador_soma_pontos(pontos, _jog_atual);
 }
 
-void Jogo::jog_perde_pontos(int pontos){
+void Jogo::jogador_subtrai_pontos(int pontos){
 
-	jog_ganha_pontos(-pontos);
+	jogador_soma_pontos(-pontos);
 }
 
 bool Jogo::move_carta_j(Carta carta, std::size_t j){
@@ -174,8 +174,7 @@ void Jogo::verifica_vitoria() {
 }
 
 void Jogo::verifica_derrota() {
-
-
+	//TODO
 }
 
 
@@ -212,6 +211,7 @@ void Jogo::verifica_jogador_unico(){
 
 void Jogo::declara_fim_de_jogo(){
 
+	//TODO
 }
 
 void Jogo::declara_vencedor(std::size_t j){

@@ -38,7 +38,7 @@ int Regra::cartas_inicial() const {//retorna numero de cartas do monte
 int Regra::cartas_jogadores() const { //retorna cartas iniciais por jogadores
 	return  _cartas_jogadores;
 }
-int Regra::rodadas() const {//retorna numero maximo de rodadas
+int Regra::max_rodadas() const {//retorna numero maximo de rodadas
 	return _rodadas;
 }
 int Regra::pontuacao_max() const {//retorna numero de pontos para termino
