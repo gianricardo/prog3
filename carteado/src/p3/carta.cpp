@@ -45,6 +45,8 @@ bool Carta::operator!=(const Carta& c) const {
 
 	return !(*this != c);
 }
+    
+    //teste commit
 
 }/* namespace p3 */
 
