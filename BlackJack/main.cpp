@@ -7,10 +7,15 @@
 //
 
 #include <iostream>
-
+#include "../carteado/src/p3/baralho.h"
+#include "../carteado/src/p3/carta.h"
+#include "../carteado/src/p3/jogador.h"
+#include "../carteado/src/p3/jogo.h"
+#include "../carteado/src/p3/mesa.h"
+#include "../carteado/src/p3/regra.h"
 int main(void) {
     // insert code here...
-    #include "../carteado/src/p3/baralho.h"
+    
     //
     
     return 0;
