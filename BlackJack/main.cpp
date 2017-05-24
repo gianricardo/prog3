@@ -22,6 +22,7 @@ int main(void) {
     
     p3::Jogo j(r, {"j1", "j2", "j3"});
     
+    std::cout << "BlackJack" << std::endl;
     
     return 0;
 }

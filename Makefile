@@ -1,5 +1,9 @@
-	
-INCLUDE_DIRS := . src src/p3
+
+PROJECT := BlackJack
+TARGET := main
+
+FRAMEWORK_DIR := carteado/src/p3
+INCLUDE_DIRS := . carteado/p3 carteado/src/p3
 CXX := g++
 CXXFLAGS := -Wall -std=c++14 -Wshadow -Wextra
 DBG := gdb
@@ -7,10 +11,11 @@ DBGFLAGS := -g
 MEMCHECK := valgrind
 MEMCHECKPARAMS := 
 MEMCHECKFLAGS := -v
-TARGET := main
 
-DEPS := $(shell find . -type f -name '*.h')
-CODE := $(addsuffix .o, $(basename $(shell find . -type f -name '*.cpp')))
+DEPS := $(shell find $(FRAMEWORK_DIR) -type f -name '*.h')
+DEPS += $(shell find $(PROJECT) -type f -name '*.h')
+CODE := $(patsubst %.cpp, %.o, $(shell find $(FRAMEWORK_DIR) -type f -name '*.cpp'))
+CODE += $(patsubst %.cpp, %.o, $(shell find $(PROJECT) -type f -name '*.cpp'))
 
 CXXFLAGS += $(addprefix -I, $(INCLUDE_DIRS))
 
