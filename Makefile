@@ -1,7 +1,7 @@
 	
 INCLUDE_DIRS := . src src/p3
 CXX := g++
-CXXFLAGS := -Wall -std=c++14
+CXXFLAGS := -Wall -std=c++14 -Wshadow -Wextra
 DBG := gdb
 DBGFLAGS := -g
 MEMCHECK := valgrind

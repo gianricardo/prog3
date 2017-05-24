@@ -88,7 +88,7 @@ Jogador Mesa::ver_jogador(std::size_t i) const {
 
 void Mesa::jogador_soma_pontos(int valor, std::size_t i){
 
-	_jogadores[i].pontuacao(_jogadores[i].pontuacao() + i);
+	_jogadores[i].pontuacao(_jogadores[i].pontuacao() + valor);
 }
 
 bool Mesa::jogador_tira_carta(Carta c, std::size_t i){
