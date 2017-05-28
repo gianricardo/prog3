@@ -13,6 +13,7 @@ Regra::Regra(std::size_t numero_de_jogadores,
 			 int cartas_jogadores,
 			 int rodadas /* = -1 */,
 			 int pontuacao_max /* = -1 */, 
+			 int menor_pontuacao /* = -1 */,
 			 int cartas_inicial /* = 52 */,
 			 modo_fim fim /* = modo_fim::pontuacao */, 
 			 condicao_vitoria vit /* = condicao_vitoria::maior_pontuacao */, 
@@ -23,10 +24,11 @@ Regra::Regra(std::size_t numero_de_jogadores,
 	_cartas_jogadores = cartas_jogadores;
 	_rodadas = rodadas;
 	_pontuacao_max = pontuacao_max;
+	_menor_pontuacao = menor_pontuacao;
 }
 
 Regra::~Regra() {
-	// TODO Auto-generated destructor stub
+
 }
 
 std::size_t Regra::numero_de_jogadores() const {
@@ -59,7 +61,5 @@ Regra::condicao_derrota Regra::cond_der() const {
 
 	return _der;
 }
-
-
 
 } /* namespace p3 */
