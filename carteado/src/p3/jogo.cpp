@@ -49,12 +49,12 @@ int Jogo::pontuacao_max() const {
 	return _regra->pontuacao_max();
 }
 
-void Jogo::reiniciar(){
+
+
+void Jogo::reiniciar(){ //TODO
 }
 
 void Jogo::fim_jogada(){
-
-	verifica_vitoria();
 
 	if(!_jogando) return;
 
@@ -66,6 +66,8 @@ void Jogo::fim_jogada(){
 
 			_rodada++;
 
+			verifica_jogadores_derrotados();
+			verifica_fim_de_jogo();
 			verifica_vitoria();
 		}
 	}
@@ -74,6 +76,11 @@ void Jogo::fim_jogada(){
 bool Jogo::jogando() const {
 
 	return _jogando;
+}
+
+std::size_t Jogo::rodada() const {
+
+	return _rodada;
 }
 
 std::size_t Jogo::posicao_jogador_atual() const {
@@ -172,27 +179,108 @@ void Jogo::deleta_monte(std::size_t i){
 	_mesa.deleta_monte(i);
 }
 
-void Jogo::verifica_vitoria() {
+void Jogo::verifica_fim_de_jogo()
+{
+	switch(_regra->fim())
+	{
+	case (Regra::modo_fim::padrao) :		//caso de um jogador restante
+		if(numero_jogadores_aptos() == 1) declara_fim_de_jogo();
+		break;
 
-	if(!_jogando) return;
-    
-	verifica_derrota();
+	case (Regra::modo_fim::pontuacao) :	//caso de um jogador ter atingido pontuacao maxima
+		for(std::size_t pos_jogador = 0; pos_jogador < _mesa.numero_jogadores(); pos_jogador++)
+		{
+			if(_mesa.ver_jogador(pos_jogador).esta_apto() && _mesa.ver_jogador(pos_jogador).pontuacao() == _regra->pontuacao_max())
+				declara_fim_de_jogo();
+		}
+		break;
 
-	if(_regra->cond_der() != Regra::condicao_derrota::nenhuma && numero_de_jogadores() != 1){
+	case (Regra::modo_fim::rodadas) : 	//caso atingido numero maximo de rodadas
+		if((int)rodada() > _regra->max_rodadas())
+			declara_fim_de_jogo();
+		break;
 
-		verifica_jogador_unico();
+	case (Regra::modo_fim::zero_cartas) :
+		bool condicao = true;	//condicao para checar se todos possuem zero cartas
 
-		if(!_jogando) return;
+		for(std::size_t pos_jogador = 0; pos_jogador < _mesa.numero_jogadores(); pos_jogador++)
+		{
+			if(_mesa.ver_jogador(pos_jogador).esta_apto() && _mesa.ver_jogador(pos_jogador).mostra_mao().size() != 0)	condicao = false;;
+		}
+		if(condicao) declara_fim_de_jogo();
+		break;
+
 	}
-
-	if(_regra->fim() == Regra::modo_fim::zero_cartas) verifica_fim_zero_cartas();
-
-	if(!_jogando) return;
 
 }
 
-void Jogo::verifica_derrota() {
-	//TODO
+void Jogo::verifica_vitoria() {
+
+	if(!_jogando) return;
+
+	if(todos_jogadores_derrotados()) return;
+    
+	switch(_regra->cond_vit())
+	{
+	case Regra::condicao_vitoria::padrao :
+		verifica_jogador_unico();
+		break;
+
+	case Regra::condicao_vitoria::maior_pontuacao :
+		verifica_jogador_pontuacao_maxima();
+		break;
+
+	case Regra::condicao_vitoria::menor_pontuacao :
+		verifica_jogador_pontuacao_minima();
+		break;
+
+	case Regra::condicao_vitoria::mais_cartas :
+		verifica_jogador_mais_cartas();
+		break;
+
+	case Regra::condicao_vitoria::menos_cartas :
+		verifica_jogador_menos_cartas();
+		break;
+
+	}
+}
+
+void Jogo::verifica_jogadores_derrotados()
+{
+	if(!jogando()) return;
+
+	if(!todos_jogadores_derrotados()) return;
+
+	switch(_regra->cond_der())
+	{
+	case Regra::condicao_derrota::estoura_pontuacao :
+		for(std::size_t pos_jogador = 0; pos_jogador < _mesa.numero_jogadores(); pos_jogador++)
+		{
+			if(_mesa.ver_jogador(pos_jogador).esta_apto() && _mesa.ver_jogador(pos_jogador).pontuacao() > _regra->pontuacao_max())
+				_mesa.ver_jogador(pos_jogador).muda_aptidao();
+		}
+		break;
+
+	case Regra::condicao_derrota::zero_cartas :
+		for(std::size_t pos_jogador = 0; pos_jogador < _mesa.numero_jogadores(); pos_jogador++)
+		{
+			if(_mesa.ver_jogador(pos_jogador).esta_apto() && _mesa.ver_jogador(pos_jogador).mostra_mao().size() == 0)
+				_mesa.ver_jogador(pos_jogador).muda_aptidao();
+		}
+		break;
+
+	case Regra::condicao_derrota::nenhuma :
+		break;
+	}
+}
+
+bool Jogo::todos_jogadores_derrotados() {
+
+	if(numero_jogadores_aptos() == 0){
+		declara_fim_de_jogo();
+		return true;
+	}
+	return false;
 }
 
 
@@ -227,9 +315,92 @@ void Jogo::verifica_jogador_unico(){
 	declara_vencedor(last);
 }
 
+int Jogo::numero_jogadores_aptos(){
+
+	int jogadores_aptos = 0;
+
+	for(std::size_t pos_jogador = 0; pos_jogador < _mesa.numero_jogadores(); pos_jogador++)
+	{
+		if(_mesa.ver_jogador().esta_apto())
+		{
+			jogadores_aptos++;
+		}
+	}
+
+	return jogadores_aptos;
+}
+
+void Jogo::verifica_jogador_pontuacao_maxima(){
+
+	int maior_pontuacao = 0;
+	int jogador_vencedor;
+
+	for(std::size_t pos_jogador = 0; pos_jogador < _mesa.numero_jogadores(); pos_jogador++)
+	{
+		if(_mesa.ver_jogador().esta_apto() && _mesa.ver_jogador(pos_jogador).pontuacao() > maior_pontuacao)
+		{
+			maior_pontuacao = _mesa.ver_jogador(pos_jogador).pontuacao();
+			jogador_vencedor = pos_jogador;
+		}
+	}
+
+	declara_vencedor(jogador_vencedor);
+}
+
+void Jogo::verifica_jogador_pontuacao_minima(){
+
+	int menor_pontuacao = 999999;
+	int jogador_vencedor;
+
+	for(std::size_t pos_jogador = 0; pos_jogador < _mesa.numero_jogadores(); pos_jogador++)
+	{
+		if(_mesa.ver_jogador().esta_apto() && _mesa.ver_jogador(pos_jogador).pontuacao() < menor_pontuacao)
+		{
+			menor_pontuacao = _mesa.ver_jogador(pos_jogador).pontuacao();
+			jogador_vencedor = pos_jogador;
+		}
+	}
+
+	declara_vencedor(jogador_vencedor);
+}
+
+void Jogo::verifica_jogador_mais_cartas(){
+
+	std::size_t maior_numero_cartas = -999999;
+	std::size_t jogador_vencedor;
+
+	for(std::size_t pos_jogador = 0; pos_jogador < _mesa.numero_jogadores(); pos_jogador++)
+	{
+		if(_mesa.ver_jogador().esta_apto() && _mesa.ver_jogador(pos_jogador).mostra_mao().size() > maior_numero_cartas)
+		{
+			maior_numero_cartas = _mesa.ver_jogador(pos_jogador).mostra_mao().size();
+			jogador_vencedor = pos_jogador;
+		}
+	}
+
+	declara_vencedor(jogador_vencedor);
+}
+
+void Jogo::verifica_jogador_menos_cartas(){
+
+	std::size_t menor_numero_cartas = 999999;
+	std::size_t jogador_vencedor;
+
+	for(std::size_t pos_jogador = 0; pos_jogador < _mesa.numero_jogadores(); pos_jogador++)
+	{
+		if(_mesa.ver_jogador().esta_apto() && _mesa.ver_jogador(pos_jogador).mostra_mao().size() < menor_numero_cartas)
+		{
+			menor_numero_cartas = _mesa.ver_jogador(pos_jogador).mostra_mao().size();
+			jogador_vencedor = pos_jogador;
+		}
+	}
+
+	declara_vencedor(jogador_vencedor);
+}
+
 void Jogo::declara_fim_de_jogo(){
 
-	//TODO
+	_jogando = false;
 }
 
 void Jogo::declara_vencedor(std::size_t j){

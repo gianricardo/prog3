@@ -23,6 +23,7 @@ public:
 		  int cartas_jogadores, 
 		  int rodadas = -1,
 		  int pontuacao_max = -1,
+		  int menor_pontuacao = -1,
 		  int cartas_inicial = 52,
 		  modo_fim fim = modo_fim::pontuacao, 
 		  condicao_vitoria vit = condicao_vitoria::maior_pontuacao, 
@@ -34,6 +35,7 @@ public:
 	int cartas_jogadores() const; 		//retorna cartas iniciais por jogadores
 	int max_rodadas() const; 			//retorna numero maximo de rodadas
 	int pontuacao_max() const; 			//retorna numero de pontos para termino
+	int menor_pontuacao() const; 			//retorna pontuacao min
 	modo_fim fim() const;
 	condicao_vitoria cond_vit() const;
 	condicao_derrota cond_der() const;
@@ -44,6 +46,7 @@ protected:
 	int _cartas_jogadores; 				// cartas iniciais por jogadores
 	int _rodadas; 						// numero maximo de rodadas
 	int _pontuacao_max; 				// numero de pontos para termino
+	int _menor_pontuacao; 				// usada para condicao de derrota de menor pontuacao
 
 	modo_fim _fim;
 	condicao_vitoria _vit;

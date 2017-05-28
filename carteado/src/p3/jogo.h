@@ -37,6 +37,9 @@ public:
     //Retorna se o jogo esta em andamento
 	bool jogando() const;
 
+	//Retorna numero da rodada atual
+	std::size_t rodada() const;
+
     //Retorna o nome do jogador atual
 	std::string nome_jogador_atual() const;
 
@@ -84,13 +87,27 @@ private:
 
 	static const std::size_t jogador_atual = std::numeric_limits<std::size_t>::max();
 
-	void verifica_vitoria();
+	void verifica_fim_de_jogo();
 
-	void verifica_derrota(); // TODO
+	void verifica_vitoria();					//checa se algum jogador ja ganhou
 
-	void verifica_fim_zero_cartas();
+	void verifica_jogadores_derrotados();		//checa se algum jogador perdeu
 
-	void verifica_jogador_unico();
+	bool todos_jogadores_derrotados();			//retorna se todos os jogadores perderam
+
+	void verifica_fim_zero_cartas();			//ultizado na condicao de fim de todos com zero cartas
+
+	void verifica_jogador_pontuacao_maxima();	//utilizado para condicao de vitoria de maior pontuacao
+
+	void verifica_jogador_pontuacao_minima();	//utilizado para condicao de vitoria de menor pontuacao
+
+	void verifica_jogador_mais_cartas();		//ultizado para condicao de vitoria de mais cartas
+
+	void verifica_jogador_menos_cartas();		//ultizado para condicao de vitoria de menos cartas
+
+	void verifica_jogador_unico();				//utilizado na condicao de vitoria de ultimo jogador
+
+	int numero_jogadores_aptos();
 
 	void declara_fim_de_jogo();
 
