@@ -46,6 +46,32 @@ bool Carta::operator!=(const Carta& c) const {
 	return !(*this == c);
 }
 
+bool Carta::operator<(const Carta& c) const {
+
+	if(this->_numero < c._numero) return true;
+	if(this->_naipe < c._naipe) return true;
+	//if(this->_frente < c._frente) return true;
+
+	return false;
+}
+
+bool Carta::operator>(const Carta& c) const{
+
+	return !(*this <= c);
+} 
+
+bool Carta::operator<=(const Carta& c) const{
+
+	return (*this == c || *this < c);
+}
+
+bool Carta::operator>=(const Carta& c) const{
+
+	return !(*this < c);
+}
+
+
+
 }/* namespace p3 */
 
 

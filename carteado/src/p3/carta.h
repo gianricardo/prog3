@@ -39,7 +39,15 @@ public:
 	//Retorna true se a carta for diferente de "c"
 	bool operator!=(const Carta& c) const;
 
-private:
+	bool operator<(const Carta& c) const;
+
+	bool operator>(const Carta& c) const;
+
+	bool operator<=(const Carta& c) const;
+
+	bool operator>=(const Carta& c) const;
+
+protected:
 	int _numero;
 	Naipe _naipe;
 	bool _frente;
