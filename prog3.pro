@@ -24,6 +24,7 @@ QT += widgets gui
 
 CONFIG += c++14
 
+
 veryclean.depends = clean
 veryclean.commands = find . -type f -executable -exec rm {} + ; find . -type f -name '*.o' -exec rm {} +
 

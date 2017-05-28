@@ -13,16 +13,18 @@
 #include "../carteado/src/p3/jogo.h"
 #include "../carteado/src/p3/mesa.h"
 #include "../carteado/src/p3/regra.h"
+
+using namespace p3;
 int main(void) {
     // insert code here...
     
     //
+    JogadorBasico<Carta> Player("Player");
+    JogadorBasico<Carta> Dealer("Dealer");
+    BaralhoBasico<Carta> Deck(52);
+    Deck.embaralhar();
     
-    p3::Regra *r = new p3::Regra(3, 4, 0, 0, 16);
     
-    p3::Jogo j(r, {"j1", "j2", "j3"});
-    
-    std::cout << "BlackJack" << std::endl;
     
     return 0;
 }
