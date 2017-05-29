@@ -3,7 +3,6 @@
 #include "cartaimagem.h"
 
 #include <QApplication>
-#include <QPushButton>
 
 using namespace p3;
 
@@ -16,23 +15,28 @@ public:
         
         auto imagens = cria_imagem(200, 100);
 
-        Carta c(2, Carta::Naipe::Espadas, true);
+        Carta c(3, Carta::Naipe::Espadas, true);
 
         imagens->addimagem(c, "Imagens/espadas.png");
 
-        im = std::make_unique<CartaImagem>(c, imagens, this);
+        int y = 0;
         
-        im->display();
+        for(auto& image : ims){
+            
+            image = CartaImagem(c, imagens, this);
+            
+            image.y(y);
+            
+            image.display();
+            
+            y += 40;
+        }
         
-        minus_button = new QPushButton("-", this);
-        
-        minus_button->setGeometry(100, 100, 30, 30);
     }
     
 private:
     
-    QPushButton *minus_button;
-    std::unique_ptr<CartaImagem> im;
+    CartaImagem ims[5];
 
 };
 

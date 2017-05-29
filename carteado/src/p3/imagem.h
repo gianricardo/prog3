@@ -62,7 +62,7 @@ template<class CARTA> void ImagemBasica<CARTA>::addimagem(const CARTA& carta, st
 
 	QImage im;
 
-	std::cout << im.load(QString::fromStdString(path)) << std::endl;
+	im.load(QString::fromStdString(path));
 
 	_imagens[c] = QPixmap::fromImage(im.scaled((_width == normal_size) ? im.width() : _width, 
 											   (_height == normal_size) ? im.height() : _height));
