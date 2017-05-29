@@ -65,7 +65,7 @@ void Jogo::reiniciar(){
 	}
 
 	//Restaura o monte da mesa e resdistribui as cartas para os jogadores
-	_mesa._monte.restaurar();
+	_mesa.monte_mesa().restaurar();
 	_mesa.distribuir(cartas_jogadores());
 }
 

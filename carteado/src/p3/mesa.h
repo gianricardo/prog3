@@ -72,6 +72,9 @@ public:
     //Limpa o monte
 	void deleta_monte(std::size_t i);
 
+	//Mostra o monte da mesa
+	BaralhoBasico<CARTA> monte_mesa() const;
+
 	std::size_t n_montes() const;
 
 private:
@@ -200,6 +203,11 @@ template <class CARTA> void MesaBasica<CARTA>::deleta_monte(std::size_t i){
 	if(i == 0) std::cerr << "Mesa::deleta_monte -- Nao pode deletar o monte principal\n";
 
 	_outros_montes.erase(_outros_montes.begin() + i - 1);
+}
+
+template <class CARTA> BaralhoBasico<CARTA> MesaBasica<CARTA>::monte_mesa() const{
+
+	return _monte;
 }
 
 template <class CARTA> std::size_t MesaBasica<CARTA>::n_montes() const {
