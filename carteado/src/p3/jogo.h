@@ -107,7 +107,7 @@ private:
 
 	void verifica_jogador_unico();				//utilizado na condicao de vitoria de ultimo jogador
 
-	int numero_jogadores_aptos();
+	std::size_t numero_jogadores_aptos();
 
 	void declara_fim_de_jogo();
 

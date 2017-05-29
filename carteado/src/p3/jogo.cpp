@@ -49,9 +49,24 @@ int Jogo::pontuacao_max() const {
 	return _regra->pontuacao_max();
 }
 
+void Jogo::reiniciar(){
 
+	_rodada = 1;
+	_jog_atual = 0;
+	_jogando = true;
 
-void Jogo::reiniciar(){ //TODO
+	//Reseta pontuacao, limpa a mao e muda aptidao se nao for apto
+	for(std::size_t pos_jogador; pos_jogador < numero_de_jogadores(); pos_jogador++)
+	{
+		_mesa.ver_jogador(pos_jogador).pontuacao(0);
+		_mesa.ver_jogador(pos_jogador).esvazia_mao();
+		if(!_mesa.ver_jogador(pos_jogador).esta_apto())
+			_mesa.ver_jogador(pos_jogador).muda_aptidao();
+	}
+
+	//Restaura o monte da mesa e resdistribui as cartas para os jogadores
+	_mesa._monte.restaurar();
+	_mesa.distribuir(cartas_jogadores());
 }
 
 void Jogo::fim_jogada(){
@@ -315,19 +330,9 @@ void Jogo::verifica_jogador_unico(){
 	declara_vencedor(last);
 }
 
-int Jogo::numero_jogadores_aptos(){
+std::size_t Jogo::numero_jogadores_aptos(){
 
-	int jogadores_aptos = 0;
-
-	for(std::size_t pos_jogador = 0; pos_jogador < _mesa.numero_jogadores(); pos_jogador++)
-	{
-		if(_mesa.ver_jogador().esta_apto())
-		{
-			jogadores_aptos++;
-		}
-	}
-
-	return jogadores_aptos;
+	return _mesa.numero_jogadores_aptos();
 }
 
 void Jogo::verifica_jogador_pontuacao_maxima(){

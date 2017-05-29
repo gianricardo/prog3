@@ -48,6 +48,9 @@ public:
     //Retorna o numero de jogadores
 	std::size_t numero_jogadores() const;
 
+	//Retorna o numero de jogadores aptos
+	std::size_t numero_jogadores_aptos() const;
+
     //Retorna um jogador especificado
     JogadorBasico<CARTA> ver_jogador(std::size_t i = 0) const;
 
@@ -91,7 +94,7 @@ template <class CARTA> MesaBasica<CARTA>::~MesaBasica() {
 template <class CARTA> void MesaBasica<CARTA>::distribuir(unsigned int qtd_cartas, bool cima/* = true */){
 
 	if(qtd_cartas * _jogadores.size() > _monte.size()){
-		std::cout<<"Erro";
+		std::cout<<"Erro\n";
 		return;
 	}
 
@@ -149,6 +152,22 @@ template <class CARTA> std::size_t MesaBasica<CARTA>::tamanho_monte(std::size_t 
 template <class CARTA> std::size_t MesaBasica<CARTA>::numero_jogadores() const {
 
 	return _jogadores.size();
+}
+
+template <class CARTA> std::size_t MesaBasica<CARTA>::numero_jogadores_aptos() const {
+
+	std::size_t jogadores_aptos = 0;
+
+	for(std::size_t pos_jogador = 0; pos_jogador < numero_jogadores(); pos_jogador++)
+	{
+		if(ver_jogador(pos_jogador).esta_apto())
+		{
+			jogadores_aptos++;
+		}
+	}
+
+	return jogadores_aptos;
+
 }
 
 template <class CARTA> JogadorBasico<CARTA> MesaBasica<CARTA>::ver_jogador(std::size_t i) const {

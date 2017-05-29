@@ -43,7 +43,10 @@ public:
 	bool esta_apto() const;
 
     //Retorna um vetor das cartas contidas na mao do jogador
-	const std::vector<CARTA> mostra_mao() const ;
+	const std::vector<CARTA> mostra_mao() const;
+
+	//Esvazia o vetor de cartas
+	void esvazia_mao();
 
 private:
 	std::vector<CARTA> _mao;
@@ -111,6 +114,11 @@ template<class CARTA> bool JogadorBasico<CARTA>::esta_apto() const {
 template<class CARTA> const std::vector<CARTA> JogadorBasico<CARTA>::mostra_mao() const {
 
 	return _mao;
+}
+
+template<class CARTA> void JogadorBasico<CARTA>::esvazia_mao(){
+
+	_mao.clear();
 }
 
 using Jogador = JogadorBasico<Carta>;
