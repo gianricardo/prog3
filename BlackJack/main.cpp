@@ -33,6 +33,8 @@ int main(void) {
     std::vector<Carta> hand_1;
     hand_1=Game.mostra_mao_jogador_atual();
     Game.vira_cara(hand_1[0]);
+    Game.move_carta_jm(hand_1[0]);
+    Game.move_carta_jm(hand_1[1]);
     
     
     
