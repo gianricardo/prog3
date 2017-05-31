@@ -3,7 +3,6 @@
 	<name>Paciencia</name>
 	<comment></comment>
 	<projects>
-		<project>carteado</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
