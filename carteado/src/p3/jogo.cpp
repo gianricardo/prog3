@@ -56,7 +56,7 @@ void Jogo::reiniciar(){
 	_jogando = true;
 
 	//Reseta pontuacao, limpa a mao e muda aptidao se nao for apto
-	for(std::size_t pos_jogador; pos_jogador < numero_de_jogadores(); pos_jogador++)
+	for(std::size_t pos_jogador=0; pos_jogador < numero_de_jogadores(); pos_jogador++)
 	{
 		_mesa.ver_jogador(pos_jogador).pontuacao(0);
 		_mesa.ver_jogador(pos_jogador).esvazia_mao();
@@ -345,7 +345,7 @@ void Jogo::verifica_jogador_pontuacao_maxima(){
 		if(_mesa.ver_jogador().esta_apto() && _mesa.ver_jogador(pos_jogador).pontuacao() > maior_pontuacao)
 		{
 			maior_pontuacao = _mesa.ver_jogador(pos_jogador).pontuacao();
-			jogador_vencedor = pos_jogador;
+			jogador_vencedor = (int)pos_jogador;
 		}
 	}
 
@@ -362,7 +362,7 @@ void Jogo::verifica_jogador_pontuacao_minima(){
 		if(_mesa.ver_jogador().esta_apto() && _mesa.ver_jogador(pos_jogador).pontuacao() < menor_pontuacao)
 		{
 			menor_pontuacao = _mesa.ver_jogador(pos_jogador).pontuacao();
-			jogador_vencedor = pos_jogador;
+			jogador_vencedor = (int)pos_jogador;
 		}
 	}
 
