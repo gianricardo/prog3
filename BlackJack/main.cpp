@@ -7,6 +7,7 @@
 //
 
 #include <iostream>
+#include <vector>
 #include "../carteado/src/p3/baralho.h"
 #include "../carteado/src/p3/carta.h"
 #include "../carteado/src/p3/jogador.h"
@@ -19,10 +20,16 @@ int main(void) {
     // insert code here...
     
     //
-    JogadorBasico<Carta> Player("Player");
-    JogadorBasico<Carta> Dealer("Dealer");
-    BaralhoBasico<Carta> Deck(52);
-    Deck.embaralhar();
+    
+    Regra Rules(2,2,-1,-1,0,52, (Regra::modo_fim::pontuacao), (Regra::condicao_vitoria::maior_pontuacao), (Regra::condicao_derrota::nenhuma));
+    
+    Jogo Game(&Rules,{"Dealer","Player"});
+    std::vector<Carta> hand_1;
+    hand_1=Game.mostra_mao_jogador_atual();
+    Game.
+    
+    
+    
     
     
     
