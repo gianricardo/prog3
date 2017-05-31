@@ -14,6 +14,8 @@
 
 #include <iostream>
 #include <vector>
+
+
 #include "../carteado/src/p3/baralho.h"
 #include "../carteado/src/p3/carta.h"
 #include "../carteado/src/p3/jogador.h"
