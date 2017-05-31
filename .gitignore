@@ -37,7 +37,7 @@
 
 #dev files
 Debug
-
+Lib
 
 #temporary libreoffice files
 .*lock*
