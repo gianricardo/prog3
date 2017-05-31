@@ -46,11 +46,17 @@ public:
 	//Restaura as cartas do baralho as iniciais
 	void restaurar();
 
+    bool vira_carta(CARTA c);
+    
 private:
 	std::size_t _numerocartas;
 	std::deque<CARTA> _monte;
 };
 
+template<class CARTA> bool BaralhoBasico<CARTA>::vira_carta(CARTA c){
+    c.vira();
+    return true;
+}
 
 template<class CARTA> BaralhoBasico<CARTA>::BaralhoBasico(std::size_t numerocartas/* = 0 */) : _numerocartas{numerocartas} {
 

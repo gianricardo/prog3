@@ -16,6 +16,7 @@ template <class CARTA>
 class MesaBasica {
 public:
 
+
     //Constroi uma mesa com um baralho principal com "main_deck_size" numero de cartas
 	MesaBasica(std::size_t main_deck_size = 0);
 	virtual ~MesaBasica();
@@ -76,6 +77,10 @@ public:
 	BaralhoBasico<CARTA> monte_mesa() const;
 
 	std::size_t n_montes() const;
+    
+    //Vira carta
+    //recebe carta a ser virada
+    bool vira_carta(CARTA c);
 
 private:
 	BaralhoBasico<CARTA> _monte; //monte principal
@@ -209,6 +214,10 @@ template <class CARTA> BaralhoBasico<CARTA> MesaBasica<CARTA>::monte_mesa() cons
 
 	return _monte;
 }
+    
+template <class CARTA> bool MesaBasica<CARTA>::vira_carta(CARTA c){
+    return _monte.vira_carta(c);
+}
 
 template <class CARTA> std::size_t MesaBasica<CARTA>::n_montes() const {
 
@@ -216,6 +225,8 @@ template <class CARTA> std::size_t MesaBasica<CARTA>::n_montes() const {
 }
 
 using Mesa = MesaBasica<Carta>;
+    
+
 
 } /* namespace p3 */
 

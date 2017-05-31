@@ -25,7 +25,8 @@ int main(void) {
     
     Jogo Game(&Rules,{"Dealer","Player"});
     std::vector<Carta> hand_1;
-    
+    hand_1=Game.mostra_mao_jogador_atual();
+    Game.vira_cara(hand_1[0]);
     
     
     

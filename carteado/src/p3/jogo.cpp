@@ -426,6 +426,11 @@ Carta Jogo::_pega_monte(std::size_t m, bool topo){
 	if(topo) return _mesa.pega_topo(m);
 	else return _mesa.pega_baixo(m);
 }
+        
+bool Jogo::vira_cara(p3::Carta c){
+    return _mesa.vira_carta(c);
+    
+}
 
 } /* namespace p3 */
 

@@ -19,7 +19,7 @@ class Jogo {
 public:
 
     //Construtor
-	Jogo(Regra *regra, std::vector<std::string> nomes);
+    Jogo(Regra *regra, std::vector<std::string> nomes);
 	
 	virtual ~Jogo();
 
@@ -82,7 +82,9 @@ public:
 
     //Deleta um monte da mesa especificada em "i"
 	void deleta_monte(std::size_t i);
-
+    
+    //vira a carta
+    bool vira_cara( Carta c);
 private:
 
 	static const std::size_t jogador_atual = std::numeric_limits<std::size_t>::max();
@@ -124,6 +126,8 @@ private:
 	std::size_t _rodada;
 
 	bool _jogando;
+    
+    
 
 };
 
