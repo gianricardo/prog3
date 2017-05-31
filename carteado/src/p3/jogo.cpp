@@ -216,6 +216,7 @@ void Jogo::verifica_fim_de_jogo()
 		break;
 
 	case (Regra::modo_fim::zero_cartas) :
+	{
 		bool condicao = true;	//condicao para checar se todos possuem zero cartas
 
 		for(std::size_t pos_jogador = 0; pos_jogador < _mesa.numero_jogadores(); pos_jogador++)
@@ -223,6 +224,12 @@ void Jogo::verifica_fim_de_jogo()
 			if(_mesa.ver_jogador(pos_jogador).esta_apto() && _mesa.ver_jogador(pos_jogador).mostra_mao().size() != 0)	condicao = false;;
 		}
 		if(condicao) declara_fim_de_jogo();
+		break;
+	}
+
+	case (Regra::modo_fim::zero_jogadores) :
+		if(numero_jogadores_aptos() == 0)
+			declara_fim_de_jogo();
 		break;
 
 	}
@@ -320,6 +327,8 @@ void Jogo::verifica_fim_zero_cartas(){
 
 void Jogo::verifica_jogador_unico(){
 
+	if(todos_jogadores_derrotados()) return;
+
 	std::size_t jog_aptos = 0;
 	std::size_t last = _jog_atual;
 
@@ -345,9 +354,12 @@ std::size_t Jogo::numero_jogadores_aptos(){
 
 void Jogo::verifica_jogador_pontuacao_maxima(){
 
+	if(todos_jogadores_derrotados()) return;
+
 	int maior_pontuacao = 0;
 	int jogador_vencedor;
 
+	//checa todos os jogadores aptos e ve qual tem mais pontos
 	for(std::size_t pos_jogador = 0; pos_jogador < _mesa.numero_jogadores(); pos_jogador++)
 	{
 		if(_mesa.ver_jogador().esta_apto() && _mesa.ver_jogador(pos_jogador).pontuacao() > maior_pontuacao)
@@ -362,9 +374,12 @@ void Jogo::verifica_jogador_pontuacao_maxima(){
 
 void Jogo::verifica_jogador_pontuacao_minima(){
 
+	if(todos_jogadores_derrotados()) return;
+
 	int menor_pontuacao = 999999;
 	int jogador_vencedor;
 
+	//checa todos os jogadores aptos e ve qual tem menos pontos
 	for(std::size_t pos_jogador = 0; pos_jogador < _mesa.numero_jogadores(); pos_jogador++)
 	{
 		if(_mesa.ver_jogador().esta_apto() && _mesa.ver_jogador(pos_jogador).pontuacao() < menor_pontuacao)
@@ -379,9 +394,12 @@ void Jogo::verifica_jogador_pontuacao_minima(){
 
 void Jogo::verifica_jogador_mais_cartas(){
 
+	if(todos_jogadores_derrotados()) return;
+
 	std::size_t maior_numero_cartas = -999999;
 	std::size_t jogador_vencedor;
 
+	//checa todos os jogadores aptos e ve qual tem mais cartas
 	for(std::size_t pos_jogador = 0; pos_jogador < _mesa.numero_jogadores(); pos_jogador++)
 	{
 		if(_mesa.ver_jogador().esta_apto() && _mesa.ver_jogador(pos_jogador).mostra_mao().size() > maior_numero_cartas)
@@ -396,9 +414,12 @@ void Jogo::verifica_jogador_mais_cartas(){
 
 void Jogo::verifica_jogador_menos_cartas(){
 
+	if(todos_jogadores_derrotados()) return;
+
 	std::size_t menor_numero_cartas = 999999;
 	std::size_t jogador_vencedor;
 
+	//checa todos os jogadores aptos e ve qual tem menos cartas
 	for(std::size_t pos_jogador = 0; pos_jogador < _mesa.numero_jogadores(); pos_jogador++)
 	{
 		if(_mesa.ver_jogador().esta_apto() && _mesa.ver_jogador(pos_jogador).mostra_mao().size() < menor_numero_cartas)
