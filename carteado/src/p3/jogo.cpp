@@ -284,6 +284,14 @@ void Jogo::verifica_jogadores_derrotados()
 		}
 		break;
 
+	case Regra::condicao_derrota::zero_pontos :
+		for(std::size_t pos_jogador = 0; pos_jogador < _mesa.numero_jogadores(); pos_jogador++)
+		{
+			if(_mesa.ver_jogador(pos_jogador).esta_apto() && _mesa.ver_jogador(pos_jogador).pontuacao() == 0)
+				_mesa.ver_jogador(pos_jogador).muda_aptidao();
+		}
+		break;
+
 	case Regra::condicao_derrota::nenhuma :
 		break;
 	}

@@ -15,9 +15,9 @@ namespace p3 {
 class Regra {
 public:
 
-	enum class modo_fim { padrao, pontuacao, rodadas, zero_cartas };
+	enum class modo_fim { padrao, pontuacao, rodadas, zero_cartas, zero_jogadores };
 	enum class condicao_vitoria { padrao, maior_pontuacao, menor_pontuacao, menos_cartas, mais_cartas};
-	enum class condicao_derrota { nenhuma, zero_cartas, estoura_pontuacao };
+	enum class condicao_derrota { nenhuma, zero_cartas, estoura_pontuacao, zero_pontos };
 	
 	Regra(std::size_t numero_de_jogadores,
 		  int cartas_jogadores, 
