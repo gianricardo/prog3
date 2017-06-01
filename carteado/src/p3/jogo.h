@@ -15,13 +15,14 @@
 
 namespace p3 {
 
-class Jogo {
+template<class CARTA>
+class JogoBasico {
 public:
 
     //Construtor
-    Jogo(Regra *regra, std::vector<std::string> nomes);
+    JogoBasico(Regra *regra, std::vector<std::string> nomes);
 	
-	virtual ~Jogo();
+	virtual ~JogoBasico();
 
 	std::size_t numero_de_jogadores() const; //retorna numero de jogares
 	int cartas_inicial() const; //retorna numero de cartas iniciais monte
@@ -47,7 +48,7 @@ public:
 	std::size_t posicao_jogador_atual() const;
 
     //Retorna um vetor contendo as cartas do jogador atual
-	std::vector<Carta> mostra_mao_jogador_atual() const;
+	std::vector<CARTA> mostra_mao_jogador_atual() const;
 
     //Retorna a pontucao do jogador atual
 	int pontuacao_jogador_atual() const;
@@ -59,21 +60,59 @@ public:
 	void jogador_subtrai_pontos(int pontos);
 
 	 // move carta do jogador atual para outro jogador
-	bool move_carta_j(Carta carta, std::size_t j);
+	bool move_carta_j(CARTA carta, std::size_t j);
 	
 	 // move carta do monte principal para outro monte
 	bool move_carta_m(std::size_t m, bool p_cima = true, bool m_cima = true);
 	
-	 // move carta entre jogadores
-	bool move_carta_jj(Carta carta, std::size_t j1, std::size_t j2 = jogador_atual);
+	// move carta entre jogadores
+	//
+	// "carta" - Carta que será retirada de um jogador para ser passado a outro(usa o comparador padrao da carta)
+	// "j1" - indice do jogador que entregara a carta ao outro
+	// "j2" - indice do jogador que recebera a carta
+	//
+	// retorna um booleano indicando se "carta" foi encontrada na mao de "j1" podendo executar a troca
+	//
+	// ex: jogo.move_carta_jj(Carta(3, Carta::Naipe::copas), jogador_atual, 3);
+	//
+	bool move_carta_jj(CARTA carta, std::size_t j1, std::size_t j2 = jogador_atual);
 	
-	 // move carta de um jogador para um monte
-	bool move_carta_jm(Carta carta, std::size_t j = jogador_atual, std::size_t m = 0, bool m_cima = true);
+	// move carta de um jogador para um monte
+	//
+	// "carta" - Carta que será retirada de um jogador para ser passado a um monte(usa o comparador padrao da carta)
+	// "j" - indice do jogador que entregara a carta ao monte
+	// "m" - indice do monte
+	// "m_cima" - caso true a carta sera colocada na parte de cima do baralho, caso false em baixo
+	//
+	// retorna um booleano indicando se "carta" foi encontrada na mao de "j" podendo executar a troca
+	//
+	// ex: jogo.move_carta_jm(Carta(3, Carta::Naipe::copas), 2, 0, false);
+	//
+	bool move_carta_jm(CARTA carta, std::size_t j = jogador_atual, std::size_t m = 0, bool m_cima = true);
 	
-	 // move carta de um monte para um jogador
+	// move carta de um monte para um jogador
+	//
+	// "m" - indice do jogador que entregara a carta ao outro
+	// "j" - indice do jogador que recebera a carta
+	// "m_cima" - caso true a carta sera tirada da parte de cima do baralho, caso falso de baixo
+	//
+	// retorna um booleano se "m" nao esta vazio, dessa forma, podendo fazer a troca
+	//
+	// ex: jogo.move_carta_mj(3, jogador_atual, true);
+	//
 	bool move_carta_mj(std::size_t m = 0, std::size_t j = jogador_atual, bool m_cima = true);
 	
-	 // move carta entre montes
+	// move carta entre montes
+	//
+	// "m1" - indice do monte que entregara a carta ao outro
+	// "m2" - indice do monte que recebera a carta
+	// "m1_cima" - caso true a carta sera tirada da parte de cima do baralho "m1", caso falso de baixo
+	// "m2_cima" - caso true a carta sera colocada na parte de cima do baralho "m2', caso false em baixo
+	//
+	// retorna um booleano se "m1" nao esta vazio, dessa forma, podendo fazer a troca
+	//
+	// ex: jogo.move_carta_mm(0, 1, true, true);
+	//
 	bool move_carta_mm(std::size_t m1, std::size_t m2 = 0, bool m1_cima = true, bool m2_cima = true);
 
 	
@@ -84,7 +123,7 @@ public:
 	void deleta_monte(std::size_t i);
     
     //vira a carta
-    bool vira_cara( Carta c);
+    bool vira_cara( CARTA c);
 private:
 
 	static const std::size_t jogador_atual = std::numeric_limits<std::size_t>::max();
@@ -115,12 +154,12 @@ private:
 
 	void declara_vencedor(std::size_t j);
 
-	void _coloca_monte(Carta c, std::size_t m, bool topo);
+	void _coloca_monte(CARTA c, std::size_t m, bool topo);
 
-	Carta _pega_monte(std::size_t m, bool topo);
+	CARTA _pega_monte(std::size_t m, bool topo);
 
 	std::unique_ptr<Regra> _regra;
-	Mesa _mesa;
+	MesaBasica<CARTA> _mesa;
 
 	std::size_t _jog_atual;
 	std::size_t _rodada;
@@ -131,6 +170,462 @@ private:
 
 };
 
+
+
+template<class CARTA> JogoBasico<CARTA>::JogoBasico(Regra *regra, std::vector<std::string> nomes) : _regra{regra}, _mesa{ (unsigned int) regra->cartas_inicial() },
+										 _jog_atual{0}, _rodada{1}, _jogando{true} {
+
+	if(nomes.size() != numero_de_jogadores()) std::cerr << "Jogo::Jogo -- Numero incorreto de nomes passado\n";
+
+	auto it = nomes.begin();
+
+	for(std::size_t i = 0; i < numero_de_jogadores(); i++){
+
+		_mesa.add_jogador((it != nomes.end()) ? *it : "");
+
+		it++;
+	}
+
+	_mesa.distribuir(cartas_jogadores());
+
+}
+
+template<class CARTA> JogoBasico<CARTA>::~JogoBasico() {}
+
+template<class CARTA> std::size_t JogoBasico<CARTA>::numero_de_jogadores() const {
+	return _regra->numero_de_jogadores();
+}
+
+template<class CARTA> int JogoBasico<CARTA>::cartas_inicial() const {
+	return _regra->cartas_inicial();
+}
+
+template<class CARTA> int JogoBasico<CARTA>::cartas_jogadores() const {
+	return _regra->cartas_jogadores();
+}
+
+template<class CARTA> int JogoBasico<CARTA>::max_rodadas() const {
+	return _regra->max_rodadas();
+}
+
+template<class CARTA> int JogoBasico<CARTA>::pontuacao_max() const {
+	return _regra->pontuacao_max();
+}
+
+template<class CARTA> void JogoBasico<CARTA>::reiniciar(){
+
+	_rodada = 1;
+	_jog_atual = 0;
+	_jogando = true;
+
+	//Reseta pontuacao, limpa a mao e muda aptidao se nao for apto
+	for(std::size_t pos_jogador=0; pos_jogador < numero_de_jogadores(); pos_jogador++)
+	{
+		_mesa.ver_jogador(pos_jogador).pontuacao(0);
+		_mesa.ver_jogador(pos_jogador).esvazia_mao();
+		if(!_mesa.ver_jogador(pos_jogador).esta_apto())
+			_mesa.ver_jogador(pos_jogador).muda_aptidao();
+	}
+
+	//Restaura o monte da mesa e resdistribui as cartas para os jogadores
+	_mesa.monte_mesa().restaurar();
+	_mesa.distribuir(cartas_jogadores());
+}
+
+template<class CARTA> void JogoBasico<CARTA>::fim_jogada(){
+
+	if(!_jogando) return;
+
+	while(!_mesa.ver_jogador(++_jog_atual).esta_apto()){
+
+		if(_jog_atual == numero_de_jogadores()){
+
+			_jog_atual = 0;
+
+			_rodada++;
+
+			verifica_jogadores_derrotados();
+			verifica_fim_de_jogo();
+			verifica_vitoria();
+		}
+	}
+}
+
+template<class CARTA> bool JogoBasico<CARTA>::jogando() const {
+
+	return _jogando;
+}
+
+template<class CARTA> std::size_t JogoBasico<CARTA>::rodada() const {
+
+	return _rodada;
+}
+
+template<class CARTA> std::size_t JogoBasico<CARTA>::posicao_jogador_atual() const {
+
+	return _jog_atual;
+}
+
+template<class CARTA> std::string JogoBasico<CARTA>::nome_jogador_atual() const {
+
+	return _mesa.ver_jogador(_jog_atual).nome();
+}
+
+template<class CARTA> std::vector<CARTA> JogoBasico<CARTA>::mostra_mao_jogador_atual() const {
+
+	return _mesa.ver_jogador(_jog_atual).mostra_mao();
+}
+
+template<class CARTA> int JogoBasico<CARTA>::pontuacao_jogador_atual() const {
+
+	return _mesa.ver_jogador(_jog_atual).pontuacao();
+}
+
+template<class CARTA> void JogoBasico<CARTA>::jogador_soma_pontos(int pontos){
+
+	_mesa.jogador_soma_pontos(pontos, _jog_atual);
+}
+
+template<class CARTA> void JogoBasico<CARTA>::jogador_subtrai_pontos(int pontos){
+
+	jogador_soma_pontos(-pontos);
+}
+
+template<class CARTA> bool JogoBasico<CARTA>::move_carta_j(CARTA carta, std::size_t j){
+
+	return move_carta_jj(carta, jogador_atual, j);
+}
+
+template<class CARTA> bool JogoBasico<CARTA>::move_carta_m(std::size_t m, bool p_cima /* = true */, bool m_cima /* = true */){
+
+	return move_carta_mm(0, m, p_cima, m_cima);
+}
+
+template<class CARTA> bool JogoBasico<CARTA>::move_carta_jj(CARTA carta, std::size_t j1, std::size_t j2 /* = jogador_atual */){
+
+	if(j1 == jogador_atual) j1 = _jog_atual;
+	if(j2 == jogador_atual) j2 = _jog_atual;
+
+	if(_mesa.jogador_tira_carta(carta, j1)){
+
+		_mesa.jogador_recebe_carta(carta, j2);
+
+		return true;
+	}
+
+	return false;
+}
+
+template<class CARTA> bool JogoBasico<CARTA>::move_carta_jm(CARTA carta, std::size_t j /* = jogador_atual */, std::size_t m /* = 0 */, bool m_cima /* = true */){
+
+	if(j == jogador_atual) j = _jog_atual;
+
+	if(!_mesa.jogador_tira_carta(carta, j)) return false;
+
+	_coloca_monte(carta, m, m_cima);
+
+	return true;
+}
+
+template<class CARTA> bool JogoBasico<CARTA>::move_carta_mj(std::size_t m /* = 0 */, std::size_t j /* =  jogador_atual */, bool m_cima /* = true */){
+
+	if(_mesa.tamanho_monte(m) == 0) return false;
+
+	if(j == jogador_atual) j = _jog_atual;
+
+	_mesa.jogador_recebe_carta(_pega_monte(m, m_cima), j);
+
+	return true;
+}
+
+template<class CARTA> bool JogoBasico<CARTA>::move_carta_mm(std::size_t m1, std::size_t m2 /* = 0 */, bool m1_cima /* = true */, bool m2_cima /* = true */){
+
+	if(_mesa.tamanho_monte(m1) == 0) return false;
+
+	_coloca_monte(_pega_monte(m1, m1_cima), m2, m2_cima);
+
+	return true;
+}
+
+template<class CARTA> void JogoBasico<CARTA>::novo_monte(){
+
+	_mesa.novo_monte();
+}
+
+template<class CARTA> void JogoBasico<CARTA>::deleta_monte(std::size_t i){
+
+	_mesa.deleta_monte(i);
+}
+
+template<class CARTA> void JogoBasico<CARTA>::verifica_fim_de_jogo()
+{
+	switch(_regra->fim())
+	{
+	case (Regra::modo_fim::padrao) :		//caso de um jogador restante
+		if(numero_jogadores_aptos() == 1) declara_fim_de_jogo();
+		break;
+
+	case (Regra::modo_fim::pontuacao) :	//caso de um jogador ter atingido pontuacao maxima
+		for(std::size_t pos_jogador = 0; pos_jogador < _mesa.numero_jogadores(); pos_jogador++)
+		{
+			if(_mesa.ver_jogador(pos_jogador).esta_apto() && _mesa.ver_jogador(pos_jogador).pontuacao() == _regra->pontuacao_max())
+				declara_fim_de_jogo();
+		}
+		break;
+
+	case (Regra::modo_fim::rodadas) : 	//caso atingido numero maximo de rodadas
+		if((int)rodada() > _regra->max_rodadas())
+			declara_fim_de_jogo();
+		break;
+
+	case (Regra::modo_fim::zero_cartas) :
+	{
+		bool condicao = true;	//condicao para checar se todos possuem zero cartas
+
+		for(std::size_t pos_jogador = 0; pos_jogador < _mesa.numero_jogadores(); pos_jogador++)
+		{
+			if(_mesa.ver_jogador(pos_jogador).esta_apto() && _mesa.ver_jogador(pos_jogador).mostra_mao().size() != 0)	condicao = false;;
+		}
+		if(condicao) declara_fim_de_jogo();
+		break;
+	}
+
+	case (Regra::modo_fim::zero_jogadores) :
+		if(numero_jogadores_aptos() == 0)
+			declara_fim_de_jogo();
+		break;
+
+	}
+
+}
+
+template<class CARTA> void JogoBasico<CARTA>::verifica_vitoria() {
+
+	if(!_jogando) return;
+
+	if(todos_jogadores_derrotados()) return;
+    
+	switch(_regra->cond_vit())
+	{
+	case Regra::condicao_vitoria::padrao :
+		verifica_jogador_unico();
+		break;
+
+	case Regra::condicao_vitoria::maior_pontuacao :
+		verifica_jogador_pontuacao_maxima();
+		break;
+
+	case Regra::condicao_vitoria::menor_pontuacao :
+		verifica_jogador_pontuacao_minima();
+		break;
+
+	case Regra::condicao_vitoria::mais_cartas :
+		verifica_jogador_mais_cartas();
+		break;
+
+	case Regra::condicao_vitoria::menos_cartas :
+		verifica_jogador_menos_cartas();
+		break;
+
+	}
+}
+
+template<class CARTA> void JogoBasico<CARTA>::verifica_jogadores_derrotados()
+{
+	if(!jogando()) return;
+
+	if(!todos_jogadores_derrotados()) return;
+
+	switch(_regra->cond_der())
+	{
+	case Regra::condicao_derrota::estoura_pontuacao :
+		for(std::size_t pos_jogador = 0; pos_jogador < _mesa.numero_jogadores(); pos_jogador++)
+		{
+			if(_mesa.ver_jogador(pos_jogador).esta_apto() && _mesa.ver_jogador(pos_jogador).pontuacao() > _regra->pontuacao_max())
+				_mesa.ver_jogador(pos_jogador).muda_aptidao();
+		}
+		break;
+
+	case Regra::condicao_derrota::zero_cartas :
+		for(std::size_t pos_jogador = 0; pos_jogador < _mesa.numero_jogadores(); pos_jogador++)
+		{
+			if(_mesa.ver_jogador(pos_jogador).esta_apto() && _mesa.ver_jogador(pos_jogador).mostra_mao().size() == 0)
+				_mesa.ver_jogador(pos_jogador).muda_aptidao();
+		}
+		break;
+
+	case Regra::condicao_derrota::zero_pontos :
+		for(std::size_t pos_jogador = 0; pos_jogador < _mesa.numero_jogadores(); pos_jogador++)
+		{
+			if(_mesa.ver_jogador(pos_jogador).esta_apto() && _mesa.ver_jogador(pos_jogador).pontuacao() == 0)
+				_mesa.ver_jogador(pos_jogador).muda_aptidao();
+		}
+		break;
+
+	case Regra::condicao_derrota::nenhuma :
+		break;
+	}
+}
+
+template<class CARTA> bool JogoBasico<CARTA>::todos_jogadores_derrotados() {
+
+	if(numero_jogadores_aptos() == 0){
+		declara_fim_de_jogo();
+		return true;
+	}
+	return false;
+}
+
+
+template<class CARTA> void JogoBasico<CARTA>::verifica_fim_zero_cartas(){
+
+	for(std::size_t i = 0; i < numero_de_jogadores(); i++){
+
+		if(_mesa.ver_jogador(i).mostra_mao().size() == 0){
+
+			declara_fim_de_jogo();
+		}
+	}
+}
+
+template<class CARTA> void JogoBasico<CARTA>::verifica_jogador_unico(){
+
+	if(todos_jogadores_derrotados()) return;
+
+	std::size_t jog_aptos = 0;
+	std::size_t last = _jog_atual;
+
+	for(std::size_t i = 0; i < _mesa.numero_jogadores(); i++){
+
+		if(_mesa.ver_jogador(i).esta_apto()){
+		
+			jog_aptos++;
+
+			last = i;
+		}
+	}
+
+	if(jog_aptos > 1) return;
+
+	declara_vencedor(last);
+}
+
+template<class CARTA> std::size_t JogoBasico<CARTA>::numero_jogadores_aptos(){
+
+	return _mesa.numero_jogadores_aptos();
+}
+
+template<class CARTA> void JogoBasico<CARTA>::verifica_jogador_pontuacao_maxima(){
+
+	if(todos_jogadores_derrotados()) return;
+
+	int maior_pontuacao = 0;
+	int jogador_vencedor;
+
+	//checa todos os jogadores aptos e ve qual tem mais pontos
+	for(std::size_t pos_jogador = 0; pos_jogador < _mesa.numero_jogadores(); pos_jogador++)
+	{
+		if(_mesa.ver_jogador().esta_apto() && _mesa.ver_jogador(pos_jogador).pontuacao() > maior_pontuacao)
+		{
+			maior_pontuacao = _mesa.ver_jogador(pos_jogador).pontuacao();
+			jogador_vencedor = (int)pos_jogador;
+		}
+	}
+
+	declara_vencedor(jogador_vencedor);
+}
+
+template<class CARTA> void JogoBasico<CARTA>::verifica_jogador_pontuacao_minima(){
+
+	if(todos_jogadores_derrotados()) return;
+
+	int menor_pontuacao = 999999;
+	int jogador_vencedor;
+
+	//checa todos os jogadores aptos e ve qual tem menos pontos
+	for(std::size_t pos_jogador = 0; pos_jogador < _mesa.numero_jogadores(); pos_jogador++)
+	{
+		if(_mesa.ver_jogador().esta_apto() && _mesa.ver_jogador(pos_jogador).pontuacao() < menor_pontuacao)
+		{
+			menor_pontuacao = _mesa.ver_jogador(pos_jogador).pontuacao();
+			jogador_vencedor = (int)pos_jogador;
+		}
+	}
+
+	declara_vencedor(jogador_vencedor);
+}
+
+template<class CARTA> void JogoBasico<CARTA>::verifica_jogador_mais_cartas(){
+
+	if(todos_jogadores_derrotados()) return;
+
+	std::size_t maior_numero_cartas = -999999;
+	std::size_t jogador_vencedor;
+
+	//checa todos os jogadores aptos e ve qual tem mais cartas
+	for(std::size_t pos_jogador = 0; pos_jogador < _mesa.numero_jogadores(); pos_jogador++)
+	{
+		if(_mesa.ver_jogador().esta_apto() && _mesa.ver_jogador(pos_jogador).mostra_mao().size() > maior_numero_cartas)
+		{
+			maior_numero_cartas = _mesa.ver_jogador(pos_jogador).mostra_mao().size();
+			jogador_vencedor = pos_jogador;
+		}
+	}
+
+	declara_vencedor(jogador_vencedor);
+}
+
+template<class CARTA> void JogoBasico<CARTA>::verifica_jogador_menos_cartas(){
+
+	if(todos_jogadores_derrotados()) return;
+
+	std::size_t menor_numero_cartas = 999999;
+	std::size_t jogador_vencedor;
+
+	//checa todos os jogadores aptos e ve qual tem menos cartas
+	for(std::size_t pos_jogador = 0; pos_jogador < _mesa.numero_jogadores(); pos_jogador++)
+	{
+		if(_mesa.ver_jogador().esta_apto() && _mesa.ver_jogador(pos_jogador).mostra_mao().size() < menor_numero_cartas)
+		{
+			menor_numero_cartas = _mesa.ver_jogador(pos_jogador).mostra_mao().size();
+			jogador_vencedor = pos_jogador;
+		}
+	}
+
+	declara_vencedor(jogador_vencedor);
+}
+
+template<class CARTA> void JogoBasico<CARTA>::declara_fim_de_jogo(){
+
+	_jogando = false;
+}
+
+template<class CARTA> void JogoBasico<CARTA>::declara_vencedor(std::size_t j){
+
+	_jog_atual = j;
+
+	_jogando = false;
+}
+
+template<class CARTA> void JogoBasico<CARTA>::_coloca_monte(CARTA c, std::size_t m, bool topo){
+
+	if(topo) _mesa.coloca_topo(c, m);
+	else _mesa.coloca_baixo(c, m);
+}
+
+template<class CARTA> CARTA JogoBasico<CARTA>::_pega_monte(std::size_t m, bool topo){
+
+	if(topo) return _mesa.pega_topo(m);
+	else return _mesa.pega_baixo(m);
+}
+        
+template<class CARTA> bool JogoBasico<CARTA>::vira_cara(CARTA c){
+    return _mesa.vira_carta(c);
+    
+}
+
+
+using Jogo = JogoBasico<Carta>;
 
 } /* namespace p3 */
 

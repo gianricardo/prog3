@@ -1,17 +1,13 @@
 
 #include <QApplication>
 #include "window.h"
+#include "jogo.h"
 
-int main(int argc, char **argv){
+int main(){
     
-    QApplication app(argc, argv);
     
-    Window window;
     
-    window.setFixedSize(500, 500);
-
-    window.show();
-
-    return app.exec();
+    
+    return 0;
     
 }
