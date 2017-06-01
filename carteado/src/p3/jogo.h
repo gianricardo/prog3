@@ -20,6 +20,8 @@ class JogoBasico {
 public:
 
     //Construtor
+	//recebe um ponteiro da classe regra e um vetor de nomes de jogadores
+	//inicializa os atributos rodada com 1, jogador atual como 0 e jogando como true
     JogoBasico(Regra *regra, std::vector<std::string> nomes);
 	
 	virtual ~JogoBasico();
@@ -30,7 +32,8 @@ public:
 	int max_rodadas() const; //retorna numero maximo de rodadas
 	int pontuacao_max() const; //retorna numero de pontos para termino
 
-	void reiniciar(); // TODO
+	//reinicia o jogo como se o objeto JogoBasico fosse recem criado
+	void reiniciar();
 
 	 //Termina a jogada do jogador atual, caso ele seja o ultimo jogador, muda a rodada
 	void fim_jogada();
@@ -148,25 +151,21 @@ private:
 
 	void verifica_jogador_unico();				//utilizado na condicao de vitoria de ultimo jogador
 
-	std::size_t numero_jogadores_aptos();
+	std::size_t numero_jogadores_aptos();		//retorna o numero de jogadores aptos restante no jogo
 
-	void declara_fim_de_jogo();
+	void declara_fim_de_jogo();					//troca o estado da variavel que declara se o jogo esta rodando
 
-	void declara_vencedor(std::size_t j);
+	void declara_vencedor(std::size_t j);		//declara o jogador j como vencedor e encerra o jogo
 
-	void _coloca_monte(CARTA c, std::size_t m, bool topo);
+	void _coloca_monte(CARTA c, std::size_t m, bool topo);	//coloca a carta c no topo(se for true) do monte m
 
-	CARTA _pega_monte(std::size_t m, bool topo);
+	CARTA _pega_monte(std::size_t m, bool topo);	//pega uma carta do topo(se for true) do monte m
 
-	std::unique_ptr<Regra> _regra;
-	MesaBasica<CARTA> _mesa;
-
-	std::size_t _jog_atual;
-	std::size_t _rodada;
-
-	bool _jogando;
-    
-    
+	std::unique_ptr<Regra> _regra;		//ponteiro para a regra do jogo
+	MesaBasica<CARTA> _mesa;			//objeto da classe mesa que representa a mesa do jogo
+	std::size_t _jog_atual;				//guarda a posicao do jogador atual
+	std::size_t _rodada;				//guarda a rodada do jogo
+	bool _jogando;   					//se for true o jogo esta rodando
 
 };
 

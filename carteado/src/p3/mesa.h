@@ -19,17 +19,18 @@ public:
 
     //Constroi uma mesa com um baralho principal com "main_deck_size" numero de cartas
 	MesaBasica(std::size_t main_deck_size = 0);
+
 	virtual ~MesaBasica();
 
-	 //Distribui cartas do monte principal para todos os jogadores
-	void distribuir(unsigned int qtd_cartas, bool cima = true); //distribui uma quantidade de cartas
+	//Distribui "qtd_cartas" cartas do monte principal para todos os jogadores, se cima for true retira as cartas
+	//de cima do monte principal
+	void distribuir(unsigned int qtd_cartas, bool cima = true);
     
-    //Adiciona um jogador a mesa
+    //Adiciona um jogador a mesa passando o nome dele como parametro
 	void add_jogador(std::string name = "");
 	
-	 //Torna um jogador da mesa inapto de jogar
+	 //Torna um jogador da mesa inapto de jogar passando sua posicao na mesa
 	void rem_jogador(std::size_t pos);
-
 	
 	 //Pega uma carta do topo de um monte de cartas especificado
 	CARTA pega_topo(std::size_t monte = 0);
@@ -55,18 +56,15 @@ public:
     //Retorna um jogador especificado
     JogadorBasico<CARTA> ver_jogador(std::size_t i = 0) const;
 
-
     //Acrescenta pontos a um jogador "i"
 	void jogador_soma_pontos(int valor, std::size_t i = 0);
 
-	
     //Tira uma carta "c" de um jogador "i", caso ele nao tenha retorna false
 	bool jogador_tira_carta(CARTA c, std::size_t i = 0);
 
     //Acrescenta uma carta "c" a mao do jogador "i"
 	void jogador_recebe_carta(CARTA c, std::size_t i = 0);
 
-	
     //Pega uma carta do topo de um monte de cartas especificado
 	void novo_monte();
     
@@ -76,6 +74,7 @@ public:
 	//Mostra o monte da mesa
 	BaralhoBasico<CARTA> monte_mesa() const;
 
+	//retorna o numero de montes que a mesa contem
 	std::size_t n_montes() const;
     
     //Vira carta
@@ -83,20 +82,22 @@ public:
     bool vira_carta(CARTA c);
 
 private:
-	BaralhoBasico<CARTA> _monte; //monte principal
+    //monte principal
+    BaralhoBasico<CARTA> _monte;
+
+	//vetor de baralhos que representam os montes na mesa diferentes do deck principal
 	std::vector<BaralhoBasico<CARTA> > _outros_montes;
 
+	//vetor de jogadores contido na mesa
 	std::vector<JogadorBasico<CARTA>> _jogadores;
 };
 
 
 template <class CARTA> MesaBasica<CARTA>::MesaBasica(std::size_t main_deck_size) : _monte(main_deck_size) {
-	// TODO Auto-generated constructor stub
 	_monte.embaralhar();
 }
 
 template <class CARTA> MesaBasica<CARTA>::~MesaBasica() {
-	// TODO Auto-generated destructor stub
 }
 
 template <class CARTA> void MesaBasica<CARTA>::distribuir(unsigned int qtd_cartas, bool cima/* = true */){
@@ -225,8 +226,6 @@ template <class CARTA> std::size_t MesaBasica<CARTA>::n_montes() const {
 }
 
 using Mesa = MesaBasica<Carta>;
-    
-
 
 } /* namespace p3 */
 
