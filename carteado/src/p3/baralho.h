@@ -57,9 +57,21 @@ public:
 	//limpa o vetor de cartas e recoloca todas elas no vetor de cartas novamente como se fosse o baralho inicial
 	void restaurar();
 
-	//Altera posicao da carta
-	//a carta passada como parametro terá sua posicao invertida(cima->baixo, baixo->cima)
-    void vira_carta(CARTA c);
+	// vira a carta do topo do baralho
+	//
+	// nao retorna nada
+	//
+	// ex: baralho.vira_topo();
+	//
+    void vira_topo();
+
+    // vira a carta de baixo do baralho
+	//
+	// nao retorna nada
+	//
+	// ex: baralho.vira_baixo();
+	//
+    void vira_baixo();
     
 private:
 
@@ -69,10 +81,6 @@ private:
 	//vetor de cartas que representa o baralho
 	std::deque<CARTA> _monte;
 };
-
-template<class CARTA> void BaralhoBasico<CARTA>::vira_carta(CARTA c){
-    c.vira();
-}
 
 template<class CARTA> BaralhoBasico<CARTA>::BaralhoBasico(std::size_t numerocartas/* = 0 */) : _numerocartas{numerocartas} {
 
@@ -128,6 +136,16 @@ template<class CARTA> void BaralhoBasico<CARTA>::restaurar(){
 		
 		for(std::size_t numero = 1; numero <= cartas_por_naipe; numero++) _monte.emplace_back(numero, (typename CARTA::Naipe) naipe);
 	}
+}
+
+template<class CARTA> void BaralhoBasico<CARTA>::vira_topo(){
+    
+    _monte.front().vira();
+}
+
+template<class CARTA> void BaralhoBasico<CARTA>::vira_baixo(){
+    
+    _monte.back().vira();
 }
 
 using Baralho = BaralhoBasico<Carta>;

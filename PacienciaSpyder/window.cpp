@@ -1,8 +1,7 @@
 
-#include "window.h"
+//#include "window.h"
 
-Window::Window(QWidget *parent /* = nullptr */) : QWidget(parent){
+//Window::Window(QWidget *parent /* = nullptr */) : QWidget(parent){
         
     
-}
-
+//}

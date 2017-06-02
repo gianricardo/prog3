@@ -56,6 +56,27 @@ public:
 	//Esvazia o vetor de cartas
 	void esvazia_mao();
 
+	// vira uma carta da mao do jogador
+	//
+	// "c" - Carta que sera virada(caso o jogador tenha duas cartas iguais, so a primeira sera virada)
+	//
+	// retorna um booleano indicando se "carta" foi encontrada na mao do jogador
+	//
+	// ex: jogador.vira_carta(Carta(3, Carta::Naipe::copas));
+	//
+	bool vira_carta(CARTA c);
+
+	// vira uma carta da mao do jogador
+	//
+	// "posicao" - Posicao na mao do jogador da carta que sera virada
+	//
+	// nao retorna nada
+	//
+	// ex: jogador.vira_carta(4); ou jogador.vira_carta_pos(4);
+	//
+	void vira_carta(std::size_t posicao);
+	void vira_carta_pos(std::size_t posicao);
+
 private:
 
 	//vetor de cartas que representa a mao do jogador
@@ -121,6 +142,31 @@ template<class CARTA> const std::vector<CARTA> JogadorBasico<CARTA>::mostra_mao(
 
 template<class CARTA> void JogadorBasico<CARTA>::esvazia_mao(){
 	_mao.clear();
+}
+
+template<class CARTA> bool JogadorBasico<CARTA>::vira_carta(CARTA c){
+	
+	for(auto& carta : _mao){
+
+		if(carta == c) {
+
+			carta.vira();
+
+			return true;
+		}
+	}
+
+	return false;
+}
+
+template<class CARTA> void JogadorBasico<CARTA>::vira_carta(std::size_t posicao){
+	
+	vira_carta_pos(posicao);
+}
+
+template<class CARTA> void JogadorBasico<CARTA>::vira_carta_pos(std::size_t posicao){
+	
+	_mao[posicao].vira();
 }
 
 using Jogador = JogadorBasico<Carta>;

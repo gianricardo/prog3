@@ -124,9 +124,29 @@ public:
 
     //Deleta um monte da mesa especificada em "i"
 	void deleta_monte(std::size_t i);
-    
-    //vira a carta
-    bool vira_cara( CARTA c);
+
+    // vira uma carta de um monte
+	//
+	// "m" - Indice do monte que tera uma de suas cartas virada
+	// "m_cima" - Caso true a carta sera tira do topo do monte, caso contrario, de baixo
+	//
+	// nao retorna nada
+	//
+	// ex: jogo.vira_carta_monte(2, false);
+	//
+    void vira_carta_monte(std::size_t m = 0, bool m_cima = true);
+
+    // vira uma carta de um jogador
+	//
+	// "pos_carta" - Posicao da carta a ser virada na mao do jogador
+	// "j" - indice do jogador que tera uma de suas cartas virada
+	//
+	// nao retorna nada
+	//
+	// ex: jogo.vira_carta_jogador(2);
+	//
+    void vira_carta_jogador(std::size_t pos_carta, std::size_t j = jogador_atual);
+
 private:
 
 	static const std::size_t jogador_atual = std::numeric_limits<std::size_t>::max();
@@ -617,10 +637,17 @@ template<class CARTA> CARTA JogoBasico<CARTA>::_pega_monte(std::size_t m, bool t
 	if(topo) return _mesa.pega_topo(m);
 	else return _mesa.pega_baixo(m);
 }
-        
-template<class CARTA> bool JogoBasico<CARTA>::vira_cara(CARTA c){
-    return _mesa.vira_carta(c);
     
+template <class CARTA> void JogoBasico<CARTA>::vira_carta_monte(std::size_t m /* = 0 */, bool m_cima /* = true */){
+
+	_mesa.vira_carta_monte(m, m_cima);
+}
+
+template <class CARTA> void JogoBasico<CARTA>::vira_carta_jogador(std::size_t pos_carta, std::size_t j /* = jogador_atual */){
+    
+	if(j == jogador_atual) j = _jog_atual;
+
+	_mesa.vira_carta_jogador(pos_carta, j);
 }
 
 

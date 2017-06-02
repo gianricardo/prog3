@@ -77,9 +77,38 @@ public:
 	//retorna o numero de montes que a mesa contem
 	std::size_t n_montes() const;
     
-    //Vira carta
-    //recebe carta a ser virada
-    bool vira_carta(CARTA c);
+    // vira uma carta de um monte
+	//
+	// "m" - Indice do monte que tera uma de suas cartas virada
+	// "m_cima" - Caso true a carta sera tira do topo do monte, caso contrario, de baixo
+	//
+	// nao retorna nada
+	//
+	// ex: mesa.vira_carta_monte(2, false);
+	//
+    void vira_carta_monte(std::size_t m = 0, bool m_cima = true);
+
+    // vira uma carta de um jogador
+	//
+	// "pos_carta" - Posicao da carta a ser virada na mao do jogador
+	// "j" - indice do jogador que tera uma de suas cartas virada
+	//
+	// nao retorna nada
+	//
+	// ex: mesa.vira_carta_jogador(2);
+	//
+    void vira_carta_jogador(std::size_t pos_carta, std::size_t j);
+
+    // vira uma carta de um jogador
+	//
+	// "carta" - Carta que vai ser procurada dentro da mao do jogador, vira a primeira que encontrar
+	// "j" - indice do jogador que tera uma de suas cartas virada
+	//
+	// retorna true caso consiga achar a carta dentro da mao do jogador, retorna false caso contrario
+	//
+	// ex: mesa.vira_carta_jogador_c(Carta(7, Carta::Naipe::Paus), 3);
+	//
+    bool vira_carta_jogador_c(CARTA carta, std::size_t j);
 
 private:
     //monte principal
@@ -215,14 +244,28 @@ template <class CARTA> BaralhoBasico<CARTA> MesaBasica<CARTA>::monte_mesa() cons
 
 	return _monte;
 }
-    
-template <class CARTA> bool MesaBasica<CARTA>::vira_carta(CARTA c){
-    return _monte.vira_carta(c);
-}
 
 template <class CARTA> std::size_t MesaBasica<CARTA>::n_montes() const {
 
 	return 1 + _outros_montes.size();
+}
+    
+template <class CARTA> void MesaBasica<CARTA>::vira_carta_monte(std::size_t m /* = 0 */, bool m_cima /* = true */){
+    
+	BaralhoBasico<CARTA>& monte = (m == 0) ? _monte : _outros_montes[m-1];
+
+	if(m_cima) monte.vira_topo();
+	else monte.vira_baixo();
+}
+
+template <class CARTA> void MesaBasica<CARTA>::vira_carta_jogador(std::size_t pos_carta, std::size_t j){
+    
+	_jogadores[j].vira_carta_pos(pos_carta);
+}
+
+template <class CARTA> bool MesaBasica<CARTA>::vira_carta_jogador_c(CARTA carta, std::size_t j){
+    
+	return _jogadores[j].vira_carta(carta);
 }
 
 using Mesa = MesaBasica<Carta>;
