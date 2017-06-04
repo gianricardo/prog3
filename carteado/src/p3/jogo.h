@@ -22,6 +22,7 @@ public:
     //Construtor
 	//recebe um ponteiro da classe regra e um vetor de nomes de jogadores
 	//inicializa os atributos rodada com 1, jogador atual como 0 e jogando como true
+    //cria a mesa e distribui o numero de cartas inicial para a mao dos jogadores
     JogoBasico(Regra *regra, std::vector<std::string> nomes);
 	
 	virtual ~JogoBasico();
