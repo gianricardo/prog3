@@ -1,17 +1,28 @@
 
 //#include <QApplication>
 //#include "window.h"
-#include "jogo.h"
+#include <jogo.h>
+
+#include "rules.h"
+#include "cards.h"
 
 using namespace p3;
 
 int main(){
     
-    Jogo j(new Regra(2, 4, -1, -1, -1, 12), {"j1", "j2"});
+    Jogo j(new Rules(), {"player"});
     
-    j.vira_carta_monte(0, true); // vira a carte de cima do primeiro baralho
+    Baralho b(52);
     
-    j.vira_carta_jogador(1); // vira a segunda carta do jogador atual
+    b.vira_topo();
+    b.vira_baixo();
+    
+    auto vec = b.mostra_baralho();
+    
+    for(auto pair : vec){
+        
+        std::cout << std::boolalpha << pair.first << "//" << pair.second.numero() << std::endl;
+    }
     
     return 0;
     
