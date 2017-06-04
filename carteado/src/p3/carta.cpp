@@ -36,8 +36,6 @@ bool Carta::operator==(const Carta& c) const {
 
 	if(this->_numero != c._numero) return false;
 	if(this->_naipe != c._naipe) return false;
-	//if(this->_frente != c._frente) return false;
-
 	return true;
 }
 
@@ -50,7 +48,6 @@ bool Carta::operator<(const Carta& c) const {
 
 	if(this->_numero < c._numero) return true;
 	if(this->_naipe < c._naipe) return true;
-	//if(this->_frente < c._frente) return true;
 
 	return false;
 }

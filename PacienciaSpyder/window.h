@@ -1,11 +1,9 @@
-
+/*
 #ifndef WINDOW_H
 #define WINDOW_H
 
 #include <QApplication>
-
-#include "jogo.h"
-#include "cartaimagem.h"
+#include <QWidget>
 
 
 class Window : public QWidget {
@@ -19,9 +17,8 @@ public:
     
 private:
     
-    p3::CartaImagem *img;
-    p3::CartaImagem *ims[5];
 
 };
 
 #endif
+*/

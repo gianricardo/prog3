@@ -21,42 +21,66 @@ namespace p3 {
 template<class CARTA>
 class BaralhoBasico {
 public:
-	//Cria um baralho com "numerocartas" numero de cartas
+	//Construtor
+	//recebe o numero de cartas total do baralho
+	//se o numero de cartas nao for divisivel pelo numero de naipes, retorna um baralho com o valor truncado da divisao
+	//de numerocartas por numero de naipes do baralho;
 	BaralhoBasico(std::size_t numerocartas = 0);
+
+	//Destrutor
 	virtual ~BaralhoBasico();
 
 	//Emabaralha o baralho
+	//utiliza um algoritimo que faz trocas de posicoes aleatorias no vetor de cartas
 	void embaralhar();
 
 	//Pega uma carta do topo
+	//retorna a primeira carta do vetor de cartas e remove ela do vetor
 	CARTA pega_topo(void);
 
 	//Pega uma carta de baixo
+	//retorna a ultima carta do vetor de cartas e remove ela do vetor
 	CARTA pega_baixo(void);
 
 	//Coloca uma carta no topo do baralho
+	//a carta passada como argumento é colocada no inicio do vetor de cartas
 	void coloca_topo(CARTA c);
 
 	//Coloca uma carta em baixa do baralho
+	//a carta passada como argumento é colocada no final do vetor de cartas
 	void coloca_baixo(CARTA c);
 
 	//Retorna o numero de cartas do baralho
 	std::size_t size() const;
 
 	//Restaura as cartas do baralho as iniciais
+	//limpa o vetor de cartas e recoloca todas elas no vetor de cartas novamente como se fosse o baralho inicial
 	void restaurar();
 
-    bool vira_carta(CARTA c);
+	// vira a carta do topo do baralho
+	//
+	// nao retorna nada
+	//
+	// ex: baralho.vira_topo();
+	//
+    void vira_topo();
+
+    // vira a carta de baixo do baralho
+	//
+	// nao retorna nada
+	//
+	// ex: baralho.vira_baixo();
+	//
+    void vira_baixo();
     
 private:
+
+    //guarda o numero de cartas inicial passado ao baralho
 	std::size_t _numerocartas;
+
+	//vetor de cartas que representa o baralho
 	std::deque<CARTA> _monte;
 };
-
-template<class CARTA> bool BaralhoBasico<CARTA>::vira_carta(CARTA c){
-    c.vira();
-    return true;
-}
 
 template<class CARTA> BaralhoBasico<CARTA>::BaralhoBasico(std::size_t numerocartas/* = 0 */) : _numerocartas{numerocartas} {
 
@@ -112,6 +136,16 @@ template<class CARTA> void BaralhoBasico<CARTA>::restaurar(){
 		
 		for(std::size_t numero = 1; numero <= cartas_por_naipe; numero++) _monte.emplace_back(numero, (typename CARTA::Naipe) naipe);
 	}
+}
+
+template<class CARTA> void BaralhoBasico<CARTA>::vira_topo(){
+    
+    _monte.front().vira();
+}
+
+template<class CARTA> void BaralhoBasico<CARTA>::vira_baixo(){
+    
+    _monte.back().vira();
 }
 
 using Baralho = BaralhoBasico<Carta>;

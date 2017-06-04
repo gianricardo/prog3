@@ -19,17 +19,18 @@ public:
 
     //Constroi uma mesa com um baralho principal com "main_deck_size" numero de cartas
 	MesaBasica(std::size_t main_deck_size = 0);
+
 	virtual ~MesaBasica();
 
-	 //Distribui cartas do monte principal para todos os jogadores
-	void distribuir(unsigned int qtd_cartas, bool cima = true); //distribui uma quantidade de cartas
+	//Distribui "qtd_cartas" cartas do monte principal para todos os jogadores, se cima for true retira as cartas
+	//de cima do monte principal
+	void distribuir(unsigned int qtd_cartas, bool cima = true);
     
-    //Adiciona um jogador a mesa
+    //Adiciona um jogador a mesa passando o nome dele como parametro
 	void add_jogador(std::string name = "");
 	
-	 //Torna um jogador da mesa inapto de jogar
+	 //Torna um jogador da mesa inapto de jogar passando sua posicao na mesa
 	void rem_jogador(std::size_t pos);
-
 	
 	 //Pega uma carta do topo de um monte de cartas especificado
 	CARTA pega_topo(std::size_t monte = 0);
@@ -55,18 +56,15 @@ public:
     //Retorna um jogador especificado
     JogadorBasico<CARTA> ver_jogador(std::size_t i = 0) const;
 
-
     //Acrescenta pontos a um jogador "i"
 	void jogador_soma_pontos(int valor, std::size_t i = 0);
 
-	
     //Tira uma carta "c" de um jogador "i", caso ele nao tenha retorna false
 	bool jogador_tira_carta(CARTA c, std::size_t i = 0);
 
     //Acrescenta uma carta "c" a mao do jogador "i"
 	void jogador_recebe_carta(CARTA c, std::size_t i = 0);
 
-	
     //Pega uma carta do topo de um monte de cartas especificado
 	void novo_monte();
     
@@ -76,27 +74,59 @@ public:
 	//Mostra o monte da mesa
 	BaralhoBasico<CARTA> monte_mesa() const;
 
+	//retorna o numero de montes que a mesa contem
 	std::size_t n_montes() const;
     
-    //Vira carta
-    //recebe carta a ser virada
-    bool vira_carta(CARTA c);
+    // vira uma carta de um monte
+	//
+	// "m" - Indice do monte que tera uma de suas cartas virada
+	// "m_cima" - Caso true a carta sera tira do topo do monte, caso contrario, de baixo
+	//
+	// nao retorna nada
+	//
+	// ex: mesa.vira_carta_monte(2, false);
+	//
+    void vira_carta_monte(std::size_t m = 0, bool m_cima = true);
+
+    // vira uma carta de um jogador
+	//
+	// "pos_carta" - Posicao da carta a ser virada na mao do jogador
+	// "j" - indice do jogador que tera uma de suas cartas virada
+	//
+	// nao retorna nada
+	//
+	// ex: mesa.vira_carta_jogador(2);
+	//
+    void vira_carta_jogador(std::size_t pos_carta, std::size_t j);
+
+    // vira uma carta de um jogador
+	//
+	// "carta" - Carta que vai ser procurada dentro da mao do jogador, vira a primeira que encontrar
+	// "j" - indice do jogador que tera uma de suas cartas virada
+	//
+	// retorna true caso consiga achar a carta dentro da mao do jogador, retorna false caso contrario
+	//
+	// ex: mesa.vira_carta_jogador_c(Carta(7, Carta::Naipe::Paus), 3);
+	//
+    bool vira_carta_jogador_c(CARTA carta, std::size_t j);
 
 private:
-	BaralhoBasico<CARTA> _monte; //monte principal
+    //monte principal
+    BaralhoBasico<CARTA> _monte;
+
+	//vetor de baralhos que representam os montes na mesa diferentes do deck principal
 	std::vector<BaralhoBasico<CARTA> > _outros_montes;
 
+	//vetor de jogadores contido na mesa
 	std::vector<JogadorBasico<CARTA>> _jogadores;
 };
 
 
 template <class CARTA> MesaBasica<CARTA>::MesaBasica(std::size_t main_deck_size) : _monte(main_deck_size) {
-	// TODO Auto-generated constructor stub
 	_monte.embaralhar();
 }
 
 template <class CARTA> MesaBasica<CARTA>::~MesaBasica() {
-	// TODO Auto-generated destructor stub
 }
 
 template <class CARTA> void MesaBasica<CARTA>::distribuir(unsigned int qtd_cartas, bool cima/* = true */){
@@ -214,19 +244,31 @@ template <class CARTA> BaralhoBasico<CARTA> MesaBasica<CARTA>::monte_mesa() cons
 
 	return _monte;
 }
-    
-template <class CARTA> bool MesaBasica<CARTA>::vira_carta(CARTA c){
-    return _monte.vira_carta(c);
-}
 
 template <class CARTA> std::size_t MesaBasica<CARTA>::n_montes() const {
 
 	return 1 + _outros_montes.size();
 }
+    
+template <class CARTA> void MesaBasica<CARTA>::vira_carta_monte(std::size_t m /* = 0 */, bool m_cima /* = true */){
+    
+	BaralhoBasico<CARTA>& monte = (m == 0) ? _monte : _outros_montes[m-1];
+
+	if(m_cima) monte.vira_topo();
+	else monte.vira_baixo();
+}
+
+template <class CARTA> void MesaBasica<CARTA>::vira_carta_jogador(std::size_t pos_carta, std::size_t j){
+    
+	_jogadores[j].vira_carta_pos(pos_carta);
+}
+
+template <class CARTA> bool MesaBasica<CARTA>::vira_carta_jogador_c(CARTA carta, std::size_t j){
+    
+	return _jogadores[j].vira_carta(carta);
+}
 
 using Mesa = MesaBasica<Carta>;
-    
-
 
 } /* namespace p3 */
 
