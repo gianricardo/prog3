@@ -38,7 +38,7 @@ DEBUG.target = debug
 DEBUG.depends = debug_flags $$TARGET
 DEBUG.commands = $$DEBUGGER ./$$TARGET
 
-isEmpty(DEBUGFLAGS) {} else {debug_flags.commands = "$(eval CXXFLAGS += $${DEBUGFLAGS})"}
+isEmpty(DEBUGFLAGS) {} else {debug_flags.commands = "$(eval CXXFLAGS += $${DEBUGFLAGS} -O0)"}
 
 memcheck.depends = memcheck_flags $$TARGET
 memcheck.commands = $$MEMCHECKER ./$$TARGET

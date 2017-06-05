@@ -126,6 +126,9 @@ public:
     //Deleta um monte da mesa especificada em "i"
 	void deleta_monte(std::size_t i);
 
+	//Mostra um monte dado que está na mesa (nao inclui o monte principal da mesa)
+	std::vector<std::pair<bool, CARTA> > mostra_monte(std::size_t pos_monte) const;
+
     // vira uma carta de um monte
 	//
 	// "m" - Indice do monte que tera uma de suas cartas virada
@@ -375,6 +378,11 @@ template<class CARTA> void JogoBasico<CARTA>::novo_monte(){
 template<class CARTA> void JogoBasico<CARTA>::deleta_monte(std::size_t i){
 
 	_mesa.deleta_monte(i);
+}
+
+template<class CARTA> std::vector<std::pair<bool, CARTA> > JogoBasico<CARTA>::mostra_monte(std::size_t pos_monte) const{
+
+	return _mesa.mostra_monte(pos_monte);
 }
 
 template<class CARTA> void JogoBasico<CARTA>::verifica_fim_de_jogo()

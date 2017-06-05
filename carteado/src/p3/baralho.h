@@ -72,6 +72,17 @@ public:
 	// ex: baralho.vira_baixo();
 	//
     void vira_baixo();
+
+    // vira uma carta de um jogador
+	//
+	// retorna um vetor contendo cartas e um booleano, caso a carta na respectiva posicao esteja virada para baixo, 
+	// o booleano sera false e a carta tera um valor padrao indicando estar virada para baixo, caso a carta esteja
+	// virada para cima o booleano sera true e a carta correspondera ao valor da carta do baralho na posicao
+	//
+	// ex: baralho.mostra_baralho()[0].second; // acesso a carta no topo
+	//     baralho.mostra_baralho()[baralho.size() - 1].first; // verifica se a carta em baixo do baralho esta virada para cima
+	//
+    std::vector<std::pair<bool, CARTA> > mostra_baralho() const;
     
 private:
 
@@ -146,6 +157,17 @@ template<class CARTA> void BaralhoBasico<CARTA>::vira_topo(){
 template<class CARTA> void BaralhoBasico<CARTA>::vira_baixo(){
     
     _monte.back().vira();
+}
+
+template<class CARTA> std::vector<std::pair<bool, CARTA> > BaralhoBasico<CARTA>::mostra_baralho() const {
+
+	std::vector<std::pair<bool, CARTA> > vec;
+
+	vec.reserve(this->size());
+
+	for(auto carta : _monte) vec.emplace_back(carta.mostra(), carta.mostra() ? carta : CARTA(0, static_cast<typename CARTA::Naipe>(0)));
+
+	return vec;
 }
 
 using Baralho = BaralhoBasico<Carta>;
