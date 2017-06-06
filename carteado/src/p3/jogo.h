@@ -125,7 +125,7 @@ public:
     //Deleta um monte da mesa especificada em "i"
 	void deleta_monte(std::size_t i);
 
-	//Mostra um monte dado que está na mesa (nao inclui o monte principal da mesa)
+	//Mostra um monte dado que está na mesa (monte 0 é o monte principal da mesa)
 	std::vector<std::pair<bool, CARTA> > mostra_monte(std::size_t pos_monte) const;
 
     // vira uma carta de um monte
