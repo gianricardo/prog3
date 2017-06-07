@@ -74,7 +74,7 @@ public:
 	//Mostra o monte da mesa
 	BaralhoBasico<CARTA> monte_mesa() const;
 
-	//Mostra um monte dado
+	//Mostra um monte dado (monte 0 é da mesa)
 	std::vector<std::pair<bool, CARTA> > mostra_monte(std::size_t pos_monte) const;
 
 	//retorna o numero de montes que a mesa contem
@@ -250,6 +250,7 @@ template <class CARTA> BaralhoBasico<CARTA> MesaBasica<CARTA>::monte_mesa() cons
 
 template <class CARTA> std::vector<std::pair<bool, CARTA> > MesaBasica<CARTA>::mostra_monte(std::size_t pos_monte) const{
 
+	if(pos_monte == 0) return monte_mesa().mostra_baralho();
 	return _outros_montes[pos_monte].mostra_baralho();
 }
 
