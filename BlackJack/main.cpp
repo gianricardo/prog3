@@ -103,9 +103,11 @@ int main(void) {
     //Game.reiniciar();
     
     //inicia_partida_21(&Game);
+    
+    auto vet = Game.mostra_mao_jogador(0);
 
-    std::cout<<Game.mostra_mao_jogador(0)[0].numero()<<std::endl;
-    std::cout<<Game.mostra_mao_jogador(0)[1].numero()<<std::endl;
+    std::cout<< vet[0].numero()<<std::endl;
+    std::cout<< vet[1].numero()<<std::endl;
   
     
     // std::cout<<Game.mostra_mao_jogador(1)[0].numero()<<std::endl;

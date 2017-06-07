@@ -17,11 +17,17 @@ public:
     
     void show();
     
+    bool move(std::size_t deck1, std::size_t deck2, std::size_t n_cards);
+    
+    std::size_t turn() const;
+    
 private:
     
     void _distribute(int start = 0, int end = 9);
     
     void _turn_all();
+    
+    int _verify_sequence(std::vector<std::pair<bool, OneSuitCard> >& deck, std::size_t n_cards);
 };
 
 #endif

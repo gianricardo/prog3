@@ -57,10 +57,11 @@ void OneSuitGame::show(){
                     else std::cout << ' ' << char('0' + card.numero());
                 }
                 
-                for(int i = 0; i < 6; i++) std::cout << ' ';
-                
                 _continue = true;
             }
+            else std::cout << "  ";
+            
+            for(int i = 0; i < 6; i++) std::cout << ' ';
         }
         
         std::cout << '\n';
@@ -78,6 +79,33 @@ void OneSuitGame::show(){
     std::cout << std::endl;
 }
 
+bool OneSuitGame::move(std::size_t deck1, std::size_t deck2, std::size_t n_cards){
+    
+    auto d1 = JogoBasico<OneSuitCard>::mostra_monte(deck1 + 1);
+    auto d2 = JogoBasico<OneSuitCard>::mostra_monte(deck2 + 1);
+    
+    int aux = _verify_sequence(d1, n_cards);
+    
+    if(aux == -1) return false;
+    
+    if(d1[aux].second.numero() != d2.back().second.numero() - 1) return false;
+    
+    for(std::size_t i = 0; i < n_cards; i++) move_carta_mj(deck1+1, 0, false);
+    
+    auto vet = mostra_mao_jogador_atual();
+    
+    for(auto it = vet.rbegin(); it != vet.rend(); it++) move_carta_jm(*it, 0, deck2+1, false);
+    
+    if(aux != 0) if(!d1[aux-1].first) JogoBasico<OneSuitCard>::vira_carta_monte(deck1+1, false);
+    
+    return true;
+}
+
+std::size_t OneSuitGame::turn() const {
+    
+    return JogoBasico<OneSuitCard>::rodada();
+}
+
 void OneSuitGame::_distribute(int start, int end){
     
     start++;
@@ -90,6 +118,21 @@ void OneSuitGame::_turn_all(){
     
     for(int i = 1; i < 11; i++) JogoBasico<OneSuitCard>::vira_carta_monte(i, false);
 }
+
+int OneSuitGame::_verify_sequence(std::vector<std::pair<bool, OneSuitCard> >& deck, std::size_t n_cards){
+ 
+    std::size_t aux = deck.size() - n_cards;
+    
+    if(!deck[aux].first) return -1;
+    
+    for(std::size_t i = aux + 1; i < deck.size(); i++){
+        
+        if(deck[i].second.numero() != deck[i-1].second.numero() - 1) return -1;
+    }
+        
+    return aux;
+}
+
 
 
 

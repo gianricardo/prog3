@@ -309,7 +309,7 @@ template<class CARTA> std::vector<CARTA> JogoBasico<CARTA>::mostra_mao_jogador_a
 template<class CARTA> std::vector<CARTA> JogoBasico<CARTA>::mostra_mao_jogador(std::size_t pos) const{
             
     auto vet = _mesa.ver_jogador(pos).mostra_mao();
-    std::cout << "size: " << vet.size();
+    
     return vet;
     std::vector<CARTA> aux;
     
