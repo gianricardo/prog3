@@ -24,6 +24,14 @@
 #include "../carteado/src/p3/regra.h"
 
 using namespace p3;
+
+
+int soma_mone(std::vector<std::pair<bool,Carta>>){
+    int soma=0;
+    return soma;
+}
+
+
 int main(void) {
     // insert code here...
     
@@ -59,17 +67,30 @@ int main(void) {
     Game.move_carta_jm(hand[1],1,2,true);
     Game.jogador_soma_pontos($p);//coloca o dinheiro do jogador;
 
-   
-
-    std::cout<<Game.mostra_monte(1)[0].second.numero()<<std::endl;
-    std::cout<<Game.mostra_monte(1)[1].second.numero()<<std::endl;
+    std::vector<std::pair<bool,Carta>> deck;
     
-    std::cout<<Game.mostra_monte(2)[0].second.numero()<<std::endl;
-    std::cout<<Game.mostra_monte(2)[1].second.numero()<<std::endl;
-        
+    deck =Game.mostra_monte(1);
+    std::cout<<"\nMD"<<std::endl;
+    std::cout<<deck[0].second.numero()<<std::endl;
+    std::cout<<deck[1].second.numero()<<std::endl;
     
     
+    deck =Game.mostra_monte(2);
+    std::cout<<"\nMP"<<std::endl;
+    std::cout<<deck[0].second.numero()<<std::endl;
+    std::cout<<deck[1].second.numero()<<std::endl;
     
+    Game.move_carta_m(2,true,false);
+    Game.vira_carta_monte(2,false);
+    deck =Game.mostra_monte(2);
+    std::cout<<deck[2].second.numero()<<std::endl;
+    
+    
+    Game.vira_carta_monte(1);
+    deck =Game.mostra_monte(1);
+    std::cout<<"\nMD"<<std::endl;
+    std::cout<<deck[0].second.numero()<<std::endl;
+    std::cout<<deck[1].second.numero()<<std::endl;
     
     
     
