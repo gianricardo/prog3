@@ -54,6 +54,9 @@ public:
     //Retorna um vetor contendo as cartas do jogador atual
 	std::vector<CARTA> mostra_mao_jogador_atual() const;
 
+    //Retorna um vetor contendo as cartas do jogador na posi pos
+    std::vector<CARTA> mostra_mao_jogador(std::size_t pos) const;
+    
     //Retorna a pontucao do jogador atual
 	int pontuacao_jogador_atual() const;
 
@@ -301,6 +304,32 @@ template<class CARTA> std::vector<CARTA> JogoBasico<CARTA>::mostra_mao_jogador_a
 
 	return _mesa.ver_jogador(_jog_atual).mostra_mao();
 }
+        
+        
+template<class CARTA> std::vector<CARTA> JogoBasico<CARTA>::mostra_mao_jogador(std::size_t pos) const{
+            
+    auto vet = _mesa.ver_jogador(pos).mostra_mao();
+    std::cout << "size: " << vet.size();
+    return vet;
+    std::vector<CARTA> aux;
+    
+    aux.reserve(vet.size());
+    
+    std::cout << "size: " << vet.size();
+    
+    for(auto carta : vet){
+        
+        if(carta.mostra()) aux.push_back(carta);
+        else aux.emplace_back(0, (typename CARTA::Naipe) 0);
+        
+        std::cout << "passou aqui" << std::endl;
+    }
+    
+    return aux;
+}
+        
+        
+        
 
 template<class CARTA> int JogoBasico<CARTA>::pontuacao_jogador_atual() const {
 
