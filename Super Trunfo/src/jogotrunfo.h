@@ -14,15 +14,13 @@
 #include "cartatrunfo.h"
 #include "jogada.h"
 
-class Jogo_trunfo {
+class Jogo_trunfo : public p3::JogoBasico<Carta_trunfo>{
 public:
-	Jogo_trunfo(p3::JogoBasico<Carta_trunfo>* jogo_basico);
+	Jogo_trunfo();
 	Jogada::Atributos recebe_jogada();
 	void realiza_jogada();
 
-
 private:
-	std::unique_ptr<p3::JogoBasico<Carta_trunfo>> _jogo_basico;
 
 };
 
