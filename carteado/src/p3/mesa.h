@@ -112,6 +112,9 @@ public:
 	// ex: mesa.vira_carta_jogador_c(Carta(7, Carta::Naipe::Paus), 3);
 	//
     bool vira_carta_jogador_c(CARTA carta, std::size_t j);
+    
+    //limpa todos os montes da mesa menos o principal;
+    void limpa_outros_montes();
 
 private:
     //monte principal
@@ -125,6 +128,10 @@ private:
 };
 
 
+    
+template <class CARTA> void MesaBasica<CARTA>::limpa_outros_montes(){
+    _outros_montes.clear();
+}
 template <class CARTA> MesaBasica<CARTA>::MesaBasica(std::size_t main_deck_size) : _monte(main_deck_size) {
 	_monte.embaralhar();
 }

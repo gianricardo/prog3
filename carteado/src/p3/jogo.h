@@ -252,6 +252,7 @@ template<class CARTA> void JogoBasico<CARTA>::reiniciar(){
 
 	//Restaura o monte da mesa e resdistribui as cartas para os jogadores
 	_mesa.monte_mesa().restaurar();
+    _mesa.limpa_outros_montes();
 	_mesa.distribuir(cartas_jogadores());
 }
 

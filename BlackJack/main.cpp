@@ -26,8 +26,11 @@
 using namespace p3;
 
 
-int soma_mone(std::vector<std::pair<bool,Carta>>){
+int soma_mone(std::vector<std::pair<bool,Carta>> monte){
     int soma=0;
+    for(auto a:monte){
+        soma = soma+a.second.numero();
+    }
     return soma;
 }
 
@@ -73,6 +76,7 @@ int main(void) {
     std::cout<<"\nMD"<<std::endl;
     std::cout<<deck[0].second.numero()<<std::endl;
     std::cout<<deck[1].second.numero()<<std::endl;
+    std::cout<<"soma:"<<soma_mone(deck)<<std::endl;
     
     
     deck =Game.mostra_monte(2);
@@ -84,6 +88,7 @@ int main(void) {
     Game.vira_carta_monte(2,false);
     deck =Game.mostra_monte(2);
     std::cout<<deck[2].second.numero()<<std::endl;
+    std::cout<<"soma:"<<soma_mone(deck)<<std::endl;
     
     
     Game.vira_carta_monte(1);
@@ -91,10 +96,56 @@ int main(void) {
     std::cout<<"\nMD"<<std::endl;
     std::cout<<deck[0].second.numero()<<std::endl;
     std::cout<<deck[1].second.numero()<<std::endl;
+    std::cout<<"soma:"<<soma_mone(deck)<<std::endl;
     
     
     
+    Game.reiniciar();
+    std::cout<<"----------------------------------"<<std::endl;
     
+    Game.novo_monte(); //cria monte do dealder
+    Game.novo_monte(); //cria monte do jogador
+    Game.novo_monte();
+    Game.vira_carta_jogador(0); //coloca uma carta do dealer virada/
+    hand=Game.mostra_mao_jogador_atual(); //pega ref. mao do dealer
+    Game.move_carta_jm(hand[0],0,1,true); //coloca as cartas do dealer no seu monte
+    Game.move_carta_jm(hand[1],0,1,true);
+    Game.jogador_soma_pontos($h); //coloca o dinheiro do dealer
+    Game.fim_jogada(); //passa pro player
+    Game.vira_carta_jogador(0,1);
+    Game.vira_carta_jogador(1,1);
+    hand=Game.mostra_mao_jogador_atual(); //pega ref. mao jogador
+    Game.move_carta_jm(hand[0],1,2,true); //passa as cartas pro monte do jogador
+    Game.move_carta_jm(hand[1],1,2,true);
+    Game.jogador_soma_pontos($p);//coloca o dinheiro do jogador;
+    
+
+    
+    deck =Game.mostra_monte(1);
+    std::cout<<"\nMD"<<std::endl;
+    std::cout<<deck[0].second.numero()<<std::endl;
+    std::cout<<deck[1].second.numero()<<std::endl;
+    std::cout<<"soma:"<<soma_mone(deck)<<std::endl;
+    
+    
+    deck =Game.mostra_monte(2);
+    std::cout<<"\nMP"<<std::endl;
+    std::cout<<deck[0].second.numero()<<std::endl;
+    std::cout<<deck[1].second.numero()<<std::endl;
+    
+    Game.move_carta_m(2,true,false);
+    Game.vira_carta_monte(2,false);
+    deck =Game.mostra_monte(2);
+    std::cout<<deck[2].second.numero()<<std::endl;
+    std::cout<<"soma:"<<soma_mone(deck)<<std::endl;
+    
+    
+    Game.vira_carta_monte(1);
+    deck =Game.mostra_monte(1);
+    std::cout<<"\nMD"<<std::endl;
+    std::cout<<deck[0].second.numero()<<std::endl;
+    std::cout<<deck[1].second.numero()<<std::endl;
+    std::cout<<"soma:"<<soma_mone(deck)<<std::endl;
     
     
     return 0;
