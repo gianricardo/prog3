@@ -10,7 +10,32 @@ int main(){
     
     OneSuitGame game("player");
     
+    game.show();
+    
+    char a;
+    
+    std::cin >> a;
+    
     game.next_turn();
+    
+    game.show();
+    
+    std::cin >> a;
+    
+    game.next_turn();
+    
+    game.show();
+    std::cin >> a;
+    
+    game.next_turn();
+    
+    game.show();
+    
+    std::cin >> a;
+    
+    game.next_turn();
+    
+    game.show();
     
     return 0;
     

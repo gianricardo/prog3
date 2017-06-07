@@ -18,6 +18,7 @@ public:
 	enum class Naipe{Espadas,Copas,Paus,Ouros};
 
 	// numero de naipes
+	static const int n_numeros = 13;
 	static const int n_naipes = 4;
 
 	//Cria uma carta

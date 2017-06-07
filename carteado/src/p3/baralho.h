@@ -145,7 +145,10 @@ template<class CARTA> void BaralhoBasico<CARTA>::restaurar(){
 
 	for(int naipe = 0; naipe < CARTA::n_naipes; naipe++){
 		
-		for(std::size_t numero = 1; numero <= cartas_por_naipe; numero++) _monte.emplace_back(numero, (typename CARTA::Naipe) naipe);
+		for(std::size_t numero = 0; numero < cartas_por_naipe; numero++){
+
+			_monte.emplace_back((numero%CARTA::n_numeros) + 1, (typename CARTA::Naipe) naipe);
+		}
 	}
 }
 
