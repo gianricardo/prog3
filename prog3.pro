@@ -5,7 +5,7 @@
 
 TEMPLATE = app
 TARGET = main
-INCLUDEPATH += . carteado/p3 carteado/src/p3
+INCLUDEPATH += carteado/src/p3
 FRAMEWORK_PATH = carteado/src/p3
 
 DEBUGGER = gdb

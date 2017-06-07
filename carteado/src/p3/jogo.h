@@ -259,9 +259,9 @@ template<class CARTA> void JogoBasico<CARTA>::fim_jogada(){
 
 	if(!_jogando) return;
 
-	while(!_mesa.ver_jogador(++_jog_atual).esta_apto()){
+	while(1){
 
-		if(_jog_atual == numero_de_jogadores()){
+		if(++_jog_atual == numero_de_jogadores()){
 
 			_jog_atual = 0;
 
@@ -271,6 +271,8 @@ template<class CARTA> void JogoBasico<CARTA>::fim_jogada(){
 			verifica_fim_de_jogo();
 			verifica_vitoria();
 		}
+		
+		if(_mesa.ver_jogador(_jog_atual).esta_apto()) break;
 	}
 }
 
