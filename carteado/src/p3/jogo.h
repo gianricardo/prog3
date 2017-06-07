@@ -551,7 +551,7 @@ template<class CARTA> void JogoBasico<CARTA>::verifica_jogador_pontuacao_maxima(
 	if(todos_jogadores_derrotados()) return;
 
 	int maior_pontuacao = 0;
-	int jogador_vencedor;
+	int jogador_vencedor = 0;
 
 	//checa todos os jogadores aptos e ve qual tem mais pontos
 	for(std::size_t pos_jogador = 0; pos_jogador < _mesa.numero_jogadores(); pos_jogador++)
@@ -571,7 +571,7 @@ template<class CARTA> void JogoBasico<CARTA>::verifica_jogador_pontuacao_minima(
 	if(todos_jogadores_derrotados()) return;
 
 	int menor_pontuacao = 999999;
-	int jogador_vencedor;
+	int jogador_vencedor = 0;
 
 	//checa todos os jogadores aptos e ve qual tem menos pontos
 	for(std::size_t pos_jogador = 0; pos_jogador < _mesa.numero_jogadores(); pos_jogador++)
@@ -591,7 +591,7 @@ template<class CARTA> void JogoBasico<CARTA>::verifica_jogador_mais_cartas(){
 	if(todos_jogadores_derrotados()) return;
 
 	std::size_t maior_numero_cartas = -999999;
-	std::size_t jogador_vencedor;
+	std::size_t jogador_vencedor = 0;
 
 	//checa todos os jogadores aptos e ve qual tem mais cartas
 	for(std::size_t pos_jogador = 0; pos_jogador < _mesa.numero_jogadores(); pos_jogador++)
@@ -611,7 +611,7 @@ template<class CARTA> void JogoBasico<CARTA>::verifica_jogador_menos_cartas(){
 	if(todos_jogadores_derrotados()) return;
 
 	std::size_t menor_numero_cartas = 999999;
-	std::size_t jogador_vencedor;
+	std::size_t jogador_vencedor = 0;
 
 	//checa todos os jogadores aptos e ve qual tem menos cartas
 	for(std::size_t pos_jogador = 0; pos_jogador < _mesa.numero_jogadores(); pos_jogador++)

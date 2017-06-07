@@ -8,7 +8,7 @@ class OneSuitCard : public p3::Carta {
     
 public:
     
-    static const int n_numbers = 13;
+    static const int n_numeros = 13;
     static const int n_naipes = 1;
     
     enum class Naipe {Espadas};
@@ -24,7 +24,7 @@ class TwoSuitsCard : public p3::Carta {
     
 public:
 
-    static const int n_numbers = 13;
+    static const int n_numeros = 13;
     static const int n_naipes = 2;
     
     enum class Naipe {Espadas, Copas};
@@ -38,7 +38,7 @@ class FourSuitsCard : public p3::Carta {
     
 public:
 
-    static const int n_numbers = 13;
+    static const int n_numeros = 13;
     static const int n_naipes = 4;
     
     using p3::Carta::Naipe;
