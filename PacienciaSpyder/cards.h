@@ -4,23 +4,46 @@
 
 #include <carta.h>
 
-class OneSuitCard : p3::Carta {
+class OneSuitCard : public p3::Carta {
     
 public:
+    
+    static const int n_numbers = 13;
+    static const int n_naipes = 1;
+    
+    enum class Naipe {Espadas};
+    
+    using p3::Carta::Carta;
+    
+    OneSuitCard(int num, Naipe np);
     
 };
 
 
-class TwoSuitsCard : p3::Carta {
+class TwoSuitsCard : public p3::Carta {
     
 public:
+
+    static const int n_numbers = 13;
+    static const int n_naipes = 2;
     
+    enum class Naipe {Espadas, Copas};
+    
+    using p3::Carta::Carta;
+    
+    TwoSuitsCard(int num, Naipe np);
 };
 
-class ThreeSuitsCard : p3::Carta {
+class FourSuitsCard : public p3::Carta {
     
 public:
+
+    static const int n_numbers = 13;
+    static const int n_naipes = 4;
     
+    using p3::Carta::Naipe;
+    
+    FourSuitsCard(int num, Naipe np);
 };
 
 
