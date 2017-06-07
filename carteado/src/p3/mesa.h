@@ -251,7 +251,7 @@ template <class CARTA> BaralhoBasico<CARTA> MesaBasica<CARTA>::monte_mesa() cons
 template <class CARTA> std::vector<std::pair<bool, CARTA> > MesaBasica<CARTA>::mostra_monte(std::size_t pos_monte) const{
 
 	if(pos_monte == 0) return monte_mesa().mostra_baralho();
-	return _outros_montes[pos_monte].mostra_baralho();
+	return _outros_montes[pos_monte-1].mostra_baralho();
 }
 
 template <class CARTA> std::size_t MesaBasica<CARTA>::n_montes() const {

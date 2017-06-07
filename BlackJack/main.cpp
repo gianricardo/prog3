@@ -45,24 +45,28 @@ int main(void) {
     
     Game.novo_monte(); //cria monte do dealder
     Game.novo_monte(); //cria monte do jogador
+    Game.novo_monte();
     Game.vira_carta_jogador(0); //coloca uma carta do dealer virada/
     hand=Game.mostra_mao_jogador_atual(); //pega ref. mao do dealer
     Game.move_carta_jm(hand[0],0,1,true); //coloca as cartas do dealer no seu monte
     Game.move_carta_jm(hand[1],0,1,true);
     Game.jogador_soma_pontos($h); //coloca o dinheiro do dealer
     Game.fim_jogada(); //passa pro player
+    Game.vira_carta_jogador(0,1);
+    Game.vira_carta_jogador(1,1);
     hand=Game.mostra_mao_jogador_atual(); //pega ref. mao jogador
     Game.move_carta_jm(hand[0],1,2,true); //passa as cartas pro monte do jogador
     Game.move_carta_jm(hand[1],1,2,true);
     Game.jogador_soma_pontos($p);//coloca o dinheiro do jogador;
+
+   
+
+    std::cout<<Game.mostra_monte(1)[0].second.numero()<<std::endl;
+    std::cout<<Game.mostra_monte(1)[1].second.numero()<<std::endl;
     
-    std::vector<std::pair<bool,Carta>> monte;
-    monte = Game.mostra_monte(0);
-    
-    std::cout<<monte[1].second.numero()<<std::endl;
-    
-    
-    
+    std::cout<<Game.mostra_monte(2)[0].second.numero()<<std::endl;
+    std::cout<<Game.mostra_monte(2)[1].second.numero()<<std::endl;
+        
     
     
     
