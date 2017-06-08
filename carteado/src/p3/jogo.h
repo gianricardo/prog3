@@ -71,6 +71,10 @@ public:
 	
 	 // move carta do monte principal para outro monte
 	bool move_carta_m(std::size_t m, bool p_cima = true, bool m_cima = true);
+
+    //altera a posicao do jogador atual
+    //recebe como parametro a nova posicao do jogador atual sendo '0' a primeira e 'numero de jogadores -1' a ultima
+    void muda_jog_atual(int novapos);
 	
 	// move carta entre jogadores
 	//
@@ -691,6 +695,9 @@ template <class CARTA> void JogoBasico<CARTA>::vira_carta_jogador(std::size_t po
 	_mesa.vira_carta_jogador(pos_carta, j);
 }
 
+template <class CARTA> void JogoBasico<CARTA>::muda_jog_atual(int novapos){
+	_jog_atual = novapos;
+}
 
 using Jogo = JogoBasico<Carta>;
 
