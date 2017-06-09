@@ -54,6 +54,9 @@ public:
     //Retorna um vetor contendo as cartas do jogador atual
 	std::vector<CARTA> mostra_mao_jogador_atual() const;
 
+    //Retorna um vetor contendo as cartas do jogador na posi pos
+    std::vector<CARTA> mostra_mao_jogador(std::size_t pos) const;
+    
     //Retorna a pontucao do jogador atual
 	int pontuacao_jogador_atual() const;
 
@@ -68,6 +71,10 @@ public:
 	
 	 // move carta do monte principal para outro monte
 	bool move_carta_m(std::size_t m, bool p_cima = true, bool m_cima = true);
+
+    //altera a posicao do jogador atual
+    //recebe como parametro a nova posicao do jogador atual sendo '0' a primeira e 'numero de jogadores -1' a ultima
+    void muda_jogador_atual(int novapos);
 	
 	// move carta entre jogadores
 	//
@@ -150,6 +157,14 @@ public:
 	// ex: jogo.vira_carta_jogador(2);
 	//
     void vira_carta_jogador(std::size_t pos_carta, std::size_t j = jogador_atual);
+
+    // Distribui as cartas para os jogadores. O metodo apenas chama o metodo ja feito na mesa.h.
+    // o numero de cartas distribuidas vai ser o mesmo numero de cartas escolhidas na regra.
+    //
+    // nao retorna nada
+
+    // ex: jogo.distribuir;
+    void distribuir();    
 
 private:
 
@@ -301,6 +316,32 @@ template<class CARTA> std::vector<CARTA> JogoBasico<CARTA>::mostra_mao_jogador_a
 
 	return _mesa.ver_jogador(_jog_atual).mostra_mao();
 }
+        
+        
+template<class CARTA> std::vector<CARTA> JogoBasico<CARTA>::mostra_mao_jogador(std::size_t pos) const{
+            
+    auto vet = _mesa.ver_jogador(pos).mostra_mao();
+    
+    return vet;
+    std::vector<CARTA> aux;
+    
+    aux.reserve(vet.size());
+    
+    std::cout << "size: " << vet.size();
+    
+    for(auto carta : vet){
+        
+        if(carta.mostra()) aux.push_back(carta);
+        else aux.emplace_back(0, (typename CARTA::Naipe) 0);
+        
+        std::cout << "passou aqui" << std::endl;
+    }
+    
+    return aux;
+}
+        
+        
+        
 
 template<class CARTA> int JogoBasico<CARTA>::pontuacao_jogador_atual() const {
 
@@ -551,7 +592,7 @@ template<class CARTA> void JogoBasico<CARTA>::verifica_jogador_pontuacao_maxima(
 	if(todos_jogadores_derrotados()) return;
 
 	int maior_pontuacao = 0;
-	int jogador_vencedor;
+	int jogador_vencedor = 0;
 
 	//checa todos os jogadores aptos e ve qual tem mais pontos
 	for(std::size_t pos_jogador = 0; pos_jogador < _mesa.numero_jogadores(); pos_jogador++)
@@ -571,7 +612,7 @@ template<class CARTA> void JogoBasico<CARTA>::verifica_jogador_pontuacao_minima(
 	if(todos_jogadores_derrotados()) return;
 
 	int menor_pontuacao = 999999;
-	int jogador_vencedor;
+	int jogador_vencedor = 0;
 
 	//checa todos os jogadores aptos e ve qual tem menos pontos
 	for(std::size_t pos_jogador = 0; pos_jogador < _mesa.numero_jogadores(); pos_jogador++)
@@ -591,7 +632,7 @@ template<class CARTA> void JogoBasico<CARTA>::verifica_jogador_mais_cartas(){
 	if(todos_jogadores_derrotados()) return;
 
 	std::size_t maior_numero_cartas = -999999;
-	std::size_t jogador_vencedor;
+	std::size_t jogador_vencedor = 0;
 
 	//checa todos os jogadores aptos e ve qual tem mais cartas
 	for(std::size_t pos_jogador = 0; pos_jogador < _mesa.numero_jogadores(); pos_jogador++)
@@ -611,7 +652,7 @@ template<class CARTA> void JogoBasico<CARTA>::verifica_jogador_menos_cartas(){
 	if(todos_jogadores_derrotados()) return;
 
 	std::size_t menor_numero_cartas = 999999;
-	std::size_t jogador_vencedor;
+	std::size_t jogador_vencedor = 0;
 
 	//checa todos os jogadores aptos e ve qual tem menos cartas
 	for(std::size_t pos_jogador = 0; pos_jogador < _mesa.numero_jogadores(); pos_jogador++)
@@ -660,6 +701,16 @@ template <class CARTA> void JogoBasico<CARTA>::vira_carta_jogador(std::size_t po
 	if(j == jogador_atual) j = _jog_atual;
 
 	_mesa.vira_carta_jogador(pos_carta, j);
+}
+
+
+template<class CARTA> void JogoBasico<CARTA>::distribuir(){
+
+	_mesa.distribuir(cartas_jogadores());
+}
+        
+template <class CARTA> void JogoBasico<CARTA>::muda_jogador_atual(int novapos){
+    _jog_atual = novapos;
 }
 
 
