@@ -37,7 +37,7 @@ public:
 	void reiniciar();
 
 	 //Termina a jogada do jogador atual, caso ele seja o ultimo jogador, muda a rodada
-	void fim_jogada();
+	virtual void fim_jogada();
 
     //Retorna se o jogo esta em andamento
 	bool jogando() const;
@@ -60,11 +60,11 @@ public:
     //Retorna a pontucao do jogador atual
 	int pontuacao_jogador_atual() const;
 
-	 //Aumenta a pontucao do jogador atual em "pontos" pontos
-	void jogador_soma_pontos(int pontos);
+	 //Aumenta a pontucao do jogador que esta na posicao "pos" em "pontos" pontos
+	void jogador_soma_pontos(int pontos, int pos);
 
-    //Diminui a pontucao do jogador atual em "pontos" pontos
-	void jogador_subtrai_pontos(int pontos);
+    //Diminui a pontucao do jogador que esta na posicao "pos" em "pontos" pontos
+	void jogador_subtrai_pontos(int pontos, int pos);
 
 	 // move carta do jogador atual para outro jogador
 	bool move_carta_j(CARTA carta, std::size_t j);
@@ -166,7 +166,30 @@ public:
     // ex: jogo.distribuir;
     void distribuir();    
 
-private:
+    //limpa outros montes menos o principal
+    //chama o metodo de mesa.h
+    void limpa_outros_montes();
+
+    //jogadores aptos viram espectadores, e espectadores viram jogadores aptos
+	//a posicao do jogador que tera sua aptidao mudada é especificada em pos
+    //chama o metodo de mesa.h
+    void muda_aptidao(int pos);
+
+    //informa se jogador esta apto
+    //para saber se o jogador esta apto passa-se sua posicao
+    //chama o metodo de mesa.h
+	bool esta_apto(int pos);
+
+	//Retorna o numero de jogadores aptos
+	//chama o metodo de mesa.h
+	std::size_t numero_jogadores_aptos();		//retorna o numero de jogadores aptos restante no jogo
+
+	//restaura as cartas do monte inicial às do inicio de jogo
+	//certifique-se primeiro de nao haver cartas nas maos dos jogadores para nao criar cartas a mais
+	//chama o metodo de mesa.h
+	void restaurar_monte_inicial();
+
+protected:
 
 	static const std::size_t jogador_atual = std::numeric_limits<std::size_t>::max();
 
@@ -189,8 +212,6 @@ private:
 	void verifica_jogador_menos_cartas();		//ultizado para condicao de vitoria de menos cartas
 
 	void verifica_jogador_unico();				//utilizado na condicao de vitoria de ultimo jogador
-
-	std::size_t numero_jogadores_aptos();		//retorna o numero de jogadores aptos restante no jogo
 
 	void declara_fim_de_jogo();					//troca o estado da variavel que declara se o jogo esta rodando
 
@@ -277,6 +298,8 @@ template<class CARTA> void JogoBasico<CARTA>::fim_jogada(){
 
 	while(1){
 
+		if(_mesa.ver_jogador(_jog_atual).esta_apto()) break;
+
 		if(++_jog_atual == numero_de_jogadores()){
 
 			_jog_atual = 0;
@@ -288,7 +311,7 @@ template<class CARTA> void JogoBasico<CARTA>::fim_jogada(){
 			verifica_vitoria();
 		}
 		
-		if(_mesa.ver_jogador(_jog_atual).esta_apto()) break;
+
 	}
 }
 
@@ -348,14 +371,14 @@ template<class CARTA> int JogoBasico<CARTA>::pontuacao_jogador_atual() const {
 	return _mesa.ver_jogador(_jog_atual).pontuacao();
 }
 
-template<class CARTA> void JogoBasico<CARTA>::jogador_soma_pontos(int pontos){
+template<class CARTA> void JogoBasico<CARTA>::jogador_soma_pontos(int pontos,int pos){
 
-	_mesa.jogador_soma_pontos(pontos, _jog_atual);
+	_mesa.jogador_soma_pontos(pontos, pos);
 }
 
-template<class CARTA> void JogoBasico<CARTA>::jogador_subtrai_pontos(int pontos){
+template<class CARTA> void JogoBasico<CARTA>::jogador_subtrai_pontos(int pontos,int pos){
 
-	jogador_soma_pontos(-pontos);
+	jogador_soma_pontos(-pontos,pos);
 }
 
 template<class CARTA> bool JogoBasico<CARTA>::move_carta_j(CARTA carta, std::size_t j){
@@ -713,6 +736,21 @@ template <class CARTA> void JogoBasico<CARTA>::muda_jogador_atual(int novapos){
     _jog_atual = novapos;
 }
 
+template <class CARTA> void JogoBasico<CARTA>::muda_aptidao(int pos){
+	_mesa.muda_aptidao(pos);
+}
+
+template <class CARTA> bool JogoBasico<CARTA>::esta_apto(int pos){
+	return _mesa.esta_apto(pos);
+}
+
+template <class CARTA> void JogoBasico<CARTA>::restaurar_monte_inicial(){
+	_mesa.restaurar_monte_inicial();
+}
+
+template <class CARTA> void JogoBasico<CARTA>::limpa_outros_montes(){
+	_mesa.limpa_outros_montes();
+}
 
 using Jogo = JogoBasico<Carta>;
 

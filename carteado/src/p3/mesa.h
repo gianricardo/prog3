@@ -116,6 +116,20 @@ public:
     //limpa todos os montes da mesa menos o principal;
     void limpa_outros_montes();
 
+    //jogadores aptos viram espectadores, e espectadores viram jogadores aptos
+	//a posicao do jogador que tera sua aptidao mudada é especificada em pos
+    //chama o metodo de jogador.h
+    void muda_aptidao(int pos);
+
+    //informa se jogador esta apto
+    //para saber se o jogador esta apto passa-se sua posicao
+    //chama o metodo de jogador.h
+	bool esta_apto(int pos);
+
+	//restaura as cartas do monte inicial às do inicio de jogo
+	//certifique-se primeiro de nao haver cartas nas maos dos jogadores para nao criar cartas a mais
+	void restaurar_monte_inicial();
+
 private:
     //monte principal
     BaralhoBasico<CARTA> _monte;
@@ -130,7 +144,9 @@ private:
 
     
 template <class CARTA> void MesaBasica<CARTA>::limpa_outros_montes(){
-    _outros_montes.clear();
+    for(int i=0;i<_outros_montes.size();i++){
+    	_outros_montes[i].esvazia_monte();
+    }
 }
 template <class CARTA> MesaBasica<CARTA>::MesaBasica(std::size_t main_deck_size) : _monte(main_deck_size) {
 	_monte.embaralhar();
@@ -282,6 +298,19 @@ template <class CARTA> void MesaBasica<CARTA>::vira_carta_jogador(std::size_t po
 template <class CARTA> bool MesaBasica<CARTA>::vira_carta_jogador_c(CARTA carta, std::size_t j){
     
 	return _jogadores[j].vira_carta(carta);
+}
+
+template <class CARTA> void MesaBasica<CARTA>::muda_aptidao(int pos){
+	_jogadores[pos].muda_aptidao();
+}
+
+template <class CARTA> bool MesaBasica<CARTA>::esta_apto(int pos){
+	if(_jogadores[pos].esta_apto()) return true;
+	return false;
+}
+
+template <class CARTA> void MesaBasica<CARTA>::restaurar_monte_inicial(){
+	_monte.restaurar();
 }
 
 using Mesa = MesaBasica<Carta>;

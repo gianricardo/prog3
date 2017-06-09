@@ -75,6 +75,7 @@ public:
 	// ex: jogador.vira_carta(4); ou jogador.vira_carta_pos(4);
 	//
 	void vira_carta(std::size_t posicao);
+
 	void vira_carta_pos(std::size_t posicao);
 
 private:

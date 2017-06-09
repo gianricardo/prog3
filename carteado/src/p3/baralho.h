@@ -84,6 +84,10 @@ public:
 	//
     std::vector<std::pair<bool, CARTA> > mostra_baralho() const;
     
+    //esvazia monte
+    //exclui todas as cartas do vetor de cartas e deixa o monte com tamanho 0
+    void esvazia_monte();
+
 private:
 
     //guarda o numero de cartas inicial passado ao baralho
@@ -171,6 +175,10 @@ template<class CARTA> std::vector<std::pair<bool, CARTA> > BaralhoBasico<CARTA>:
 	for(auto carta : _monte) vec.emplace_back(carta.mostra(), carta.mostra() ? carta : CARTA(0, static_cast<typename CARTA::Naipe>(0)));
 
 	return vec;
+}
+
+template<class CARTA> void BaralhoBasico<CARTA>::esvazia_monte(){
+	_monte.clear();
 }
 
 using Baralho = BaralhoBasico<Carta>;
