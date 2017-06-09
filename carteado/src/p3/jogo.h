@@ -158,6 +158,14 @@ public:
 	//
     void vira_carta_jogador(std::size_t pos_carta, std::size_t j = jogador_atual);
 
+    // Distribui as cartas para os jogadores. O metodo apenas chama o metodo ja feito na mesa.h.
+    // o numero de cartas distribuidas vai ser o mesmo numero de cartas escolhidas na regra.
+    //
+    // nao retorna nada
+
+    // ex: jogo.distribuir;
+    void distribuir();    
+
 private:
 
 	static const std::size_t jogador_atual = std::numeric_limits<std::size_t>::max();
@@ -698,6 +706,12 @@ template <class CARTA> void JogoBasico<CARTA>::vira_carta_jogador(std::size_t po
 template <class CARTA> void JogoBasico<CARTA>::muda_jog_atual(int novapos){
 	_jog_atual = novapos;
 }
+
+template<class CARTA> void JogoBasico<CARTA>::distribuir(){
+
+	_mesa.distribuir(cartas_jogadores());
+}
+
 
 using Jogo = JogoBasico<Carta>;
 
