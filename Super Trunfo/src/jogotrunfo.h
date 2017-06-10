@@ -22,9 +22,9 @@ public:
 	void realiza_jogada();
 
 private:
+	void checa_jogada_valida();
 
 };
-
 
 
 
