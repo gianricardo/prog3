@@ -144,7 +144,7 @@ private:
 
     
 template <class CARTA> void MesaBasica<CARTA>::limpa_outros_montes(){
-    for(int i=0;i<_outros_montes.size();i++){
+    for(unsigned int i=0;i<_outros_montes.size();i++){
     	_outros_montes[i].esvazia_monte();
     }
 }

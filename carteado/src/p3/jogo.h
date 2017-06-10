@@ -193,29 +193,29 @@ protected:
 
 	static const std::size_t jogador_atual = std::numeric_limits<std::size_t>::max();
 
-	void verifica_fim_de_jogo();
+	virtual void verifica_fim_de_jogo();
 
-	void verifica_vitoria();					//checa se algum jogador ja ganhou
+	virtual void verifica_vitoria();					//checa se algum jogador ja ganhou
 
-	void verifica_jogadores_derrotados();		//checa se algum jogador perdeu
+	virtual void verifica_jogadores_derrotados();		//checa se algum jogador perdeu
 
-	bool todos_jogadores_derrotados();			//retorna se todos os jogadores perderam
+	virtual bool todos_jogadores_derrotados();			//retorna se todos os jogadores perderam
 
-	void verifica_fim_zero_cartas();			//ultizado na condicao de fim de todos com zero cartas
+	virtual void verifica_fim_zero_cartas();			//ultizado na condicao de fim de todos com zero cartas
 
-	void verifica_jogador_pontuacao_maxima();	//utilizado para condicao de vitoria de maior pontuacao
+	virtual void verifica_jogador_pontuacao_maxima();	//utilizado para condicao de vitoria de maior pontuacao
 
-	void verifica_jogador_pontuacao_minima();	//utilizado para condicao de vitoria de menor pontuacao
+	virtual void verifica_jogador_pontuacao_minima();	//utilizado para condicao de vitoria de menor pontuacao
 
-	void verifica_jogador_mais_cartas();		//ultizado para condicao de vitoria de mais cartas
+	virtual void verifica_jogador_mais_cartas();		//ultizado para condicao de vitoria de mais cartas
 
-	void verifica_jogador_menos_cartas();		//ultizado para condicao de vitoria de menos cartas
+	virtual void verifica_jogador_menos_cartas();		//ultizado para condicao de vitoria de menos cartas
 
-	void verifica_jogador_unico();				//utilizado na condicao de vitoria de ultimo jogador
+	virtual void verifica_jogador_unico();				//utilizado na condicao de vitoria de ultimo jogador
 
-	void declara_fim_de_jogo();					//troca o estado da variavel que declara se o jogo esta rodando
+	virtual void declara_fim_de_jogo();					//troca o estado da variavel que declara se o jogo esta rodando
 
-	void declara_vencedor(std::size_t j);		//declara o jogador j como vencedor e encerra o jogo
+	virtual void declara_vencedor(std::size_t j);		//declara o jogador j como vencedor e encerra o jogo
 
 	void _coloca_monte(CARTA c, std::size_t m, bool topo);	//coloca a carta c no topo(se for true) do monte m
 
