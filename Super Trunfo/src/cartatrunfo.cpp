@@ -8,17 +8,18 @@
 #include "cartatrunfo.h"
 
 Carta_trunfo::Carta_trunfo(	int numero,
-							int naipe,
-							bool frente = false,
+							Carta::Naipe naipe,
+							bool frente,
 							int participacao_gps,
 							int titulos_mundiais_construtores,
 							int vitorias,
 							int pole_positions,
 							int gps_com_podios ) :
-
-					_numero{numero}, _naipe{naipe}, _frente{frente},_participacao_gps{participacao_gps},
-					_titulos_mundiais_construtores{titulos_mundiais_construtores}, _vitorias{vitorias},
-					_pole_positions{pole_positions}, _gps_com_podios{gps_com_podios}
+							Carta(numero,naipe,frente),
+							_participacao_gps{participacao_gps},
+							_titulos_mundiais_construtores{titulos_mundiais_construtores},
+							_vitorias{vitorias}, _pole_positions{pole_positions},
+							_gps_com_podios{gps_com_podios}
 { }
 
 int Carta_trunfo::gps_com_podios()
