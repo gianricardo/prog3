@@ -10,14 +10,12 @@
 
 #include "carta.h"
 
-class Carta_trunfo : p3::Carta {
+class Carta_trunfo : public p3::Carta {
 public:
 
-	enum class Naipe{A, B, C, D};
-
 	Carta_trunfo(	int numero,
-					int naipe,
-					bool frente = false,
+					Carta::Naipe naipe,
+					bool frente,
 					int participacao_gps,
 					int titulos_mundiais_construtores,
 					int vitorias,
@@ -29,8 +27,8 @@ public:
 	int vitorias();
 	int pole_positions();
 	int gps_com_podios();
-private:
 
+private:
 	int _participacao_gps;
 	int _titulos_mundiais_construtores;
 	int _vitorias;
@@ -38,5 +36,8 @@ private:
 	int _gps_com_podios;
 
 };
+
+
+
 
 #endif /* REGRATRUNFO_H_ */
