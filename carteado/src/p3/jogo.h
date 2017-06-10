@@ -189,6 +189,12 @@ public:
 	//chama o metodo de mesa.h
 	void restaurar_monte_inicial();
 
+
+	//embaralha as cartas do monte principal
+	//cuidado, este metodo nao restaura as cartas do monte
+	//chama o metodo de mesa.h
+	void embaralhar_monte_principal();
+
 protected:
 
 	static const std::size_t jogador_atual = std::numeric_limits<std::size_t>::max();
@@ -750,6 +756,10 @@ template <class CARTA> void JogoBasico<CARTA>::restaurar_monte_inicial(){
 
 template <class CARTA> void JogoBasico<CARTA>::limpa_outros_montes(){
 	_mesa.limpa_outros_montes();
+}
+
+template <class CARTA> void JogoBasico<CARTA>::embaralhar_monte_principal(){
+	_mesa.embaralhar_monte_principal();
 }
 
 using Jogo = JogoBasico<Carta>;

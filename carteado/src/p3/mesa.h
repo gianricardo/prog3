@@ -130,6 +130,10 @@ public:
 	//certifique-se primeiro de nao haver cartas nas maos dos jogadores para nao criar cartas a mais
 	void restaurar_monte_inicial();
 
+	//embaralha as cartas do monte principal
+	//cuidado este metodo nao restaura as cartas do monte
+	void embaralhar_monte_principal();
+
 private:
     //monte principal
     BaralhoBasico<CARTA> _monte;
@@ -311,6 +315,10 @@ template <class CARTA> bool MesaBasica<CARTA>::esta_apto(int pos){
 
 template <class CARTA> void MesaBasica<CARTA>::restaurar_monte_inicial(){
 	_monte.restaurar();
+}
+
+template <class CARTA> void MesaBasica<CARTA>::embaralhar_monte_principal(){
+	_monte.embaralhar();
 }
 
 using Mesa = MesaBasica<Carta>;

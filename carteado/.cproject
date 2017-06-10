@@ -155,21 +155,6 @@
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
 		<project id="projeto.cdt.managedbuild.target.gnu.exe.1782592890" name="Executable" projectType="cdt.managedbuild.target.gnu.exe"/>
 	</storageModule>
-	<storageModule moduleId="scannerConfiguration">
-		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.debug.1949481873;cdt.managedbuild.config.gnu.exe.debug.1949481873.;cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.2014209554;cdt.managedbuild.tool.gnu.cpp.compiler.input.667643322">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.release.1481857667;cdt.managedbuild.config.gnu.exe.release.1481857667.;cdt.managedbuild.tool.gnu.c.compiler.exe.release.184440297;cdt.managedbuild.tool.gnu.c.compiler.input.667804462">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.release.1481857667;cdt.managedbuild.config.gnu.exe.release.1481857667.;cdt.managedbuild.tool.gnu.cpp.compiler.exe.release.61263053;cdt.managedbuild.tool.gnu.cpp.compiler.input.1194042697">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.exe.debug.1949481873;cdt.managedbuild.config.gnu.exe.debug.1949481873.;cdt.managedbuild.tool.gnu.c.compiler.exe.debug.1629686829;cdt.managedbuild.tool.gnu.c.compiler.input.1934960321">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-		</scannerConfigBuildInfo>
-	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
 	<storageModule moduleId="refreshScope" versionNumber="2">
@@ -183,4 +168,5 @@
 			<resource resourceType="PROJECT" workspacePath="/carteado"/>
 		</configuration>
 	</storageModule>
+	<storageModule moduleId="scannerConfiguration"/>
 </cproject>
