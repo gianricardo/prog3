@@ -11,6 +11,7 @@
 #include <deque>
 #include <random>
 #include <algorithm>
+#include <stdexcept>
 #include "regra.h"
 #include "carta.h"
 #include "jogador.h"

@@ -14,11 +14,11 @@
 int main(){
 	std::string nome;
 	std::size_t numero_jogadores = 0;
-	std::size_t j_rodada = 0;
 	std::size_t carta = 0;
 	std::size_t jogador_ganhando = 0, carta_ganhando = 0;
 	char resposta;
 	char truco;
+	char mao_de_11;
 
 	std::cout << "Escolha o numero de jogadores (2/4): ";
 	std::cin >> numero_jogadores;
@@ -46,8 +46,16 @@ int main(){
 	p4::Regra_Truco *r1_ptr = &r1;
 	p4::Jogo_Truco j1(r1_ptr,_jogadores);
 
+	j1.novo_monte();
+	//Cria o monte em que as cartas serão jogadas
+	j1.novo_monte();
+	//move uma carta do monte principal para o monte 1 que sera o vira
+
+	j1.move_carta_mm(0,1,true,true);
+	j1.vira_carta_monte(1,true);
 
 	while(j1.jogando()){
+		std::cout<< "Novo Turno" << std::endl;
 
 		std::cout<< "\n Pontuacao dos jogadores: " << std::endl;
 		for(auto i = 0; i < (int)j1.numero_de_jogadores(); i++){
@@ -55,16 +63,6 @@ int main(){
 			std::cout<< "Pontuacao: " << j1.pontuacao(i) << std::endl;
 		}
 		//Cria o monte em que vai ficar o vira
-		std::cout<< "Novo Turno" << std::endl;
-		j1.novo_monte();
-		//Cria o monte em que as cartas serão jogadas
-		j1.novo_monte();
-		//move uma carta do monte principal para o monte 1 que sera o vira
-		j1.move_carta_mm(0,1,true,true);
-		//vira a carta que sera o vira
-		j1.vira_carta_monte(1,true);
-
-		j_rodada = 0;
 
 		//Termino de um Turno:
 		while(!j1.fim_turno()){
@@ -80,6 +78,34 @@ int main(){
 				std::cout << "O vira eh: " << j1.mostra_monte(1)[0].second.numero() << std::endl;
 				//Jogador escolhe suas acoes:
 				if(j1.posicao_jogador_atual() == 0){
+					//se mao de onze
+					if(j1.pontuacao(j1.posicao_jogador_atual())== 11 && j1.numero_de_jogadores() == 4){
+						for(int i = 0; i < (int)j1.mostra_mao_jogador_atual().size() ; i++){
+							std::cout<< "Suas cartas: ";
+							std::cout<< " " << (j1.mostra_mao_jogador_atual())[i].numero();
+							std::cout<< "\n";
+						}
+
+						j1.mao_de_11();
+
+						for(int i = 0; i < (int)j1.mostra_mao_jogador_atual().size() ; i++){
+							std::cout<< "Cartas do seu parceiro: ";
+							std::cout<< " " << (j1.mostra_mao_jogador_atual())[i].numero();
+							std::cout<< "\n";
+						}
+						std::cout<< "Deseja jogar ? (s/n) :";
+						std::cin >> mao_de_11;
+
+						if(mao_de_11 == 'n'){
+							jogador_ganhando = j1.posicao_jogador_atual() + 1;
+							while(!j1.fim_turno()){
+								j1.jogador_ganhou_rodada(jogador_ganhando);
+								j1.fim_rodada(jogador_ganhando);
+							}
+
+							break;
+						}
+					}
 					std::cout<< "\n" ;
 					//mostra as cartas na mao do jogador
 					for(int i = 0; i < (int)j1.mostra_mao_jogador_atual().size() ; i++){
@@ -138,6 +164,7 @@ int main(){
 								else if(j1.compara(j1.mostra_mao_jogador_atual()[carta -1], j1.mostra_monte(2)[carta_ganhando].second,
 										j1.mostra_monte(1)[0].second) == (int)p4::Jogo_Truco::Compara::Igual){
 
+									carta_ganhando = 0;
 									jogador_ganhando = j1.numero_de_jogadores();
 								}
 								else{
@@ -157,8 +184,11 @@ int main(){
 					//caso o jogador escolha pedir truco mas os outros jogadores nao aceitem
 					else if(truco == 's' && j1.verifica_truco(j1.posicao_jogador_atual()) == false){
 						jogador_ganhando = j1.posicao_jogador_atual();
-						j1.jogador_ganhou_rodada(jogador_ganhando);
-						j1.fim_rodada(jogador_ganhando);
+						while(!j1.fim_turno()){
+							j1.jogador_ganhou_rodada(jogador_ganhando);
+							j1.fim_rodada(jogador_ganhando);
+
+						}
 						break;
 					}
 
@@ -275,12 +305,14 @@ int main(){
 
 			j1.jogador_ganhou_rodada(jogador_ganhando);
 			j1.fim_rodada(jogador_ganhando);
-			j_rodada++;
+
 		}
+
 		if(j1.jogador_ganhou_turno() != 2 && j1.jogador_ganhou_turno()!= 3){
 			std::cout<< "Jogador Ganhou: " << j1.valor_pontuacao() << " pontos" << std::endl;
 			j1.jogador_soma_pontos(j1.jogador_ganhou_turno(),j1.valor_pontuacao());
 		}
+
 		std::cout<< "Fim turno" << std::endl;
 		j1.comeca_novo_turno();
 	}

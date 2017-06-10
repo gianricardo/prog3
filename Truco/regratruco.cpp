@@ -17,6 +17,10 @@ Regra_Truco::Regra_Truco(std::size_t numero_de_jogadores,
 		  int menor_pontuacao,
 		  int cartas_inicial):p3::Regra(numero_de_jogadores,cartas_jogadores,rodadas,pontuacao_max,
 				  menor_pontuacao,cartas_inicial){/*carta_ganhando(0,p3::Carta::Naipe::Paus,false)*/
+
+	if(numero_de_jogadores != 4 && numero_de_jogadores != 2){
+		throw std::invalid_argument("Numero de jogadores invalido");
+	}
 /*
 	std::random_device rd;
 	std::mt19937 g(rd());
