@@ -11,10 +11,10 @@
 
 #include <iostream>
 
-class Banco{
+class Banco21{
 public:
     //cria banco;
-    Banco();
+    Banco21();
     //determina valor da aposta da rodada
     //false se o valor nao vor valido
     //a aposta minima é cinco

@@ -9,7 +9,6 @@
 #include "jogo_21.h"
 
 BlackJack::BlackJack(Regra21 *Rules, std::string nome_jogador) : JogoBasico(Rules, {"Dealer", nome_jogador}){
-    _nome_jogador=nome_jogador;
     
 }
 
@@ -51,5 +50,29 @@ std::size_t BlackJack::pos_j()const{
 }
 std::size_t BlackJack::pos_d()const{
     return pos_dealer;
+}
+
+void BlackJack::vez_do_dealer(){
+    muda_jogador_atual((int)pos_dealer);
+}
+
+void BlackJack::vez_do_jogador(){
+    muda_jogador_atual((int)pos_jogador);
+}
+
+std::string BlackJack::nome_jogador(){
+    std::string n = "-";
+    if(posicao_jogador_atual() ==pos_dealer){
+        vez_do_jogador();
+        n = nome_jogador_atual();
+        vez_do_dealer();
+    }else {n = nome_jogador_atual();}
+    return n;
+}
+
+
+bool BlackJack::apostar(int a){
+    return Banco.set_aposta(a);
+    
 }
 
