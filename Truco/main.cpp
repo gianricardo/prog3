@@ -70,8 +70,51 @@ int main(){
 			std::cout << "Nova rodada" << std::endl;
 			carta_ganhando = 0;
 			jogador_ganhando = 0;
-			do{
 
+			if(j1.checa_mao_de_11() == 0 && j1.numero_de_jogadores() == 4){
+				for(int i = 0; i < (int)j1.mostra_mao_jogador_atual().size() ; i++){
+					std::cout<< "Suas cartas: ";
+					std::cout<< " " << (j1.mostra_mao_jogador_atual())[i].numero();
+					std::cout<< "\n";
+				}
+
+				j1.mao_de_11();
+				for(int i = 0; i < (int)j1.mostra_mao_jogador_atual().size() ; i++){
+					std::cout<< "Cartas do seu parceiro: ";
+					std::cout<< " " << (j1.mostra_mao_jogador_atual())[i].numero();
+					std::cout<< "\n";
+				}
+				std::cout<< "Deseja jogar ? (s/n) :";
+				std::cin >> mao_de_11;
+
+				if(mao_de_11 == 'n'){
+					jogador_ganhando = j1.posicao_jogador_atual() + 1;
+					while(!j1.fim_turno()){
+
+						j1.jogador_ganhou_rodada(jogador_ganhando);
+						j1.fim_rodada(jogador_ganhando);
+					}
+					j1.jogador_soma_pontos(j1.jogador_ganhou_turno(),j1.valor_pontuacao());
+
+					break;
+				}
+			}
+
+			else if(j1.checa_mao_de_11() == 1 && j1.numero_de_jogadores() == 4){
+				if(j1.ia_aceita_mao_11() == false){
+					jogador_ganhando = j1.posicao_jogador_atual() + 1;
+					while(!j1.fim_turno()){
+
+						j1.jogador_ganhou_rodada(jogador_ganhando);
+						j1.fim_rodada(jogador_ganhando);
+					}
+					j1.jogador_soma_pontos(j1.jogador_ganhou_turno(),j1.valor_pontuacao());
+
+					break;
+				}
+			}
+
+			do{
 				std::cout<< "\n" ;
 				std::cout << "Posicao jogador atual: " << j1.posicao_jogador_atual() << std::endl;
 				std::cout<< "Jogador: "<< j1.nome_jogador_atual() << std::endl;
@@ -79,33 +122,6 @@ int main(){
 				//Jogador escolhe suas acoes:
 				if(j1.posicao_jogador_atual() == 0){
 					//se mao de onze
-					if(j1.pontuacao(j1.posicao_jogador_atual())== 11 && j1.numero_de_jogadores() == 4){
-						for(int i = 0; i < (int)j1.mostra_mao_jogador_atual().size() ; i++){
-							std::cout<< "Suas cartas: ";
-							std::cout<< " " << (j1.mostra_mao_jogador_atual())[i].numero();
-							std::cout<< "\n";
-						}
-
-						j1.mao_de_11();
-
-						for(int i = 0; i < (int)j1.mostra_mao_jogador_atual().size() ; i++){
-							std::cout<< "Cartas do seu parceiro: ";
-							std::cout<< " " << (j1.mostra_mao_jogador_atual())[i].numero();
-							std::cout<< "\n";
-						}
-						std::cout<< "Deseja jogar ? (s/n) :";
-						std::cin >> mao_de_11;
-
-						if(mao_de_11 == 'n'){
-							jogador_ganhando = j1.posicao_jogador_atual() + 1;
-							while(!j1.fim_turno()){
-								j1.jogador_ganhou_rodada(jogador_ganhando);
-								j1.fim_rodada(jogador_ganhando);
-							}
-
-							break;
-						}
-					}
 					std::cout<< "\n" ;
 					//mostra as cartas na mao do jogador
 					for(int i = 0; i < (int)j1.mostra_mao_jogador_atual().size() ; i++){
@@ -308,10 +324,9 @@ int main(){
 
 		}
 
-		if(j1.jogador_ganhou_turno() != 2 && j1.jogador_ganhou_turno()!= 3){
-			std::cout<< "Jogador Ganhou: " << j1.valor_pontuacao() << " pontos" << std::endl;
-			j1.jogador_soma_pontos(j1.jogador_ganhou_turno(),j1.valor_pontuacao());
-		}
+		std::cout<< "Jogador Ganhou Turno: " << j1.jogador_ganhou_turno() << std::endl;
+		std::cout<< "Jogador Ganhou: " << j1.valor_pontuacao() << " pontos" << std::endl;
+		j1.jogador_soma_pontos(j1.jogador_ganhou_turno(),j1.valor_pontuacao());
 
 		std::cout<< "Fim turno" << std::endl;
 		j1.comeca_novo_turno();

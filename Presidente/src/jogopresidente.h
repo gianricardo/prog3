@@ -10,6 +10,7 @@
 
 #include <vector>
 #include <string>
+#include <algorithm>
 #include "jogo.h"
 
 using namespace p3;
@@ -36,6 +37,7 @@ public:
 	void declara_vencedor(std::size_t j) override;
 	void verifica_jogador_unico() override;
 private:
+	void ordena_mao_jogador();
 	std::vector<int> _positions;
 };
 #endif /* JOGOPRESIDENTE_H_ */
