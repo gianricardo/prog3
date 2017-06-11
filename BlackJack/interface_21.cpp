@@ -13,7 +13,7 @@ using namespace std;
 
 string Interface::novo(){
     std::string n;
-    cout<<"- 21 -"<<endl;
+    cout<<"- ♠♥♣♦21♦♣♥♠ -"<<endl;
     
     cout<<"\nDigite seu nome:";
     cin>>n;
@@ -48,9 +48,20 @@ void Interface::mostra_mao(vector<p3::Carta> mao){
 
     for (auto a:mao){
         if(a.numero()==0){
-            cout<<"?";
+            cout<<"[?]";
         }else{
-            cout<<a.numero();
+            if(a.naipe()==(typename p3::Carta::Naipe)0){
+                cout<<"♠ "<<a.numero();
+            }
+            if(a.naipe()==(typename p3::Carta::Naipe)1){
+                cout<<"♥ "<<a.numero();
+            }
+            if(a.naipe()==(typename p3::Carta::Naipe)2){
+                cout<<"♣ "<<a.numero();
+            }
+            if(a.naipe()==(typename p3::Carta::Naipe)3){
+                cout<<"♦ "<<a.numero();
+            }
         }
         cout<<endl;
     }
