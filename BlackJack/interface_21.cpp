@@ -26,7 +26,7 @@ void Interface::boas_vindas(){
 }
 
 void Interface::placar(int total){
-    cout<<nome<<", você possui R$"<<total<<",00 para apostar."<<endl;
+    cout<<"\n"<<nome<<", você possui R$"<<total<<",00 para apostar."<<endl;
     cout<<"A aposta mínima é de R$5,00 e a menor ficha é de R$1,00."<<endl;
 }
 
@@ -55,10 +55,11 @@ void Interface::mostra_mao(vector<p3::Carta> mao){
 }
 
 void Interface::mostra_maos(vector<p3::Carta> d, vector<p3::Carta> j){
-    cout<<"\n\nSuas cartas:"<<endl;
+    cout<<"\nSuas cartas:"<<endl;
     mostra_mao(j);
     cout<<"\nCartas do dealer:"<<endl;
     mostra_mao(d);
+    cout<<endl;
 }
 
 int Interface::jogue(){
@@ -75,11 +76,11 @@ void Interface::vez_dealer(){
 
 void Interface::vencedor(bool a,int b, int c){
     if (a){
-        cout<<"Parabéns "<<nome<<", você venceu essa rodada, ganhando R$"<<b<<",00!"<<endl;
+        cout<<"\nParabéns "<<nome<<", você venceu essa rodada, ganhando R$"<<b<<",00!"<<endl;
         cout<<"Agora você tem R$"<<c<<",00 disponíveis!"<<endl;
         return;
     }
-    cout<<"Desculpe "<<nome<<", você perdeu essa rodada, perdendo R$"<<b<<",00!"<<endl;
+    cout<<"\nDesculpe "<<nome<<", você perdeu essa rodada, perdendo R$"<<b<<",00!"<<endl;
     cout<<"Agora você tem R$"<<c<<",00 disponíveis!"<<endl;
     return;
 }
