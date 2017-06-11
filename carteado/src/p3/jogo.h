@@ -287,7 +287,7 @@ template<class CARTA> void JogoBasico<CARTA>::reiniciar(){
 	for(std::size_t pos_jogador=0; pos_jogador < numero_de_jogadores(); pos_jogador++)
 	{
 		_mesa.ver_jogador(pos_jogador).pontuacao(0);
-		_mesa.ver_jogador(pos_jogador).esvazia_mao();
+		_mesa.esvazia_mao(pos_jogador);
 		if(!_mesa.ver_jogador(pos_jogador).esta_apto())
 			_mesa.ver_jogador(pos_jogador).muda_aptidao();
 	}
