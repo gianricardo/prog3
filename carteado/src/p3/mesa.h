@@ -134,6 +134,10 @@ public:
 	//cuidado este metodo nao restaura as cartas do monte
 	void embaralhar_monte_principal();
 
+	//esvazia a mao do jogador
+	//chama o método esvazia_mao do jogador
+	void esvazia_mao(std::size_t _jogador);
+
 private:
     //monte principal
     BaralhoBasico<CARTA> _monte;
@@ -320,6 +324,13 @@ template <class CARTA> void MesaBasica<CARTA>::restaurar_monte_inicial(){
 template <class CARTA> void MesaBasica<CARTA>::embaralhar_monte_principal(){
 	_monte.embaralhar();
 }
+
+
+template <class CARTA> void MesaBasica<CARTA>::esvazia_mao(std::size_t _jogador){
+	_jogadores[_jogador].esvazia_mao();
+	return;
+}
+
 
 using Mesa = MesaBasica<Carta>;
 
