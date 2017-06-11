@@ -29,8 +29,8 @@ Jogo_Truco::Jogo_Truco(p3::Regra *regra, std::vector<std::string> nomes):p3::Jog
 	}
 
 	_rodada = 0;
-	for(auto i = 0; i < max_rodadas(); i++){
-		_jogadores_ganharam.push_back(numero_de_jogadores());
+	for(auto i = 0; i < _regra->max_rodadas(); i++){
+		_jogadores_ganharam.push_back(3);
 	}
 }
 
@@ -66,7 +66,9 @@ void Jogo_Truco::fim_rodada(std::size_t _jogador_ganhou){
 	}
 
 	if(!mostra_monte(2).empty()){
-		for(auto i = 0; i < (int)mostra_monte(2).size() ; i++){
+		std::size_t _tamanho_monte = mostra_monte(2).size();
+
+		for(std::size_t i = 0; i < _tamanho_monte ; i++){
 			move_carta_mm(2,0,true,true);
 		}
 	}
@@ -152,29 +154,22 @@ int Jogo_Truco::compara(p3::Carta c1, p3::Carta c2,p3::Carta _vira){
 
 void Jogo_Truco::jogador_ganhou_rodada(std::size_t _jogador){
 	if(_jogador >= numero_de_jogadores()){
+		if(_rodada == 3){
+			_jogadores_ganharam[_rodada - 1] = 2;
+		}
 		_jogadores_ganharam[_rodada] = 2;
 	}
 	else{
+		if(_rodada == 3){
+			_jogadores_ganharam[_rodada -1] = _jogador %2;
+		}
 		_jogadores_ganharam[_rodada] = _jogador % 2;
 		return;
 	}
 }
 
 bool Jogo_Truco::fim_turno(){
-	int cont1 = 0, cont2 = 0,cont3 = 0;
-	for(int i = 0; i <	(int)_jogadores_ganharam.size(); i++){
-		if(_jogadores_ganharam[i] == 0){
-			cont1 ++;
-		}
-		else if(_jogadores_ganharam[i] == 1){
-			cont2 ++;
-		}
-		else if(_jogadores_ganharam[i] == 2){
-			cont3 ++;
-		}
-	}
-	if (_rodada == 2 || cont1 == 2 || cont2 == 2 || (cont3 == 1 && (cont2 == 1 || cont1 == 1))){
-		_rodada = 0;
+	if (jogador_ganhou_turno() != 3||_rodada == 3 ){
 		return true;
 	}
 	else{
@@ -184,16 +179,19 @@ bool Jogo_Truco::fim_turno(){
 }
 
 std::size_t Jogo_Truco::jogador_ganhou_turno(){
-	if(_jogadores_ganharam[0] == 2 && _jogadores_ganharam[1] != 2){
-		std::size_t vencedor = _jogadores_ganharam[1];
-		for(int i = 0; i < (int)_jogadores_ganharam.size(); i++){
-			_jogadores_ganharam[i] = 3;
-		}
-		_rodada = 0;
-		return vencedor;
+	std::size_t vencedor = 3;
+	int cont1 = 0,cont2 = 0,cont3 = 0;
+
+	if(_jogadores_ganharam[0] == 2 && _jogadores_ganharam[1] != 2 && _jogadores_ganharam[1] != 3){
+		vencedor = _jogadores_ganharam[1];
+
+	}
+	else if(_jogadores_ganharam[0] == 2 && _jogadores_ganharam[1] == 2 && _jogadores_ganharam[2]!= 2 &&
+						_jogadores_ganharam[2] != 3){
+
+		vencedor = _jogadores_ganharam[2];
 	}
 	else{
-		int cont1 = 0,cont2 = 0,cont3 = 0;
 		for(int i = 0; i < (int)_jogadores_ganharam.size();i++){
 			if(_jogadores_ganharam[i] == 0){
 				cont1 ++;
@@ -205,33 +203,20 @@ std::size_t Jogo_Truco::jogador_ganhou_turno(){
 				cont3 ++;
 			}
 		}
-		if(cont1 > cont2){
-			for(int i; i <(int)_jogadores_ganharam.size(); i++){
-				_jogadores_ganharam[i] = 3;
-			}
-			_rodada = 0;
-			return 0;
+		if(cont1 == 2){
+			vencedor = 0;
 		}
-		else if(cont2 > cont1){
-			for(int i; i < (int)_jogadores_ganharam.size(); i++){
-				_jogadores_ganharam[i] = 3;
-			}
-			_rodada = 0;
-			return 1;
+		else if(cont2 == 2){
+			vencedor =  1;
+		}
+		else if((_jogadores_ganharam[1] == 2|| _jogadores_ganharam[2] ==2) && cont1 == cont2 && cont1 == 1){
+			vencedor = _jogadores_ganharam[0];
 		}
 		else if(cont3 == 3){
-			for(int i; i < (int)_jogadores_ganharam.size(); i++){
-				_jogadores_ganharam[i] = 3;
-			}
-			_rodada = 0;
-			return 2;
-		}
-		else if(cont1 == cont2){
-			_rodada = 0;
-			return _jogadores_ganharam[0];
+			vencedor=  2;
 		}
 	}
-	return 3;
+	return vencedor;
 }
 
 void Jogo_Truco::comeca_novo_turno(){
@@ -256,18 +241,21 @@ void Jogo_Truco::comeca_novo_turno(){
 
 
 	for(auto i = 0; i < max_rodadas(); i++){
-		_jogadores_ganharam[i] = 4;
+		_jogadores_ganharam[i] = 3;
 	}
 
 	for(std::size_t pos_jogador=0; pos_jogador < numero_de_jogadores(); pos_jogador++)
 	{
-		for(std::size_t pos_carta = 0; pos_carta < mostra_mao_jogador(pos_jogador).size(); pos_carta++){
+		std::size_t _tamanho = mostra_mao_jogador(pos_jogador).size();
+		for(std::size_t pos_carta = 0; pos_carta < _tamanho; pos_carta++){
 			_mesa.jogador_tira_carta(mostra_mao_jogador(pos_jogador)[0], pos_jogador);
 		}
 	}
 
 	move_carta_mm(1,0,true,true);
-	for(auto i = 0; i < (int)mostra_monte(2).size() ; i++){
+	std::size_t _tamanho_monte = mostra_monte(2).size();
+
+	for(std::size_t i = 0; i < _tamanho_monte ; i++){
 		move_carta_mm(2,0,true,true);
 	}
 
@@ -346,15 +334,16 @@ void Jogo_Truco::mao_de_11(){
 	}
 }
 
+
 void Jogo_Truco::jogador_soma_pontos(std::size_t _jogador,int pontos){
 	if(numero_de_jogadores() == 4){
 		if(_jogador  == 0){
 			_mesa.jogador_soma_pontos(pontos, 0);
-			_mesa.jogador_soma_pontos(pontos, _jogador + 2);
+			_mesa.jogador_soma_pontos(pontos, 2);
 		}
 		else if(_jogador  == 1){
-			_mesa.jogador_soma_pontos(pontos, _jogador);
-			_mesa.jogador_soma_pontos(pontos, _jogador +2);
+			_mesa.jogador_soma_pontos(pontos, 1);
+			_mesa.jogador_soma_pontos(pontos, 3);
 		}
 	}
 	else{
@@ -375,14 +364,14 @@ bool Jogo_Truco::verifica_truco(std::size_t _jogador_trucou){
 		cartas_altas = 0;
 		if(posicao != posicao_jogador_atual() + 2){
 			for(int i = 0; i < (int)(mostra_mao_jogador(posicao)).size(); i++){
-				if((mostra_mao_jogador(posicao))[i].numero() >= 9 ||
-					(mostra_mao_jogador(posicao))[i].numero() == (mostra_monte(1))[i].second.numero() + 1){
+				if((mostra_mao_jogador(posicao))[i].numero() <= 3 ||
+					(mostra_mao_jogador(posicao))[i].numero() == (mostra_monte(1))[0].second.numero() + 1){
 
 					cartas_altas++;
 				}
 			}
 		}
-		if(cartas_altas < 2){
+		if(cartas_altas >= 2){
 			aceitou_truco++;
 		}
 		if(posicao == numero_de_jogadores() - 1){
@@ -394,6 +383,49 @@ bool Jogo_Truco::verifica_truco(std::size_t _jogador_trucou){
 	}
 
 	if(aceitou_truco == 2){
+		return true;
+	}
+	else{
+		return false;
+	}
+}
+
+int Jogo_Truco::checa_mao_de_11(){
+	int _mao = 0;
+	std::size_t _jogador;
+	for(std::size_t pos = 0; pos < numero_de_jogadores(); pos++){
+		if(pontuacao(pos) == 11){
+			if(_jogador == 0 || _jogador == 2){
+				_jogador = 0;
+			}
+			else if(_jogador == 1 || _jogador == 3){
+				_jogador = 1;
+			}
+			_mao ++;
+		}
+	}
+
+	if(_mao >= 1){
+		return _jogador;
+	}
+	return -1;
+}
+
+bool Jogo_Truco::ia_aceita_mao_11(){
+	int cartas_altas = 0;
+	for(std::size_t i = 0 ; i < mostra_mao_jogador(1).size(); i++){
+		if(mostra_mao_jogador(1)[i].numero() <= 3 ||
+				mostra_mao_jogador(1)[i].numero() == (mostra_monte(1)[0].second).numero() +1){
+			cartas_altas ++;
+		}
+	}
+	for(std::size_t i = 0 ; i < mostra_mao_jogador(3).size(); i++){
+		if(mostra_mao_jogador(3)[i].numero() <= 3 ||
+				mostra_mao_jogador(3)[i].numero() == (mostra_monte(1)[0].second).numero() +1){
+			cartas_altas ++;
+		}
+	}
+	if(cartas_altas == 3){
 		return true;
 	}
 	else{
@@ -450,8 +482,8 @@ int Jogo_Truco::compara_vira_12(p3::Carta c1,p3::Carta c2){
 }
 
 int Jogo_Truco::compara_valor(p3::Carta c1 , p3::Carta c2){
-	if((c1.numero() == 3 || c1.numero() == 2 || c1.numero() == 1) &&
-			(c2.numero() == 3 || c2.numero() == 2 || c2.numero() == 1)){
+	if((c1.numero() <=3) &&
+			(c2.numero() <= 3)){
 		if(c1.numero() > c2.numero()){
 			return (int)(Compara::Maior);
 		}
@@ -462,13 +494,13 @@ int Jogo_Truco::compara_valor(p3::Carta c1 , p3::Carta c2){
 			return (int)(Compara::Menor);
 		}
 	}
-	else if(c1.numero() == 3 || c1.numero() == 2 || c1.numero() == 1){
-		if(c2.numero() != 3 && c2.numero() != 2 && c2.numero() != 1){
+	else if(c1.numero() <= 3){
+		if(c2.numero() > 3){
 			return (int)(Compara::Maior);
 		}
 	}
-	else if(c2.numero() == 3 || c2.numero() == 2 || c2.numero() == 1){
-		if(c1.numero() != 3 && c1.numero() != 2 && c1.numero() != 1){
+	else if(c2.numero() <= 3){
+		if(c1.numero() > 3){
 			return (int)(Compara::Menor);
 		}
 	}
