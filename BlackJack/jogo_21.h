@@ -68,7 +68,7 @@ private:
     std::size_t const pos_jogador = 1;
     //posicao do dealer
     std::size_t const pos_dealer = 0;
-    
+    int ultima_aposta;
     
     //verifica quantos pontos a carta vale, decebe numero da carta
     int verifica_ponto(int num_carta);

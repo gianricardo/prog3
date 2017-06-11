@@ -30,12 +30,13 @@ bool IA_Dealer::decidir(){
 }
 
 
-bool IA_Dealer::agir (BlackJack &Game){
+void IA_Dealer::agir (BlackJack &Game){
     meus_pontos=Game.soma_mao(minha_pos);
     bool pede=decidir(); //decide se pede hit
     while (pede){
         Game.hit(minha_pos); //se verdadeiro pede
+        meus_pontos=Game.soma_mao(minha_pos);
         pede=decidir(); //decide se pede hit na proxima
     }
-    return true;
+    return;
 }

@@ -43,6 +43,7 @@ int main(void) {
     
 
     while (continuar){
+        r=true;
         Game.inicia_rodada_21();
         I.placar(Game.saldo());
         if(!Game.pode_apostar()){ //verifica se esta apto a apostar;

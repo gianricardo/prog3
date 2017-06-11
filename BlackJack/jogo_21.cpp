@@ -72,7 +72,8 @@ std::string BlackJack::nome_jogador(){
 
 
 bool BlackJack::apostar(int a){
-    return Banco.set_aposta(a);
+    ultima_aposta=a;
+    return Banco.set_aposta(ultima_aposta);
     
 }
 
@@ -142,5 +143,5 @@ bool BlackJack::jogada(int i){
 }
 
 int BlackJack::aposta(){
-    return Banco.get_aposta();
+    return ultima_aposta;
 }

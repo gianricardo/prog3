@@ -23,7 +23,7 @@ public:
     IA_Dealer (BlackJack &Game);
     //return true caso queira hit, false caso queira parar;
     bool decidir();
-    bool agir (BlackJack &Game);
+    void agir (BlackJack &Game);
     
 protected:
     int meus_pontos;

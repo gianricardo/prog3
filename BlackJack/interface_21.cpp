@@ -17,6 +17,7 @@ string Interface::novo(){
     
     cout<<"\nDigite seu nome:";
     cin>>n;
+    cin.clear();
     nome=n;
     return nome;
 }
@@ -34,6 +35,7 @@ int Interface::aposta(){
     cout<<"Faça sua aposta, "<<nome<<":";
     int a;
     cin>>a;
+    cin.clear();
     return a;
 }
 
@@ -67,6 +69,7 @@ int Interface::jogue(){
     cout<<nome<<", faça sua jogada:"<<endl;
     cout<<"1 = hit\n2 = dobrar aposta\n3 = finalizar jogada"<<endl;
     cin>>j;
+    cin.clear();
     return j;
 }
 
@@ -89,6 +92,7 @@ bool Interface::continuar(){
     int a;
     cout<<"Deseja jogar uma nova partida?\n1 = Sim\n2 = Não"<<endl;
     cin>>a;
+    cin.clear();
     switch (a) {
         case 1:
             return true;
