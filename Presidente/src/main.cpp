@@ -16,8 +16,8 @@ int main(int argc, char *argv[]){
 	std::string player_name;
 	std::cout<<"Insira o nome do jogador: "<<std::endl;
 	std::cin>>player_name;
-	RegraPresidente rule_president(4,13,5,-1,-1,52,Regra::modo_fim::rodadas);
-	JogoPresidente president(&rule_president,{player_name,"West","North","East"});
+	RegraPresidente *rule_president = new RegraPresidente(4,13,5,-1,-1,52,Regra::modo_fim::rodadas);
+	JogoPresidente president(rule_president,{player_name,"West","North","East"});
 	std::vector<Carta> playing;
 	president.novo_monte();
 	president.novo_monte();
@@ -32,11 +32,11 @@ int main(int argc, char *argv[]){
 	unsigned int pass_count=0;
 	while(president.jogando()){
 		playing=president.mostra_mao_jogador_atual();
-		if(president.posicao_jogador_atual()==0 && president.esta_apto(0)){
+		if(president.posicao_jogador_atual()==5 && president.esta_apto(0)){
 			for(auto cardp : playing){
 				std::cout << cardp.numero() << " ";
 			}
-			std::cout << std::endl;
+			std::cout << "\n";
 			std::cout<<"Suas cartas jogaveis são:\n";
 			for(auto cardp : playing){
 				if(cardp.numero()>last_played_card && president.how_many_in_the_hand(playing,cardp.numero())>=number_of_cards_played)
@@ -47,7 +47,7 @@ int main(int argc, char *argv[]){
 				std::cout<<"A ultima carta jogada foi: ";
 				for(int j=0;j<number_of_cards_played;j++)
 					std::cout<<last_played_card<<' ';
-				std::cout<<std::endl;
+				std::cout << "\n";
 			}
 			std::cout<<"Digite o numero da carta que deseja jogar, 0 para passar:";
 			std::cin>>card;
@@ -79,7 +79,7 @@ int main(int argc, char *argv[]){
 			}else pass_count++;
 		}
 		std::cout<<"A carta jogada foi:"<<last_played_card<<std::endl;
-
+		std::cout<<"ela foi jogada pelo jogador: "<<wining<<std::endl;
 		if(last_played_card==13 || pass_count==(president.numero_jogadores_aptos()-1)){
 			if(president.esta_apto(wining))	president.muda_jogador_atual(wining);
 			last_played_card=-1;
@@ -89,7 +89,12 @@ int main(int argc, char *argv[]){
 			if(president.posicao_jogador_atual()==3) president.muda_jogador_atual(0);
 			else president.muda_jogador_atual(president.posicao_jogador_atual()+1);
 		}
-		president.verifica_jogador_unico();
+		std::cout<<"Jogadores aptos: "<<president.numero_jogadores_aptos()<<std::endl;
+		std::cout<<"pass_count: "<<pass_count<<std::endl;
+		if(president.numero_jogadores_aptos()==0){
+			last_played_card=-1;
+			number_of_cards_played=0;
+		}
 		president.fim_jogada();
 	}
 	return 0;

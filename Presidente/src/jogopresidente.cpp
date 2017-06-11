@@ -8,6 +8,7 @@
 #include "jogopresidente.h"
 
 JogoPresidente::JogoPresidente(p3::Regra *r,std::vector<std::string> p) : p3::Jogo(r,p){
+	ordena_mao_jogador();
 }
 
 JogoPresidente::~JogoPresidente() {
@@ -64,6 +65,7 @@ void JogoPresidente::fim_jogada(){
 		pass_card(find_lowest(2,retorna_pres()),retorna_pres(),retorna_bobo());
 		pass_card(find_highest(1,retorna_vicebobo()),retorna_vicebobo(),retorna_vicepres());
 		pass_card(find_lowest(1,retorna_vicepres()),retorna_vicepres(),retorna_vicebobo());
+		ordena_mao_jogador();
 		_rodada++;
 		muda_jogador_atual(retorna_pres());
 		_positions.clear();
@@ -96,9 +98,11 @@ std::vector<int> JogoPresidente::find_highest(int numbercards,std::size_t player
 	int maior=0;
 	int maior2=0;
 	for(auto c : mostra_mao_jogador(player)){
-		if(c.numero() > maior){
+		if(c.numero() >= maior && c.numero()>=maior2){
 			maior2=maior;
 			maior=c.numero();
+		}else if(c.numero()>=maior2){
+			maior2=c.numero();
 		}
 	}
 	cards.push_back(maior);
@@ -111,13 +115,15 @@ std::vector<int> JogoPresidente::find_lowest(int numbercards,std::size_t player)
 	int menor=14;
 	int menor2=14;
 	for(auto c : mostra_mao_jogador(player)){
-		if(c.numero() < menor){
+		if(c.numero() <= menor && c.numero()<=menor2){
 			menor2=menor;
 			menor=c.numero();
+		}else if(c.numero()<=menor2){
+			menor2=c.numero();
 		}
 	}
 	cards.push_back(menor);
-	cards.push_back(menor2);
+	if(numbercards>1) cards.push_back(menor2);
 	return cards;
 }
 
@@ -160,21 +166,46 @@ void JogoPresidente::verifica_jogador_pontuacao_maxima(){
 
 void JogoPresidente::declara_vencedor(std::size_t j){
 	std::cout<<"O jogador vencedor foi o da posicao "<<j<<std::endl;
+	std::cout<<"Pontuacoes:\n";
+	muda_jogador_atual(0);
+	std::cout<<"Jogador 0: "<<pontuacao_jogador_atual()<<std::endl;
+	muda_jogador_atual(1);
+	std::cout<<"Jogador 1: "<<pontuacao_jogador_atual()<<std::endl;
+	muda_jogador_atual(2);
+	std::cout<<"Jogador 2: "<<pontuacao_jogador_atual()<<std::endl;
+	muda_jogador_atual(3);
+	std::cout<<"Jogador 3: "<<pontuacao_jogador_atual()<<std::endl;
 }
 
 void JogoPresidente::verifica_jogador_unico(){
-	std::size_t jog_aptos = 0;
-	std::size_t last = _jog_atual;
-	for(std::size_t i = 0; i < _mesa.numero_jogadores(); i++){
+	int jog_aptos = 0;
+	int last = 0;
+	for(unsigned int i = 0; i < _mesa.numero_jogadores(); i++){
 		if(_mesa.ver_jogador(i).esta_apto()){
 			jog_aptos++;
 			last = i;
 		}
 	}
 	if(jog_aptos > 1) return;
-	for(auto c : mostra_mao_jogador(last)){
+	std::vector<Carta> cards = mostra_mao_jogador(last);
+	for(auto c : cards){
 		_mesa.jogador_tira_carta(c,last);
 	}
 	add_position(last);
 	muda_aptidao(last);
+}
+
+void JogoPresidente::ordena_mao_jogador(){
+	std::vector<Carta> hand;
+	for(auto c : mostra_mao_jogador(0)){
+		hand.push_back(c);
+		_mesa.jogador_tira_carta(c,0);
+	}
+	auto compara=[](Carta a, Carta b){
+		return b.numero() > a.numero();
+	};
+	std::sort(hand.begin(), hand.end(), compara);
+	for(int k=0;k<13;k++){
+		_mesa.jogador_recebe_carta(hand[k],0);
+	}
 }
