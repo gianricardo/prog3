@@ -39,7 +39,7 @@ Napoleao::~Napoleao() {
 
 
 void Napoleao::inicia_jogo(){
-
+	inicia_rodada();
 
 
 }

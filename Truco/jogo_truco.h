@@ -57,6 +57,8 @@ public:
 
 	bool verifica_truco(std::size_t _jogador_trucou);
 
+	void mao_de_11();
+
 private:
 	//Compara a forca das manilhas de acordo com o truco
 	bool compara_naipe(p3::Carta c1,p3::Carta c2);
