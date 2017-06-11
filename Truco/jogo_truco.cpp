@@ -38,6 +38,16 @@ Jogo_Truco::~Jogo_Truco() {
 	// TODO Auto-generated destructor stub
 }
 
+bool Jogo_Truco::jogando_truco(){
+	std::size_t pos = 0;
+	for(pos = 0; pos < numero_de_jogadores(); pos ++){
+		if(pontuacao(pos) >= 12){
+			_jogando = false;
+		}
+	}
+	return _jogando;
+}
+
 bool Jogo_Truco::checa_fim_rodada(){
 	if(_jog_atual == _jogador_termina){
 		return true;
@@ -203,10 +213,10 @@ std::size_t Jogo_Truco::jogador_ganhou_turno(){
 				cont3 ++;
 			}
 		}
-		if(cont1 == 2){
+		if(cont1 >= 2){
 			vencedor = 0;
 		}
-		else if(cont2 == 2){
+		else if(cont2 >= 2){
 			vencedor =  1;
 		}
 		else if((_jogadores_ganharam[1] == 2|| _jogadores_ganharam[2] ==2) && cont1 == cont2 && cont1 == 1){
@@ -221,6 +231,7 @@ std::size_t Jogo_Truco::jogador_ganhou_turno(){
 
 void Jogo_Truco::comeca_novo_turno(){
 	_truco = false;
+	_valor_truco = 0;
 	_rodada = 0;
 
 	_jogador_comeca_turno++;
@@ -246,10 +257,7 @@ void Jogo_Truco::comeca_novo_turno(){
 
 	for(std::size_t pos_jogador=0; pos_jogador < numero_de_jogadores(); pos_jogador++)
 	{
-		std::size_t _tamanho = mostra_mao_jogador(pos_jogador).size();
-		for(std::size_t pos_carta = 0; pos_carta < _tamanho; pos_carta++){
-			_mesa.jogador_tira_carta(mostra_mao_jogador(pos_jogador)[0], pos_jogador);
-		}
+		esvazia_mao(pos_jogador);
 	}
 
 	move_carta_mm(1,0,true,true);
@@ -371,7 +379,7 @@ bool Jogo_Truco::verifica_truco(std::size_t _jogador_trucou){
 				}
 			}
 		}
-		if(cartas_altas >= 2){
+		if(cartas_altas >= 1){
 			aceitou_truco++;
 		}
 		if(posicao == numero_de_jogadores() - 1){
@@ -391,21 +399,25 @@ bool Jogo_Truco::verifica_truco(std::size_t _jogador_trucou){
 }
 
 int Jogo_Truco::checa_mao_de_11(){
-	int _mao = 0;
+	int _mao1 = 0;
+	int _mao2 = 0;
 	std::size_t _jogador;
 	for(std::size_t pos = 0; pos < numero_de_jogadores(); pos++){
 		if(pontuacao(pos) == 11){
-			if(_jogador == 0 || _jogador == 2){
+			if(pos == 0 || pos == 2){
 				_jogador = 0;
+				_mao1 ++;
 			}
-			else if(_jogador == 1 || _jogador == 3){
+			else if(pos == 1 || pos == 3){
 				_jogador = 1;
+				_mao2 ++;
 			}
-			_mao ++;
 		}
 	}
-
-	if(_mao >= 1){
+	if(_mao1 >= 1 && _mao2 >= 1){
+		return 2;
+	}
+	else if(_mao1 >=1 || _mao2 >= 1){
 		return _jogador;
 	}
 	return -1;
