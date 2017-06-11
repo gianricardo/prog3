@@ -45,6 +45,10 @@ public:
     bool apostar(int);
     //dobra o valor da aposta;
     bool dobrar_aposta ();
+    //verifica ganhador
+    //true=jogador, false=dealer;
+    bool verifica_ganhador();
+    
 private:
     Banco21 Banco;
     //posicao do jogador

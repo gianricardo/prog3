@@ -80,4 +80,23 @@ bool BlackJack::dobrar_aposta(){
     return Banco.set_aposta(Banco.get_aposta()*2);
 }
 
+bool BlackJack::verifica_ganhador(){
+    if(soma_mao(pos_jogador)==21){ //se o jogador ffizer 21, jogador vence
+        return true;
+    }
+    if(soma_mao(pos_dealer)>21){ //se o dealer estoura, jogador vence
+        return true;
+    }
+    if(soma_mao(pos_jogador)>21){ //se o jogador estoura mas o dealer nao o cassino ganha
+        return false;
+    }
+    
+    if(21-soma_mao(pos_jogador)<21-soma_mao(pos_dealer)){//se jogador se aproxima mais de 21 ele ganha
+        return true;
+    }
+    
+    return false; //se nenhuma das anteriores, o cassino ganha
+
+}
+
 

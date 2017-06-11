@@ -35,6 +35,11 @@ int main(void) {
     
     Regra21 *Rules = new Regra21();
     BlackJack Game(Rules, nome);
+    bool continuar=true; //em quanto quiser jogar
+    while (continuar){
+        Interface.
+        Game.apostar();
+    }
     
     
     
