@@ -31,6 +31,12 @@ using namespace p3;
 
 int main(void) {
     
+    std::string nome = "Player";
+    
+    Regra21 *Rules = new Regra21();
+    BlackJack Game(Rules, nome);
+    
+    
     
     return 0;
 }

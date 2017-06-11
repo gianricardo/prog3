@@ -43,6 +43,8 @@ public:
     std::string nome_jogador();
     //realiza uma aposta
     bool apostar(int);
+    //dobra o valor da aposta;
+    bool dobrar_aposta ();
 private:
     Banco21 Banco;
     //posicao do jogador

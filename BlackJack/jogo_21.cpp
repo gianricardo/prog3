@@ -76,3 +76,8 @@ bool BlackJack::apostar(int a){
     
 }
 
+bool BlackJack::dobrar_aposta(){
+    return Banco.set_aposta(Banco.get_aposta()*2);
+}
+
+
