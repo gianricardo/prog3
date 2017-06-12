@@ -39,7 +39,7 @@ void BlackJack::hit(std::size_t player_pos){
     vira_carta_jogador(card_pos,player_pos);
 }
 
-void BlackJack::inicia_partida_21( ){
+void BlackJack::inicia_rodada_21( ){
     vira_carta_jogador(0,0); //coloca uma carta do dealer virada para cima
     vira_carta_jogador(0,1);//vira as duas cartas do jogador
     vira_carta_jogador(1,1);
@@ -72,12 +72,76 @@ std::string BlackJack::nome_jogador(){
 
 
 bool BlackJack::apostar(int a){
-    return Banco.set_aposta(a);
+    ultima_aposta=a;
+    return Banco.set_aposta(ultima_aposta);
     
 }
 
 bool BlackJack::dobrar_aposta(){
+    if (saldo()>Banco.set_aposta(Banco.get_aposta()*2)){
     return Banco.set_aposta(Banco.get_aposta()*2);
+    }
+    return Banco.set_aposta(saldo());
+}
+
+bool BlackJack::verifica_ganhador(){
+    if(soma_mao(pos_jogador)==21){ //se o jogador ffizer 21, jogador vence
+        Banco.resultado(true);
+        return true;
+
+    }
+    if(soma_mao(pos_dealer)>21){ //se o dealer estoura, jogador vence
+        Banco.resultado(true);
+        return true;
+    }
+    if(soma_mao(pos_jogador)>21){ //se o jogador estoura mas o dealer nao o cassino ganha
+        Banco.resultado(false);
+        return false;
+    }
+    
+    if(21-soma_mao(pos_jogador)<21-soma_mao(pos_dealer)){//se jogador se aproxima mais de 21 ele ganha
+        Banco.resultado(true);
+        return true;
+    }
+    Banco.resultado(false);
+    return false; //se nenhuma das anteriores, o cassino ganha
+
+}
+
+bool BlackJack::pode_apostar(){
+    return Banco.autoriza_jogada();
+}
+
+int BlackJack::saldo(){
+    return Banco.get_dj();
 }
 
 
+std::vector<Carta> BlackJack:: mao_dealer(){
+    return mostra_mao_jogador(pos_d());
+}
+
+std::vector<Carta> BlackJack:: mao_jogador(){
+    return mostra_mao_jogador(pos_j());
+}
+
+
+bool BlackJack::jogada(int i){
+    switch (i) {
+        case 1:
+            hit(pos_j());
+            return true;
+            break;
+        case 2:
+            return dobrar_aposta();
+            break;
+        default:
+            return false;
+            break;
+    }
+    
+}
+
+int BlackJack::aposta(){
+    return ultima_aposta;
+}

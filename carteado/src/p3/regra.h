@@ -37,7 +37,8 @@ public:
 		  int cartas_inicial = 52,
 		  modo_fim fim = modo_fim::pontuacao, 
 		  condicao_vitoria vit = condicao_vitoria::maior_pontuacao, 
-		  condicao_derrota der = condicao_derrota::nenhuma );
+		  condicao_derrota der = condicao_derrota::nenhuma, 
+		  int auto_pontos_carta_mao = 0);
 
 	//Destrutor
 	virtual ~Regra();
@@ -69,6 +70,9 @@ public:
 	//retorna a condicao de derrota estabelecida
 	condicao_derrota cond_der() const;
 
+	//retorna a pontuacao automatica por carta na mao
+	int pontuacao_carta_mao() const;
+
 protected:
 
 	std::size_t _numero_de_jogadores;	// numero de jogadores que iniciam a partida
@@ -80,6 +84,8 @@ protected:
 	modo_fim _fim;						// condicao estabelecida para fim de jogo
 	condicao_vitoria _vit;				// condicao estabelecida para vitoria de um jogador
 	condicao_derrota _der;				// condicao estabelecida para derrota de um jogar
+
+	int _pont_cartas_mao; 				// pontucao somada e subtraida automaticamente por carta na mao
 };
 
 } /* namespace p3 */

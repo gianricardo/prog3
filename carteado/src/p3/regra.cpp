@@ -17,7 +17,9 @@ Regra::Regra(std::size_t numero_de_jogadores,
 			 int cartas_inicial /* = 52 */,
 			 modo_fim fim /* = modo_fim::pontuacao */, 
 			 condicao_vitoria vit /* = condicao_vitoria::maior_pontuacao */, 
-			 condicao_derrota der /* = condicao_derrota::nenhuma */) : _fim(fim), _vit(vit), _der(der){
+			 condicao_derrota der /* = condicao_derrota::nenhuma */,
+			 int auto_pontos_carta_mao /* = 0 */) : 
+			 					_fim(fim), _vit(vit), _der(der), _pont_cartas_mao(auto_pontos_carta_mao) {
 	
 	_numero_de_jogadores = numero_de_jogadores;
 	_cartas_inicial = cartas_inicial;
@@ -60,6 +62,11 @@ Regra::condicao_vitoria Regra::cond_vit() const {
 Regra::condicao_derrota Regra::cond_der() const {
 
 	return _der;
+}
+
+int Regra::pontuacao_carta_mao() const {
+
+	return _pont_cartas_mao;
 }
 
 } /* namespace p3 */

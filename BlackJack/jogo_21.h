@@ -30,7 +30,7 @@ public:
     //adicioa uma carta virada para cima a mao do jogador na posicao pos
     void hit(std::size_t pos);
     //inicia a partia, usar apos criar e apos reiniciar
-    void inicia_partida_21( );
+    void inicia_rodada_21( );
     //retorna posicao do jogador
     std::size_t pos_j()const;
     //retorna posicao do dealer
@@ -45,13 +45,30 @@ public:
     bool apostar(int);
     //dobra o valor da aposta;
     bool dobrar_aposta ();
+    //verifica ganhador
+    //true=jogador, false=dealer;
+    bool verifica_ganhador();
+    //verifica se o jogador pode apostar;
+    bool pode_apostar();
+    //mostra quanto dinheiro o jogador tem no banco
+    int saldo();
+    //mostra a mao do dealer
+    std::vector<Carta> mao_dealer();
+    //mostra a mao do jogador
+    std::vector<Carta> mao_jogador();
+    
+    bool jogada(int i);
+    
+    int aposta();
+
 private:
+    
     Banco21 Banco;
     //posicao do jogador
     std::size_t const pos_jogador = 1;
     //posicao do dealer
     std::size_t const pos_dealer = 0;
-    
+    int ultima_aposta;
     
     //verifica quantos pontos a carta vale, decebe numero da carta
     int verifica_ponto(int num_carta);
