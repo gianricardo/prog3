@@ -35,19 +35,12 @@ Jogo_Truco::Jogo_Truco(p3::Regra *regra, std::vector<std::string> nomes):p3::Jog
 }
 
 Jogo_Truco::~Jogo_Truco() {
-	// TODO Auto-generated destructor stub
 }
 
-bool Jogo_Truco::jogando_truco(){
-	std::size_t pos = 0;
-	for(pos = 0; pos < numero_de_jogadores(); pos ++){
-		if(pontuacao(pos) >= 12){
-			_jogando = false;
-		}
-	}
-	return _jogando;
+void Jogo_Truco::fim_jogo(){
+	verifica_fim_de_jogo();
+	return;
 }
-
 bool Jogo_Truco::checa_fim_rodada(){
 	if(_jog_atual == _jogador_termina){
 		return true;
@@ -267,12 +260,15 @@ void Jogo_Truco::comeca_novo_turno(){
 		move_carta_mm(2,0,true,true);
 	}
 
-	restaurar_monte_inicial();
-	embaralhar_monte_principal();
-	_mesa.distribuir(cartas_jogadores());
+	if(jogando()){
 
-	move_carta_mm(0,1,true,true);
-	vira_carta_monte(1,true);
+		restaurar_monte_inicial();
+		embaralhar_monte_principal();
+		_mesa.distribuir(cartas_jogadores());
+
+		move_carta_mm(0,1,true,true);
+		vira_carta_monte(1,true);
+	}
 
 }
 
@@ -444,8 +440,6 @@ bool Jogo_Truco::ia_aceita_mao_11(){
 		return false;
 	}
 }
-
-
 //Funcoes privadas
 
 bool Jogo_Truco::compara_naipe(p3::Carta c1,p3::Carta c2){

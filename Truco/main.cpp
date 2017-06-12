@@ -43,8 +43,7 @@ int main(){
 		break;
 	}
 
-	p4::Regra_Truco r1(numero_jogadores,3,3,12,0,40);
-	p4::Regra_Truco *r1_ptr = &r1;
+	p4::Regra_Truco *r1_ptr = new p4::Regra_Truco(numero_jogadores,3,3,12,0,40);
 	p4::Jogo_Truco j1(r1_ptr,_jogadores);
 
 	j1.novo_monte();
@@ -55,9 +54,10 @@ int main(){
 	j1.move_carta_mm(0,1,true,true);
 	j1.vira_carta_monte(1,true);
 
-	while(j1.jogando_truco()){
+	while(j1.jogando()){
 		std::cout<< "Novo Turno" << std::endl;
 		truco = 'n';
+		aumenta = 'n';
 
 		std::cout<< "\n Pontuacao dos jogadores: " << std::endl;
 		for(auto i = 0; i < (int)j1.numero_de_jogadores(); i++){
@@ -102,8 +102,6 @@ int main(){
 						j1.jogador_ganhou_rodada(jogador_ganhando);
 						j1.fim_rodada(jogador_ganhando);
 					}
-					j1.jogador_soma_pontos(j1.jogador_ganhou_turno(),j1.valor_pontuacao());
-
 					break;
 				}
 			}
@@ -118,8 +116,6 @@ int main(){
 						j1.jogador_ganhou_rodada(jogador_ganhando);
 						j1.fim_rodada(jogador_ganhando);
 					}
-					j1.jogador_soma_pontos(j1.jogador_ganhou_turno(),j1.valor_pontuacao());
-
 					break;
 				}
 			}
@@ -150,23 +146,14 @@ int main(){
 						std::cout<< "Deseja aumentar pedir " << j1.valor_truco() +3 << "? (s/n): ";
 						std::cin >> aumenta;
 						std::cout<< "\n";
-						if(aumenta == 's' && j1.verifica_truco(j1.posicao_jogador_atual()) == true){
-							j1.truco(j1.posicao_jogador_atual());
-						}
-						else if(aumenta == 's' && j1.verifica_truco(j1.posicao_jogador_atual() == false)){
-							jogador_ganhando = j1.posicao_jogador_atual();
-							while(!j1.fim_turno()){
-								j1.jogador_ganhou_rodada(jogador_ganhando);
-								j1.fim_rodada(jogador_ganhando);
-
-							}
-							break;
-						}
 					}
 
 					//Caso todos aceitem a rodada prossegue
-					if(truco == 's' && j1.verifica_truco(j1.posicao_jogador_atual()) == true){
+					if((truco == 's' && j1.verifica_truco(j1.posicao_jogador_atual()) == true) ||
+							(aumenta == 's' && j1.verifica_truco(j1.posicao_jogador_atual()) == true)){
+
 						truco = 'n';
+						aumenta = 'n';
 						j1.truco(j1.posicao_jogador_atual());
 
 						//O jogador que pediu o truco escolhe uma carta para jogar
@@ -221,8 +208,12 @@ int main(){
 						}
 					}
 					//caso o jogador escolha pedir truco mas os outros jogadores nao aceitem
-					else if(truco == 's' && j1.verifica_truco(j1.posicao_jogador_atual()) == false){
+					else if((truco == 's' && j1.verifica_truco(j1.posicao_jogador_atual()) == false) ||
+								(aumenta == 's' && j1.verifica_truco(j1.posicao_jogador_atual()) == false)){
+
 						truco = 'n';
+						aumenta ='n';
+
 						jogador_ganhando = j1.posicao_jogador_atual();
 						while(!j1.fim_turno()){
 							j1.jogador_ganhou_rodada(jogador_ganhando);
@@ -232,8 +223,8 @@ int main(){
 						break;
 					}
 
-					//Caso o jogador escolha nao pedir truco
-					else if(truco == 'n'){
+					//Caso o jogador escolha nao pedir truco nem aumentar
+					else{
 
 						//O jogador escolhe uma de suas cartas na mao
 						std::cout << "Escolha a Carta (1 a "<< j1.mostra_mao_jogador_atual().size() <<" ): ";
@@ -348,15 +339,20 @@ int main(){
 
 		}
 
-		if(j1.checa_mao_de_11() == -1 || (j1.checa_mao_de_11() == 0 && mao_de_11 =='s') ||
-										(j1.checa_mao_de_11() == 1 && j1.ia_aceita_mao_11())){
+		if(j1.checa_mao_de_11() == -1 || (j1.checa_mao_de_11() == 0 && mao_de_11 =='n') ||
+										(j1.checa_mao_de_11() == 1 && !j1.ia_aceita_mao_11()) || j1.checa_mao_de_11() ==2){
 
 			std::cout<< "Jogador Ganhou Turno: " << j1.jogador_ganhou_turno() << std::endl;
 			std::cout<< "Jogador Ganhou: " << j1.valor_pontuacao() << " pontos" << std::endl;
 			j1.jogador_soma_pontos(j1.jogador_ganhou_turno(),j1.valor_pontuacao());
 		}
 
-		else if(j1.checa_mao_de_11() != -1 && (mao_de_11 = 's' || j1.ia_aceita_mao_11()) ){
+		else if(j1.checa_mao_de_11() == 0 && (mao_de_11 = 's')){
+			std::cout<< "Jogador Ganhou Turno: " << j1.jogador_ganhou_turno() << std::endl;
+			std::cout<< "Jogador Ganhou: " << j1.valor_pontuacao() << " pontos" << std::endl;
+			j1.jogador_soma_pontos(j1.jogador_ganhou_turno(),3);
+		}
+		else if(j1.checa_mao_de_11() == 1 && j1.ia_aceita_mao_11()){
 			std::cout<< "Jogador Ganhou Turno: " << j1.jogador_ganhou_turno() << std::endl;
 			std::cout<< "Jogador Ganhou: " << j1.valor_pontuacao() << " pontos" << std::endl;
 			j1.jogador_soma_pontos(j1.jogador_ganhou_turno(),3);
@@ -364,9 +360,14 @@ int main(){
 
 		std::cout<< "Fim turno" << std::endl;
 		j1.comeca_novo_turno();
+		j1.fim_jogo();
 	}
 
-	j1.reiniciar();
+	std::cout<< "\n Pontuacao dos jogadores: " << std::endl;
+	for(auto i = 0; i < (int)j1.numero_de_jogadores(); i++){
+		std::cout<< "\n Posicao Jogador: " << i << std::endl;
+		std::cout<< "Pontuacao: " << j1.pontuacao(i) << std::endl;
+	}
 
 	return 0;
 }
