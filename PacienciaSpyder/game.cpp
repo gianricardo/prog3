@@ -70,16 +70,29 @@ void OneSuitGame::show(){
         
     }while(_continue);
     
-    for(int j = i; j < 23; j++) std::cout << '\n';
+    for(int j = i; j < 22; j++) std::cout << '\n';
     
     for(int i = 0; i < 10; i++) std::cout << '\t';
     
     std::cout << JogoBasico<OneSuitCard>::mostra_monte(0).size()/10;
-        
+    
+    std::cout << '\n';
+    
+    for(int i = 0; i < 9; i++) std::cout << '\t';
+    
+    auto str = std::to_string(JogoBasico<OneSuitCard>::pontuacao_jogador_atual());
+    
+    for(int i = str.size(); i < 9; i++) std::cout << ' ';
+    
+    std::cout << str; 
+    
     std::cout << std::endl;
 }
 
 bool OneSuitGame::move(std::size_t deck1, std::size_t deck2, std::size_t n_cards){
+    
+    if(deck1 >= 10) return false;
+    if(deck2 >= 10) return false;
     
     auto d1 = JogoBasico<OneSuitCard>::mostra_monte(deck1 + 1);
     auto d2 = JogoBasico<OneSuitCard>::mostra_monte(deck2 + 1);
@@ -88,7 +101,7 @@ bool OneSuitGame::move(std::size_t deck1, std::size_t deck2, std::size_t n_cards
     
     if(aux == -1) return false;
     
-    if(d1[aux].second.numero() != d2.back().second.numero() - 1) return false;
+    if(d2.size() > 0) if(d1[aux].second.numero() != d2.back().second.numero() - 1) return false;
     
     for(std::size_t i = 0; i < n_cards; i++) move_carta_mj(deck1+1, 0, false);
     
@@ -97,6 +110,17 @@ bool OneSuitGame::move(std::size_t deck1, std::size_t deck2, std::size_t n_cards
     for(auto it = vet.rbegin(); it != vet.rend(); it++) move_carta_jm(*it, 0, deck2+1, false);
     
     if(aux != 0) if(!d1[aux-1].first) JogoBasico<OneSuitCard>::vira_carta_monte(deck1+1, false);
+    
+    JogoBasico<OneSuitCard>::jogador_subtrai_pontos(1);
+    
+    if(_verify_sequence(d2, 13) != -1){
+        
+        std::cout << "APARECEU AQUI" << std::endl;
+        
+        for(std::size_t i = 0; i < n_cards; i++) move_carta_mj(deck2, 0, false);
+        
+        if(JogoBasico<OneSuitCard>::mostra_mao_jogador_atual().size() == 0) next_turn();
+    }
     
     return true;
 }
@@ -121,6 +145,8 @@ void OneSuitGame::_turn_all(){
 
 int OneSuitGame::_verify_sequence(std::vector<std::pair<bool, OneSuitCard> >& deck, std::size_t n_cards){
  
+    if(n_cards > deck.size()) return -1;
+    
     std::size_t aux = deck.size() - n_cards;
     
     if(!deck[aux].first) return -1;
