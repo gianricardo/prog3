@@ -195,6 +195,10 @@ public:
 	//chama o metodo de mesa.h
 	void embaralhar_monte_principal();
 
+	//esvazia mao do jogador especificado em _jogador
+	//chama o metodo esvazia_mao da mesa
+	void esvazia_mao(std::size_t _jogador);
+
 protected:
 
 	static const std::size_t jogador_atual = std::numeric_limits<std::size_t>::max();
@@ -486,7 +490,7 @@ template<class CARTA> void JogoBasico<CARTA>::verifica_fim_de_jogo()
 	case (Regra::modo_fim::pontuacao) :	//caso de um jogador ter atingido pontuacao maxima
 		for(std::size_t pos_jogador = 0; pos_jogador < _mesa.numero_jogadores(); pos_jogador++)
 		{
-			if(_mesa.ver_jogador(pos_jogador).esta_apto() && _mesa.ver_jogador(pos_jogador).pontuacao() == _regra->pontuacao_max())
+			if(_mesa.ver_jogador(pos_jogador).esta_apto() && _mesa.ver_jogador(pos_jogador).pontuacao() >= _regra->pontuacao_max())
 				declara_fim_de_jogo();
 		}
 		break;
@@ -778,6 +782,12 @@ template <class CARTA> void JogoBasico<CARTA>::limpa_outros_montes(){
 template <class CARTA> void JogoBasico<CARTA>::embaralhar_monte_principal(){
 	_mesa.embaralhar_monte_principal();
 }
+
+template <class CARTA> void JogoBasico<CARTA>::esvazia_mao(std::size_t _jogador){
+	_mesa.esvazia_mao(_jogador);
+	return ;
+}
+
 
 using Jogo = JogoBasico<Carta>;
 
