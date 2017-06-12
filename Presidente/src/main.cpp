@@ -32,7 +32,7 @@ int main(int argc, char *argv[]){
 	unsigned int pass_count=0;
 	while(president.jogando()){
 		playing=president.mostra_mao_jogador_atual();
-		if(president.posicao_jogador_atual()==5 && president.esta_apto(0)){
+		if(president.posicao_jogador_atual()==0 && president.esta_apto(0)){
 			for(auto cardp : playing){
 				std::cout << cardp.numero() << " ";
 			}
