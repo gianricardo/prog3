@@ -47,4 +47,6 @@ isEmpty(MEMCHECKFLAGS) {} else {memcheck_flags.commands = "$(eval CXXFLAGS += $$
 
 QMAKE_EXTRA_TARGETS = veryclean run extraclean DEBUG debug_flags memcheck memcheck_flags
 
+DISTFILES +=
+
 
