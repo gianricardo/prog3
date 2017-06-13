@@ -15,7 +15,7 @@ public:
     
     using p3::Carta::Carta;
     
-    OneSuitCard(int num, Naipe np);
+    OneSuitCard(int num, Naipe np = Naipe::Espadas);
     
 };
 

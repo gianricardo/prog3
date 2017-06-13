@@ -27,7 +27,7 @@ CONFIG += c++14
 
 
 veryclean.depends = clean
-veryclean.commands = find . -type f -executable -exec rm {} + ; find . -type f -name '*.o' -exec rm {} + ; find . -type f -name 'moc_*' -exec rm {} +
+veryclean.commands = "find . -type f -executable -exec rm {} + ; find . -type f -name '*.o' -exec rm {} + ; find . -type f -name 'moc_*' -exec rm {} +"
 
 run.depends = $$TARGET
 run.commands = ./$$TARGET

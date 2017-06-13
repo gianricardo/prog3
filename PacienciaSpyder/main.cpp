@@ -22,12 +22,16 @@ int main(){
         
         std::cin.ignore();
         
+        game.show();
+        
         std::cout << "destine: ";
         std::cin >> dest;
         
         std::cin.ignore();
         
-        std::cout << "cards number: ";
+        game.show();
+        
+        std::cout << "number of cards: ";
         std::cin >> num;
         
         std::cin.ignore();
@@ -40,6 +44,8 @@ int main(){
         std::cin >> quest;
         
         std::cin.ignore();
+        
+        game.show();
         
         if(quest >= 'A' && quest <= 'Z') quest += 'a' - 'A';
         

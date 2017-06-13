@@ -107,19 +107,22 @@ bool OneSuitGame::move(std::size_t deck1, std::size_t deck2, std::size_t n_cards
     
     auto vet = mostra_mao_jogador_atual();
     
-    for(auto it = vet.rbegin(); it != vet.rend(); it++) move_carta_jm(*it, 0, deck2+1, false);
+    auto rend = vet.rbegin() + n_cards;
+    
+    for(auto it = vet.rbegin(); it != rend; it++) move_carta_jm(*it, 0, deck2+1, false);
     
     if(aux != 0) if(!d1[aux-1].first) JogoBasico<OneSuitCard>::vira_carta_monte(deck1+1, false);
     
     JogoBasico<OneSuitCard>::jogador_subtrai_pontos(1);
     
-    if(_verify_sequence(d2, 13) != -1){
+    
+    if(_verify_sequence(JogoBasico<OneSuitCard>::mostra_monte(deck2 + 1), 13) != -1){
         
         std::cout << "APARECEU AQUI" << std::endl;
         
-        for(std::size_t i = 0; i < n_cards; i++) move_carta_mj(deck2, 0, false);
+        for(std::size_t i = 0; i < 13; i++) move_carta_mj(deck2+1, 0, false);
         
-        if(JogoBasico<OneSuitCard>::mostra_mao_jogador_atual().size() == 0) next_turn();
+        if(JogoBasico<OneSuitCard>::mostra_mao_jogador_atual().size() == 104) next_turn();
     }
     
     return true;
@@ -143,7 +146,7 @@ void OneSuitGame::_turn_all(){
     for(int i = 1; i < 11; i++) JogoBasico<OneSuitCard>::vira_carta_monte(i, false);
 }
 
-int OneSuitGame::_verify_sequence(std::vector<std::pair<bool, OneSuitCard> >& deck, std::size_t n_cards){
+int OneSuitGame::_verify_sequence(const std::vector<std::pair<bool, OneSuitCard> >& deck, std::size_t n_cards){
  
     if(n_cards > deck.size()) return -1;
     

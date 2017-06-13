@@ -27,7 +27,7 @@ private:
     
     void _turn_all();
     
-    int _verify_sequence(std::vector<std::pair<bool, OneSuitCard> >& deck, std::size_t n_cards);
+    int _verify_sequence(const std::vector<std::pair<bool, OneSuitCard> >& deck, std::size_t n_cards);
 };
 
 #endif
