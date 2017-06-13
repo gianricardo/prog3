@@ -54,7 +54,8 @@ public:
     //Retorna um vetor contendo as cartas do jogador atual
 	std::vector<CARTA> mostra_mao_jogador_atual() const;
 
-    //Retorna um vetor contendo as cartas do jogador na posi pos
+    //Retorna um vetor contendo as cartas viradas para cim do jogador na posi pos
+    //se a carta estiver virada para baixo ele retorna uma carta de valor "zero"
     std::vector<CARTA> mostra_mao_jogador(std::size_t pos) const;
     
     //Retorna a pontucao do jogador atual
@@ -365,10 +366,11 @@ template<class CARTA> std::vector<CARTA> JogoBasico<CARTA>::mostra_mao_jogador_a
         
         
 template<class CARTA> std::vector<CARTA> JogoBasico<CARTA>::mostra_mao_jogador(std::size_t pos) const{
+    
     auto vet = _mesa.ver_jogador(pos).mostra_mao();
-    return vet;
-
-    //TODO o que significa esta parte do metodo?????????
+    
+    //abaixo:
+    //retorna apenas as cartas viradas para cima, as para baixo voltam como cartas de valor "zero";
 
     std::vector<CARTA> aux;
     
