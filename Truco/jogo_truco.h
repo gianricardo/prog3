@@ -19,6 +19,8 @@ class Jogo_Truco final:public p3::Jogo{
 public:
 	enum class Compara{Maior, Menor, Igual};
 
+	void fim_jogo();
+
 	Jogo_Truco(p3::Regra *regra, std::vector<std::string> nomes);
 	virtual ~Jogo_Truco();
 

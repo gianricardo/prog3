@@ -61,10 +61,10 @@ public:
 	int pontuacao_jogador_atual() const;
 
 	 //Aumenta a pontucao do jogador que esta na posicao "pos" em "pontos" pontos
-	void jogador_soma_pontos(int pontos, int pos);
+	void jogador_soma_pontos(int pontos, std::size_t pos = jogador_atual);
 
     //Diminui a pontucao do jogador que esta na posicao "pos" em "pontos" pontos
-	void jogador_subtrai_pontos(int pontos, int pos);
+	void jogador_subtrai_pontos(int pontos, std::size_t pos = jogador_atual);
 
 	 // move carta do jogador atual para outro jogador
 	bool move_carta_j(CARTA carta, std::size_t j);
@@ -195,6 +195,10 @@ public:
 	//chama o metodo de mesa.h
 	void embaralhar_monte_principal();
 
+	//esvazia mao do jogador especificado em _jogador
+	//chama o metodo esvazia_mao da mesa
+	void esvazia_mao(std::size_t _jogador);
+
 protected:
 
 	static const std::size_t jogador_atual = std::numeric_limits<std::size_t>::max();
@@ -253,6 +257,12 @@ template<class CARTA> JogoBasico<CARTA>::JogoBasico(Regra *regra, std::vector<st
 
 	_mesa.distribuir(cartas_jogadores());
 
+	if(!cartas_jogadores()){
+
+		int aux = _regra->pontuacao_carta_mao()*cartas_jogadores();
+
+		for(std::size_t i = 0; i < numero_de_jogadores(); i++) _mesa.jogador_soma_pontos(aux, i);
+	}
 }
 
 template<class CARTA> JogoBasico<CARTA>::~JogoBasico() {}
@@ -296,6 +306,13 @@ template<class CARTA> void JogoBasico<CARTA>::reiniciar(){
 	_mesa.monte_mesa().restaurar();
     _mesa.limpa_outros_montes();
 	_mesa.distribuir(cartas_jogadores());
+
+	if(!cartas_jogadores()){
+
+		int aux = _regra->pontuacao_carta_mao()*cartas_jogadores();
+
+		for(std::size_t i = 0; i < numero_de_jogadores(); i++) _mesa.jogador_soma_pontos(aux, i);
+	}
 }
 
 template<class CARTA> void JogoBasico<CARTA>::fim_jogada(){
@@ -349,7 +366,10 @@ template<class CARTA> std::vector<CARTA> JogoBasico<CARTA>::mostra_mao_jogador_a
         
 template<class CARTA> std::vector<CARTA> JogoBasico<CARTA>::mostra_mao_jogador(std::size_t pos) const{
     auto vet = _mesa.ver_jogador(pos).mostra_mao();
-    
+    return vet;
+
+    //TODO o que significa esta parte do metodo?????????
+
     std::vector<CARTA> aux;
     
     aux.reserve(vet.size());
@@ -371,14 +391,14 @@ template<class CARTA> int JogoBasico<CARTA>::pontuacao_jogador_atual() const {
 	return _mesa.ver_jogador(_jog_atual).pontuacao();
 }
 
-template<class CARTA> void JogoBasico<CARTA>::jogador_soma_pontos(int pontos,int pos){
+template<class CARTA> void JogoBasico<CARTA>::jogador_soma_pontos(int pontos, std::size_t pos /* = jogador_atual */){
 
-	_mesa.jogador_soma_pontos(pontos, pos);
+	_mesa.jogador_soma_pontos(pontos, (pos == jogador_atual) ? _jog_atual : pos);
 }
 
-template<class CARTA> void JogoBasico<CARTA>::jogador_subtrai_pontos(int pontos,int pos){
+template<class CARTA> void JogoBasico<CARTA>::jogador_subtrai_pontos(int pontos, std::size_t pos /* = jogador_atual */){
 
-	jogador_soma_pontos(-pontos,pos);
+	jogador_soma_pontos(-pontos,(pos == jogador_atual) ? _jog_atual : pos);
 }
 
 template<class CARTA> bool JogoBasico<CARTA>::move_carta_j(CARTA carta, std::size_t j){
@@ -403,6 +423,9 @@ template<class CARTA> bool JogoBasico<CARTA>::move_carta_jj(CARTA carta, std::si
 		return true;
 	}
 
+	_mesa.jogador_soma_pontos(-_regra->pontuacao_carta_mao(), j1);
+	_mesa.jogador_soma_pontos(_regra->pontuacao_carta_mao(), j2);
+
 	return false;
 }
 
@@ -414,6 +437,8 @@ template<class CARTA> bool JogoBasico<CARTA>::move_carta_jm(CARTA carta, std::si
 
 	_coloca_monte(carta, m, m_cima);
 
+	_mesa.jogador_soma_pontos(-_regra->pontuacao_carta_mao(), j);
+
 	return true;
 }
 
@@ -424,6 +449,8 @@ template<class CARTA> bool JogoBasico<CARTA>::move_carta_mj(std::size_t m /* = 0
 	if(j == jogador_atual) j = _jog_atual;
 
 	_mesa.jogador_recebe_carta(_pega_monte(m, m_cima), j);
+
+	_mesa.jogador_soma_pontos(_regra->pontuacao_carta_mao(), j);
 
 	return true;
 }
@@ -463,7 +490,7 @@ template<class CARTA> void JogoBasico<CARTA>::verifica_fim_de_jogo()
 	case (Regra::modo_fim::pontuacao) :	//caso de um jogador ter atingido pontuacao maxima
 		for(std::size_t pos_jogador = 0; pos_jogador < _mesa.numero_jogadores(); pos_jogador++)
 		{
-			if(_mesa.ver_jogador(pos_jogador).esta_apto() && _mesa.ver_jogador(pos_jogador).pontuacao() == _regra->pontuacao_max())
+			if(_mesa.ver_jogador(pos_jogador).esta_apto() && _mesa.ver_jogador(pos_jogador).pontuacao() >= _regra->pontuacao_max())
 				declara_fim_de_jogo();
 		}
 		break;
@@ -755,6 +782,12 @@ template <class CARTA> void JogoBasico<CARTA>::limpa_outros_montes(){
 template <class CARTA> void JogoBasico<CARTA>::embaralhar_monte_principal(){
 	_mesa.embaralhar_monte_principal();
 }
+
+template <class CARTA> void JogoBasico<CARTA>::esvazia_mao(std::size_t _jogador){
+	_mesa.esvazia_mao(_jogador);
+	return ;
+}
+
 
 using Jogo = JogoBasico<Carta>;
 
