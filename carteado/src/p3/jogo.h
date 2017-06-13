@@ -54,7 +54,8 @@ public:
     //Retorna um vetor contendo as cartas do jogador atual
 	std::vector<CARTA> mostra_mao_jogador_atual() const;
 
-    //Retorna um vetor contendo as cartas do jogador na posi pos
+    //Retorna um vetor contendo as cartas viradas para cim do jogador na posi pos
+    //se a carta estiver virada para baixo ele retorna uma carta de valor "zero"
     std::vector<CARTA> mostra_mao_jogador(std::size_t pos) const;
     
     //Retorna a pontucao do jogador atual
@@ -194,6 +195,10 @@ public:
 	//cuidado, este metodo nao restaura as cartas do monte
 	//chama o metodo de mesa.h
 	void embaralhar_monte_principal();
+
+	//esvazia mao do jogador especificado em _jogador
+	//chama o metodo esvazia_mao da mesa
+	void esvazia_mao(std::size_t _jogador);
 
 protected:
 
@@ -361,8 +366,12 @@ template<class CARTA> std::vector<CARTA> JogoBasico<CARTA>::mostra_mao_jogador_a
         
         
 template<class CARTA> std::vector<CARTA> JogoBasico<CARTA>::mostra_mao_jogador(std::size_t pos) const{
+    
     auto vet = _mesa.ver_jogador(pos).mostra_mao();
     
+    //abaixo:
+    //retorna apenas as cartas viradas para cima, as para baixo voltam como cartas de valor "zero";
+
     std::vector<CARTA> aux;
     
     aux.reserve(vet.size());
@@ -483,7 +492,7 @@ template<class CARTA> void JogoBasico<CARTA>::verifica_fim_de_jogo()
 	case (Regra::modo_fim::pontuacao) :	//caso de um jogador ter atingido pontuacao maxima
 		for(std::size_t pos_jogador = 0; pos_jogador < _mesa.numero_jogadores(); pos_jogador++)
 		{
-			if(_mesa.ver_jogador(pos_jogador).esta_apto() && _mesa.ver_jogador(pos_jogador).pontuacao() == _regra->pontuacao_max())
+			if(_mesa.ver_jogador(pos_jogador).esta_apto() && _mesa.ver_jogador(pos_jogador).pontuacao() >= _regra->pontuacao_max())
 				declara_fim_de_jogo();
 		}
 		break;
@@ -775,6 +784,12 @@ template <class CARTA> void JogoBasico<CARTA>::limpa_outros_montes(){
 template <class CARTA> void JogoBasico<CARTA>::embaralhar_monte_principal(){
 	_mesa.embaralhar_monte_principal();
 }
+
+template <class CARTA> void JogoBasico<CARTA>::esvazia_mao(std::size_t _jogador){
+	_mesa.esvazia_mao(_jogador);
+	return ;
+}
+
 
 using Jogo = JogoBasico<Carta>;
 
