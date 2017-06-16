@@ -20,8 +20,12 @@ isEmpty(PROJECT){ PROJECT = $$STDPROJECT }
 # Input
 HEADERS += $$system("find $${FRAMEWORK_PATH} -type f -name '*.h'") $$system("find $${PROJECT} -type f -name '*.h'")
 SOURCES += $$system("find $${FRAMEWORK_PATH} -type f -name '*.cpp' ! -name 'moc_*'") $$system("find $${PROJECT} -type f -name '*.cpp' ! -name 'moc_*'")
+FORMS += $$system("find $${FRAMEWORK_PATH} -type f -name '*.ui'") $$system("find $${PROJECT} -type f -name '*.ui'")
+RESOURCES += $$system("find $${FRAMEWORK_PATH} -type f -name '*.qrc'") $$system("find $${PROJECT} -type f -name '*.qrc'")
 
 QT += widgets gui
+
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++14
 
