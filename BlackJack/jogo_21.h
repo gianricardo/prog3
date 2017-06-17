@@ -14,6 +14,9 @@
 #include "regra_21.h"
 #include "../carteado/src/p3/carta.h"
 #include "banco_21.h"
+#include "interface_21.h"
+#include "ia_dealer_21.h"
+
 
 using namespace p3;
 
@@ -42,7 +45,7 @@ public:
     //retorna o nome do jogador
     std::string nome_jogador();
     //realiza uma aposta
-    bool apostar(int);
+    void apostar(int);
     //dobra o valor da aposta;
     bool dobrar_aposta ();
     //verifica ganhador
@@ -60,6 +63,8 @@ public:
     bool jogada(int i);
     
     int aposta();
+    
+    void play (Interface & I);
 
 private:
     

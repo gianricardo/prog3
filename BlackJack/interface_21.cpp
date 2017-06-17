@@ -11,7 +11,7 @@
 using namespace std;
 
 
-string Interface::novo(){
+string Interface::novo_jogo(){
     std::string n;
     cout<<"- ♠♥♣♦21♦♣♥♠ -"<<endl;
     
@@ -117,4 +117,9 @@ bool Interface::continuar(){
 
 void Interface::obrigado(){
     cout<<"Obrigado por jogar, "<<nome<<"!"<<endl;
+}
+
+void Interface::placar_rodada(int saldo, int aposta){
+    cout<<"\nVocê tem R$"<<saldo<<",00;"<<endl;
+    cout<<"A rodada atual vale R$"<<aposta<<",00."<<endl;
 }

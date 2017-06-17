@@ -11,8 +11,6 @@
 
 #include <iostream>
 
-#include "jogo_21.h"
-
 
 //a inteligencia artificial guarda as informacoes pertinentes tendo uma "visao" do jogo
 //com esses valores ele decide o que fazer
@@ -20,16 +18,13 @@
 
 class IA_Dealer{
 public:
-    IA_Dealer (BlackJack &Game);
+    IA_Dealer (int pj);
     //return true caso queira hit, false caso queira parar;
-    bool decidir();
-    void agir (BlackJack &Game);
+    bool decidir(int mp);
     
 protected:
     int meus_pontos;
     int pontos_jogador;
-    std::size_t minha_pos;
-    std::size_t pos_jogador;
 };
 
 

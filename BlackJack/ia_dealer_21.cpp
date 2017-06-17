@@ -8,14 +8,14 @@
 
 #include "ia_dealer_21.h"
 
-IA_Dealer::IA_Dealer(BlackJack &Game){
-    minha_pos=Game.pos_d();
-    pos_jogador=Game.pos_j();
-    pontos_jogador=Game.soma_mao(pos_jogador);
-    meus_pontos=Game.soma_mao(minha_pos);
+IA_Dealer::IA_Dealer (int pj){
+    pontos_jogador=pj;
 }
 
-bool IA_Dealer::decidir(){
+bool IA_Dealer::decidir(int mp){
+    
+    meus_pontos=mp;
+    
     if(pontos_jogador>20){ //se o jogador ja ganhou (21) ou ja perdeu (22+)
         return false;
     }
@@ -27,16 +27,4 @@ bool IA_Dealer::decidir(){
         return false;
     }
     return true;
-}
-
-
-void IA_Dealer::agir (BlackJack &Game){
-    meus_pontos=Game.soma_mao(minha_pos);
-    bool pede=decidir(); //decide se pede hit
-    while (pede){
-        Game.hit(minha_pos); //se verdadeiro pede
-        meus_pontos=Game.soma_mao(minha_pos);
-        pede=decidir(); //decide se pede hit na proxima
-    }
-    return;
 }

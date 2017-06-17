@@ -15,18 +15,19 @@
 
 class Interface{
 public:
-    std::string novo();
-    void boas_vindas();
-    void placar(int total);
-    int aposta();
-    void naposta();
-    void mostra_mao(std::vector<p3::Carta> mao);
-    void mostra_maos(std::vector<p3::Carta> d, std::vector<p3::Carta> p);
-    int jogue();
-    void vez_dealer();
-    void vencedor(bool a, int b, int c);
-    bool continuar();
-    void obrigado();
+    virtual std::string novo_jogo();
+    virtual void boas_vindas();
+    virtual void placar(int total);
+    virtual int aposta();
+    virtual void naposta();
+    virtual void mostra_mao(std::vector<p3::Carta> mao);
+    virtual void mostra_maos(std::vector<p3::Carta> d, std::vector<p3::Carta> p);
+    virtual int jogue();
+    virtual void vez_dealer();
+    virtual void vencedor(bool a, int b, int c);
+    virtual bool continuar();
+    virtual void obrigado();
+    virtual void placar_rodada(int saldo, int aposta);
 private:
     std::string nome;
 };

@@ -71,15 +71,16 @@ std::string BlackJack::nome_jogador(){
 }
 
 
-bool BlackJack::apostar(int a){
-    ultima_aposta=a;
-    return Banco.set_aposta(ultima_aposta);
+void BlackJack::apostar(int a){
+    Banco.set_aposta(a);
+    ultima_aposta=Banco.get_aposta();
     
 }
 
 bool BlackJack::dobrar_aposta(){
-    if (saldo()>Banco.set_aposta(Banco.get_aposta()*2)){
-    return Banco.set_aposta(Banco.get_aposta()*2);
+    if (saldo()>ultima_aposta*2){
+        ultima_aposta=ultima_aposta*2;
+        return Banco.set_aposta(ultima_aposta);
     }
     return Banco.set_aposta(saldo());
 }
@@ -144,4 +145,43 @@ bool BlackJack::jogada(int i){
 
 int BlackJack::aposta(){
     return ultima_aposta;
+}
+
+void BlackJack::play(Interface &iu){
+    bool continuar=true; //em quanto quiser jogar
+    bool r=true;//rodada;
+    while (continuar){
+        r=true;
+        inicia_rodada_21();
+        iu.placar(saldo());
+        if(!pode_apostar()){ //verifica se esta apto a apostar;
+            iu.naposta();
+            continuar = false;
+        }else{
+            //faz aposta:
+            apostar(iu.aposta());
+            while(r){
+                iu.placar_rodada(saldo(), aposta());
+                iu.mostra_maos(mao_dealer(),mao_jogador());
+                r =jogada(iu.jogue());
+            }
+            iu.vez_dealer();
+            revela_mao_dealer();
+            iu.mostra_maos(mao_dealer(),mao_jogador());
+            IA_Dealer ia_dealer(soma_mao(pos_j()));
+            bool pede=ia_dealer.decidir(soma_mao(pos_d()));
+            while (pede){
+                hit(pos_d()); //se verdadeiro pede
+                pede=ia_dealer.decidir(soma_mao(pos_d())); //decide se pede hit na proxima
+            }
+            iu.mostra_maos(mao_dealer(),mao_jogador());
+            verifica_ganhador();
+            iu.vencedor(verifica_ganhador(), aposta(), saldo());
+            reiniciar();
+            continuar=iu.continuar();
+        }
+    }
+    
+    iu.obrigado();
+    return;
 }

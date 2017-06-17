@@ -15,7 +15,7 @@ Banco21::Banco21(){
 }
 
 bool Banco21::set_aposta(int a){
-    if(a>d_jogador) return false;
+    if(a>d_jogador) a=d_jogador;
     if(a<5)a=5;
     aposta=a;
     return true;
