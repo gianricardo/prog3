@@ -44,22 +44,27 @@ Napoleao::Napoleao() {
 	}
 	_jogadores.resize(jogadores);
 
-	if(SIMULACAO) _jogadores[0] = new NapoleaoIA(nomes[0]);
-	else _jogadores[0] = new NapoleaoPessoa(nomes[0]);
+	//if(SIMULACAO) _jogadores[0] = new NapoleaoIA(nomes[0]);
+	//else _jogadores[0] = new NapoleaoPessoa(nomes[0]);
 
+	if(SIMULACAO) _jogadores[0] = std::make_unique<NapoleaoIA>(nomes[0]);
+	else _jogadores[0] = std::make_unique<NapoleaoPessoa>(nomes[0]);
+
+//	for(int i = 1; i < jogadores; i++) {
+//		_jogadores[i] = new NapoleaoIA(nomes[i]);
+//	}
 
 	for(int i = 1; i < jogadores; i++) {
-		_jogadores[i] = new NapoleaoIA(nomes[i]);
+		_jogadores[i] = std::make_unique<NapoleaoIA>(nomes[i]);
 	}
 
-	_jogo = new Jogo(Rules, nomes);
+	_jogo = std::make_unique<Jogo>(Rules, nomes);
 	std::cout << "Fim do construtor Napoleao" << std::endl;
 
 	_jogo->novo_monte();
 }
 
 Napoleao::~Napoleao() {
-	delete (_jogo);
 }
 
 

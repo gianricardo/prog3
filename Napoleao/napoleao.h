@@ -11,6 +11,8 @@
 #define MOSTRA true
 #define SIMULACAO true
 
+#include <memory>
+
 #include "jogo.h"
 #include "jogadornapoleao.h"
 #include "napoleaopessoa.h"
@@ -24,13 +26,13 @@ public:
 	virtual ~Napoleao();
 
 private:
-	Jogo *_jogo;
+	std::unique_ptr<Jogo> _jogo;
 	unsigned int _turno = 1;
 	Carta::Naipe _trunfo = Carta::Naipe::Ouros;
 	int _aposta_max = 0;
 	int _declarante = 0;
 	int _inicio = 0;
-	std::vector<JogadorNapoleao*> _jogadores;
+	std::vector<std::unique_ptr<JogadorNapoleao> > _jogadores;
 	Carta::Naipe _naipe_inicial = Carta::Naipe::Ouros;
 	int _declarante_rodadas = 0;
 
