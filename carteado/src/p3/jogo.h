@@ -57,6 +57,9 @@ public:
     //Retorna um vetor contendo as cartas viradas para cim do jogador na posi pos
     //se a carta estiver virada para baixo ele retorna uma carta de valor "zero"
     std::vector<CARTA> mostra_mao_jogador(std::size_t pos) const;
+
+    //Retorna um vetor de cartas com a mao do jogador sem considerar se estao viradas ou não
+    std::vector<CARTA> mostra_mao_jogador_consulta(int pos);
     
     //Retorna a pontucao do jogador atual
 	int pontuacao_jogador_atual() const;
@@ -368,20 +371,20 @@ template<class CARTA> std::vector<CARTA> JogoBasico<CARTA>::mostra_mao_jogador_a
 template<class CARTA> std::vector<CARTA> JogoBasico<CARTA>::mostra_mao_jogador(std::size_t pos) const{
     
     auto vet = _mesa.ver_jogador(pos).mostra_mao();
-    
+
     //abaixo:
     //retorna apenas as cartas viradas para cima, as para baixo voltam como cartas de valor "zero";
 
     std::vector<CARTA> aux;
-    
+
     aux.reserve(vet.size());
-    
+
     for(auto carta : vet){
-        
+
         if(carta.mostra()) aux.push_back(carta);
         else aux.emplace_back(0, (typename CARTA::Naipe) 0);
     }
-    
+
     return aux;
 }
         
@@ -790,6 +793,9 @@ template <class CARTA> void JogoBasico<CARTA>::esvazia_mao(std::size_t _jogador)
 	return ;
 }
 
+template <class CARTA> std::vector<CARTA> JogoBasico<CARTA>::mostra_mao_jogador_consulta(int pos){
+	return _mesa.ver_jogador(pos).mostra_mao();
+}
 
 using Jogo = JogoBasico<Carta>;
 
