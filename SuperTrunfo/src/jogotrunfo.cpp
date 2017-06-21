@@ -140,7 +140,11 @@ void Jogo_trunfo::realiza_jogada(Jogada jogada)
 			move_carta_jogador_vencedor(jogador_oponente());
 		break;
 
+	case Jogada::Atributos::INVALIDA :
+		break;
+
 	}
+
 }
 
 void Jogo_trunfo::move_carta_jogador_vencedor(size_t jogador_vencedor)
@@ -180,19 +184,3 @@ int Jogo_trunfo::checa_super_trunfo()
 	if(mostra_mao_jogador_consulta(1)[0] == carta_super_trunfo)	return 1;
 	return -1;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
