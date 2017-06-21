@@ -31,8 +31,13 @@ Jogada Jogo_trunfo::recebe_jogada()
 
 	do{
 	std::cin >> jogada;
+//	jogada;
 	if(jogada < 1 || jogada > 5) std::cout << "Jogada invalida!\n";
 	} while (jogada < 1 || jogada > 5);
+
+	std::cout << "Atributo escolhido: " << jogada << std::endl;
+
+	jogada--;
 
 	return Jogada((Jogada::Atributos)jogada);
 }
@@ -47,9 +52,9 @@ void Jogo_trunfo::realiza_jogada(Jogada jogada)
 		size_t j_comparar = !checa_super_trunfo();
 		//Checa se a outra carta é uma XA
 		if((mostra_mao_jogador_consulta(j_comparar)[0]).naipe() == (p3::Carta::Naipe)0){
-			move_carta_jogador_vencedor(j_comparar);
+			determina_acao_jogador_vencedor(j_comparar, jogada);
 		} else	{
-			move_carta_jogador_vencedor(!j_comparar);
+			determina_acao_jogador_vencedor(!j_comparar, jogada);
 		}
 
 		return;
@@ -61,83 +66,83 @@ void Jogo_trunfo::realiza_jogada(Jogada jogada)
 		//Jogador atual vencedor
 		if	(	mostra_mao_jogador_consulta(posicao_jogador_atual())[0].participacao_gps() >
 				mostra_mao_jogador_consulta(jogador_oponente())[0].participacao_gps())
-			move_carta_jogador_vencedor(posicao_jogador_atual());
+			determina_acao_jogador_vencedor(posicao_jogador_atual(), jogada);
 
 		//Empate
 		else if(mostra_mao_jogador_consulta(posicao_jogador_atual())[0].participacao_gps() ==
 				mostra_mao_jogador_consulta(jogador_oponente())[0].participacao_gps())
 		{
-			move_carta_empate();
+			determina_acao_jogador_vencedor(-1, jogada);
 			realiza_jogada(jogada);	//Chama a funcao novamente em caso de empate
 		}
 
 		//Jogador oponente vencedor
 		else
-			move_carta_jogador_vencedor(jogador_oponente());
+			determina_acao_jogador_vencedor(jogador_oponente(), jogada);
 		break;
 
 	case Jogada::Atributos::titulos_mundiais_construtores :
 		if	(	mostra_mao_jogador_consulta(posicao_jogador_atual())[0].titulos_mundiais_construtores() >
 				mostra_mao_jogador_consulta(jogador_oponente())[0].titulos_mundiais_construtores())
-			move_carta_jogador_vencedor(posicao_jogador_atual());
+			determina_acao_jogador_vencedor(posicao_jogador_atual(), jogada);
 
 		else if(mostra_mao_jogador_consulta(posicao_jogador_atual())[0].titulos_mundiais_construtores() ==
 				mostra_mao_jogador_consulta(jogador_oponente())[0].titulos_mundiais_construtores())
 		{
-			move_carta_empate();
+			determina_acao_jogador_vencedor(-1, jogada);
 			realiza_jogada(jogada);
 		}
 
 		else
-			move_carta_jogador_vencedor(jogador_oponente());
+			determina_acao_jogador_vencedor(jogador_oponente(), jogada);
 		break;
 
 	case Jogada::Atributos::vitorias :
 		if	(	mostra_mao_jogador_consulta(posicao_jogador_atual())[0].vitorias() >
 				mostra_mao_jogador_consulta(jogador_oponente())[0].vitorias())
-			move_carta_jogador_vencedor(posicao_jogador_atual());
+			determina_acao_jogador_vencedor(posicao_jogador_atual(), jogada);
 
 		else if(mostra_mao_jogador_consulta(posicao_jogador_atual())[0].vitorias() ==
 				mostra_mao_jogador_consulta(jogador_oponente())[0].vitorias())
 		{
-			move_carta_empate();
+			determina_acao_jogador_vencedor(-1, jogada);
 			realiza_jogada(jogada);
 		}
 
 		else
-			move_carta_jogador_vencedor(jogador_oponente());
+			determina_acao_jogador_vencedor(jogador_oponente(), jogada);
 		break;
 
 	case Jogada::Atributos::pole_positions :
 		if	(	mostra_mao_jogador_consulta(posicao_jogador_atual())[0].pole_positions() >
 				mostra_mao_jogador_consulta(jogador_oponente())[0].pole_positions())
-			move_carta_jogador_vencedor(posicao_jogador_atual());
+			determina_acao_jogador_vencedor(posicao_jogador_atual(), jogada);
 
 		else if(mostra_mao_jogador_consulta(posicao_jogador_atual())[0].pole_positions() ==
 				mostra_mao_jogador_consulta(jogador_oponente())[0].pole_positions())
 		{
-			move_carta_empate();
+			determina_acao_jogador_vencedor(-1, jogada);
 			realiza_jogada(jogada);
 		}
 
 		else
-			move_carta_jogador_vencedor(jogador_oponente());
+			determina_acao_jogador_vencedor(jogador_oponente(), jogada);
 		break;
 
 	case Jogada::Atributos::gps_com_podios :
 		if	(	mostra_mao_jogador_consulta(posicao_jogador_atual())[0].gps_com_podios() >
 				mostra_mao_jogador_consulta(jogador_oponente())[0].gps_com_podios())
-			move_carta_jogador_vencedor(posicao_jogador_atual());
+			determina_acao_jogador_vencedor(posicao_jogador_atual(), jogada);
 
 		else if(mostra_mao_jogador_consulta(posicao_jogador_atual())[0].gps_com_podios() ==
 				mostra_mao_jogador_consulta(jogador_oponente())[0].gps_com_podios())
 		{
-			move_carta_empate();
+			determina_acao_jogador_vencedor(-1, jogada);
 			realiza_jogada(jogada);
 		}
 
 		else
-			move_carta_jogador_vencedor(jogador_oponente());
+			determina_acao_jogador_vencedor(jogador_oponente(), jogada);
 		break;
 
 	case Jogada::Atributos::INVALIDA :
@@ -155,6 +160,10 @@ void Jogo_trunfo::move_carta_jogador_vencedor(size_t jogador_vencedor)
 
 	move_carta_jj(mostra_mao_jogador_consulta(jogador_perdedor)[0], jogador_perdedor, jogador_vencedor);
 
+	//Coloca a primeira carta no fim do baralho
+	_mesa.jogador_recebe_carta(mostra_mao_jogador_consulta(jogador_vencedor)[0], jogador_vencedor);
+	_mesa.jogador_tira_carta(mostra_mao_jogador_consulta(jogador_vencedor)[0], jogador_vencedor);
+
 	//Caso houve cartas no monte de empate
 	while(mostra_monte(1).size() != 0)
 	{
@@ -165,6 +174,20 @@ void Jogo_trunfo::move_carta_jogador_vencedor(size_t jogador_vencedor)
 size_t Jogo_trunfo::jogador_oponente()
 {
 	return !posicao_jogador_atual();
+}
+
+void Jogo_trunfo::determina_acao_jogador_vencedor(size_t jogador_vencedor, Jogada jogada)
+{
+	imprime_atributo_escolhido(jogada);
+
+	if(jogador_vencedor != 2)
+	move_carta_jogador_vencedor(jogador_vencedor);
+
+	else
+	move_carta_empate();
+
+	//Quebra de linha apos feita a comparacao
+	std::cout << "\n\n";
 }
 
 void Jogo_trunfo::move_carta_empate()
@@ -183,4 +206,58 @@ int Jogo_trunfo::checa_super_trunfo()
 	if(mostra_mao_jogador_consulta(0)[0] == carta_super_trunfo)	return 0;
 	if(mostra_mao_jogador_consulta(1)[0] == carta_super_trunfo)	return 1;
 	return -1;
+}
+
+void Jogo_trunfo::imprime_atributo_escolhido(Jogada jogada)
+{
+	size_t jogador_1 = posicao_jogador_atual();
+	size_t jogador_2 = !jogador_1;
+
+	switch(jogada.atributo_escolhido())
+	{
+	case Jogada::Atributos::participacao_gps :
+		std::cout 	<< "Atributo escolhido: participacao em gps\n"
+					<< _mesa.ver_jogador(jogador_1).nome() << ": "
+					<< mostra_mao_jogador_consulta(jogador_1)[0].participacao_gps() 			<< std::endl
+					<< _mesa.ver_jogador(jogador_2).nome() << ": "
+					<< mostra_mao_jogador_consulta(jogador_2)[0].participacao_gps() 			<< std::endl;
+		break;
+
+	case Jogada::Atributos::titulos_mundiais_construtores :
+		std::cout 	<< "Atributo escolhido: titulos mundiais de construtores\n"
+					<< _mesa.ver_jogador(jogador_1).nome() << ": "
+					<< mostra_mao_jogador_consulta(jogador_1)[0].titulos_mundiais_construtores() << std::endl
+					<< _mesa.ver_jogador(jogador_2).nome() << ": "
+					<< mostra_mao_jogador_consulta(jogador_2)[0].titulos_mundiais_construtores() << std::endl;
+		break;
+
+	case Jogada::Atributos::vitorias :
+		std::cout 	<< "Atributo escolhido: vitorias\n"
+					<< _mesa.ver_jogador(jogador_1).nome() << ": "
+					<< mostra_mao_jogador_consulta(jogador_1)[0].vitorias() 	<< std::endl
+					<< _mesa.ver_jogador(jogador_2).nome() << ": "
+					<< mostra_mao_jogador_consulta(jogador_2)[0].vitorias() 	<< std::endl;
+		break;
+
+	case Jogada::Atributos::pole_positions :
+		std::cout 	<< "Atributo escolhido: pole positions\n"
+					<< _mesa.ver_jogador(jogador_1).nome() << ": "
+					<< mostra_mao_jogador_consulta(jogador_1)[0].pole_positions() 	<< std::endl
+					<< _mesa.ver_jogador(jogador_2).nome() << ": "
+					<< mostra_mao_jogador_consulta(jogador_2)[0].pole_positions() 	<< std::endl;
+		break;
+
+	case Jogada::Atributos::gps_com_podios :
+		std::cout 	<< "Atributo escolhido: participacao em gps\n"
+					<< _mesa.ver_jogador(jogador_1).nome() << ": "
+					<< mostra_mao_jogador_consulta(jogador_1)[0].gps_com_podios() 	<< std::endl
+					<< _mesa.ver_jogador(jogador_2).nome() << ": "
+					<< mostra_mao_jogador_consulta(jogador_2)[0].gps_com_podios() 	<< std::endl;
+		break;
+
+	case Jogada::Atributos::INVALIDA :
+		std::cout << "Jogada invalida erro\n";
+		break;
+
+	}
 }
