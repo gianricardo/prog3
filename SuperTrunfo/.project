@@ -3,7 +3,7 @@
 	<name>SuperTrunfo</name>
 	<comment></comment>
 	<projects>
-		<project>projeto</project>
+		<project>carteado</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

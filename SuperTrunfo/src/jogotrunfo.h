@@ -21,12 +21,14 @@ public:
 	Jogo_trunfo(p3::Regra *regra, std::vector<std::string> nomes);
 	Jogada recebe_jogada();
 	void realiza_jogada(Jogada jogada);
+	void determina_acao_jogador_vencedor(size_t jogador_vencedor, Jogada jogada);
 
 private:
 	void move_carta_jogador_vencedor(size_t jogador_vencedor);
 	void move_carta_empate();
 	int checa_super_trunfo();
 	size_t jogador_oponente();
+	void imprime_atributo_escolhido(Jogada jogada);
 	Carta_trunfo carta_super_trunfo;
 
 };

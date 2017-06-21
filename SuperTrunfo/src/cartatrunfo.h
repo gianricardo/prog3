@@ -71,6 +71,7 @@ private:
 	};
 
 	void set_atributos(Atributos att);
+	int numero_naipe();
 };
 
 
