@@ -15,3 +15,8 @@ Jogada::Atributos Jogada::atributo_escolhido()
 {
 	return _atributo_escolhido;
 }
+
+void Jogada::operator=(Jogada j)
+{
+	_atributo_escolhido = j.atributo_escolhido();
+}

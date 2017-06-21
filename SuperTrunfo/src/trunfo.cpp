@@ -7,9 +7,11 @@
 
 #include <iostream>
 #include <vector>
-#include "jogo.h"
+#include "jogotrunfo.h"
+#include "jogada.h"
 #include "regra.h"
 #include "cartatrunfo.h"
+#include "inteligenciaartificial.h"
 
 int main()
 {
@@ -25,7 +27,7 @@ int main()
 
 	std::cout << "Nome do jogador 1: ";
 	std::cin >> nome_jogador_1;
-	std::cout << "\nNome do jogador 2:";
+	std::cout << "Nome do jogador 2: ";
 	std::cin >> nome_jogador_2;
 
 	std::vector<std::string> nomes;
@@ -33,7 +35,26 @@ int main()
 	nomes.push_back(nome_jogador_2);
 
 	//Criando o jogo
-	p3::JogoBasico<Carta_trunfo> jogo_basico(&regra_trunfo, nomes);
+	Jogo_trunfo jogo(&regra_trunfo, nomes);
+
+	Jogada jogada(Jogada::Atributos::INVALIDA);
+
+	while(jogo.jogando())
+	{
+		if(jogo.posicao_jogador_atual() == 1)
+		{
+			jogada = Inteligencia_artificial::escolhe_jogada();
+		}
+		else {
+			jogada = jogo.recebe_jogada();
+		}
+
+		jogo.realiza_jogada(jogada);
+
+		jogo.fim_jogada();
+	}
+
+	std::cout << jogo.nome_jogador_atual() << " venceu o jogo!\n";
 
 	return 0;
 }

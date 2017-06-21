@@ -10,10 +10,11 @@
 
 class Jogada {
 public:
-	enum class Atributos{participacao_gps, titulos_mundiais_construtores, vitorias, pole_positions, gps_com_podios};
+	enum class Atributos{participacao_gps, titulos_mundiais_construtores, vitorias, pole_positions, gps_com_podios, INVALIDA};
 
 	Jogada(Jogada::Atributos atributo_escolhido);
 	Jogada::Atributos atributo_escolhido();
+	void operator=(Jogada j);
 
 private:
 	Jogada::Atributos _atributo_escolhido;

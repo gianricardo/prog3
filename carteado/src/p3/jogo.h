@@ -15,7 +15,7 @@
 
 namespace p3 {
 
-template<class CARTA>
+template<class CARTA, class MESA = MesaBasica<CARTA, JogadorBasico<CARTA> > >
 class JogoBasico {
 public:
 
@@ -236,7 +236,7 @@ protected:
 	CARTA _pega_monte(std::size_t m, bool topo);	//pega uma carta do topo(se for true) do monte m
 
 	std::unique_ptr<Regra> _regra;		//ponteiro para a regra do jogo
-	MesaBasica<CARTA> _mesa;			//objeto da classe mesa que representa a mesa do jogo
+	MESA _mesa;			//objeto da classe mesa que representa a mesa do jogo
 	std::size_t _jog_atual;				//guarda a posicao do jogador atual
 	std::size_t _rodada;				//guarda a rodada do jogo
 	bool _jogando;   					//se for true o jogo esta rodando
@@ -245,7 +245,7 @@ protected:
 
 
 
-template<class CARTA> JogoBasico<CARTA>::JogoBasico(Regra *regra, std::vector<std::string> nomes) : _regra{regra}, _mesa{ (unsigned int) regra->cartas_inicial() },
+template<class CARTA, class MESA> JogoBasico<CARTA, MESA>::JogoBasico(Regra *regra, std::vector<std::string> nomes) : _regra{regra}, _mesa{ (unsigned int) regra->cartas_inicial() },
 										 _jog_atual{0}, _rodada{1}, _jogando{true} {
 
 	if(nomes.size() != numero_de_jogadores()) std::cerr << "Jogo::Jogo -- Numero incorreto de nomes passado\n";
@@ -269,29 +269,29 @@ template<class CARTA> JogoBasico<CARTA>::JogoBasico(Regra *regra, std::vector<st
 	}
 }
 
-template<class CARTA> JogoBasico<CARTA>::~JogoBasico() {}
+template<class CARTA, class MESA> JogoBasico<CARTA, MESA>::~JogoBasico() {}
 
-template<class CARTA> std::size_t JogoBasico<CARTA>::numero_de_jogadores() const {
+template<class CARTA, class MESA> std::size_t JogoBasico<CARTA, MESA>::numero_de_jogadores() const {
 	return _regra->numero_de_jogadores();
 }
 
-template<class CARTA> int JogoBasico<CARTA>::cartas_inicial() const {
+template<class CARTA, class MESA> int JogoBasico<CARTA, MESA>::cartas_inicial() const {
 	return _regra->cartas_inicial();
 }
 
-template<class CARTA> int JogoBasico<CARTA>::cartas_jogadores() const {
+template<class CARTA, class MESA> int JogoBasico<CARTA, MESA>::cartas_jogadores() const {
 	return _regra->cartas_jogadores();
 }
 
-template<class CARTA> int JogoBasico<CARTA>::max_rodadas() const {
+template<class CARTA, class MESA> int JogoBasico<CARTA, MESA>::max_rodadas() const {
 	return _regra->max_rodadas();
 }
 
-template<class CARTA> int JogoBasico<CARTA>::pontuacao_max() const {
+template<class CARTA, class MESA> int JogoBasico<CARTA, MESA>::pontuacao_max() const {
 	return _regra->pontuacao_max();
 }
 
-template<class CARTA> void JogoBasico<CARTA>::reiniciar(){
+template<class CARTA, class MESA> void JogoBasico<CARTA, MESA>::reiniciar(){
 
 	_rodada = 1;
 	_jog_atual = 0;
@@ -319,7 +319,7 @@ template<class CARTA> void JogoBasico<CARTA>::reiniciar(){
 	}
 }
 
-template<class CARTA> void JogoBasico<CARTA>::fim_jogada(){
+template<class CARTA, class MESA> void JogoBasico<CARTA, MESA>::fim_jogada(){
 
 	if(!_jogando) return;
 
@@ -342,33 +342,33 @@ template<class CARTA> void JogoBasico<CARTA>::fim_jogada(){
 	}
 }
 
-template<class CARTA> bool JogoBasico<CARTA>::jogando() const {
+template<class CARTA, class MESA> bool JogoBasico<CARTA, MESA>::jogando() const {
 
 	return _jogando;
 }
 
-template<class CARTA> std::size_t JogoBasico<CARTA>::rodada() const {
+template<class CARTA, class MESA> std::size_t JogoBasico<CARTA, MESA>::rodada() const {
 
 	return _rodada;
 }
 
-template<class CARTA> std::size_t JogoBasico<CARTA>::posicao_jogador_atual() const {
+template<class CARTA, class MESA> std::size_t JogoBasico<CARTA, MESA>::posicao_jogador_atual() const {
 
 	return _jog_atual;
 }
 
-template<class CARTA> std::string JogoBasico<CARTA>::nome_jogador_atual() const {
+template<class CARTA, class MESA> std::string JogoBasico<CARTA, MESA>::nome_jogador_atual() const {
 
 	return _mesa.ver_jogador(_jog_atual).nome();
 }
 
-template<class CARTA> std::vector<CARTA> JogoBasico<CARTA>::mostra_mao_jogador_atual() const {
+template<class CARTA, class MESA> std::vector<CARTA> JogoBasico<CARTA, MESA>::mostra_mao_jogador_atual() const {
 
 	return _mesa.ver_jogador(_jog_atual).mostra_mao();
 }
         
         
-template<class CARTA> std::vector<CARTA> JogoBasico<CARTA>::mostra_mao_jogador(std::size_t pos) const{
+template<class CARTA, class MESA> std::vector<CARTA> JogoBasico<CARTA, MESA>::mostra_mao_jogador(std::size_t pos) const{
     
     auto vet = _mesa.ver_jogador(pos).mostra_mao();
 
@@ -391,32 +391,32 @@ template<class CARTA> std::vector<CARTA> JogoBasico<CARTA>::mostra_mao_jogador(s
         
         
 
-template<class CARTA> int JogoBasico<CARTA>::pontuacao_jogador_atual() const {
+template<class CARTA, class MESA> int JogoBasico<CARTA, MESA>::pontuacao_jogador_atual() const {
 
 	return _mesa.ver_jogador(_jog_atual).pontuacao();
 }
 
-template<class CARTA> void JogoBasico<CARTA>::jogador_soma_pontos(int pontos, std::size_t pos /* = jogador_atual */){
+template<class CARTA, class MESA> void JogoBasico<CARTA, MESA>::jogador_soma_pontos(int pontos, std::size_t pos /* = jogador_atual */){
 
 	_mesa.jogador_soma_pontos(pontos, (pos == jogador_atual) ? _jog_atual : pos);
 }
 
-template<class CARTA> void JogoBasico<CARTA>::jogador_subtrai_pontos(int pontos, std::size_t pos /* = jogador_atual */){
+template<class CARTA, class MESA> void JogoBasico<CARTA, MESA>::jogador_subtrai_pontos(int pontos, std::size_t pos /* = jogador_atual */){
 
 	jogador_soma_pontos(-pontos,(pos == jogador_atual) ? _jog_atual : pos);
 }
 
-template<class CARTA> bool JogoBasico<CARTA>::move_carta_j(CARTA carta, std::size_t j){
+template<class CARTA, class MESA> bool JogoBasico<CARTA, MESA>::move_carta_j(CARTA carta, std::size_t j){
 
 	return move_carta_jj(carta, jogador_atual, j);
 }
 
-template<class CARTA> bool JogoBasico<CARTA>::move_carta_m(std::size_t m, bool p_cima /* = true */, bool m_cima /* = true */){
+template<class CARTA, class MESA> bool JogoBasico<CARTA, MESA>::move_carta_m(std::size_t m, bool p_cima /* = true */, bool m_cima /* = true */){
 
 	return move_carta_mm(0, m, p_cima, m_cima);
 }
 
-template<class CARTA> bool JogoBasico<CARTA>::move_carta_jj(CARTA carta, std::size_t j1, std::size_t j2 /* = jogador_atual */){
+template<class CARTA, class MESA> bool JogoBasico<CARTA, MESA>::move_carta_jj(CARTA carta, std::size_t j1, std::size_t j2 /* = jogador_atual */){
 
 	if(j1 == jogador_atual) j1 = _jog_atual;
 	if(j2 == jogador_atual) j2 = _jog_atual;
@@ -434,7 +434,7 @@ template<class CARTA> bool JogoBasico<CARTA>::move_carta_jj(CARTA carta, std::si
 	return false;
 }
 
-template<class CARTA> bool JogoBasico<CARTA>::move_carta_jm(CARTA carta, std::size_t j /* = jogador_atual */, std::size_t m /* = 0 */, bool m_cima /* = true */){
+template<class CARTA, class MESA> bool JogoBasico<CARTA, MESA>::move_carta_jm(CARTA carta, std::size_t j /* = jogador_atual */, std::size_t m /* = 0 */, bool m_cima /* = true */){
 
 	if(j == jogador_atual) j = _jog_atual;
 
@@ -447,7 +447,7 @@ template<class CARTA> bool JogoBasico<CARTA>::move_carta_jm(CARTA carta, std::si
 	return true;
 }
 
-template<class CARTA> bool JogoBasico<CARTA>::move_carta_mj(std::size_t m /* = 0 */, std::size_t j /* =  jogador_atual */, bool m_cima /* = true */){
+template<class CARTA, class MESA> bool JogoBasico<CARTA, MESA>::move_carta_mj(std::size_t m /* = 0 */, std::size_t j /* =  jogador_atual */, bool m_cima /* = true */){
 
 	if(_mesa.tamanho_monte(m) == 0) return false;
 
@@ -460,7 +460,7 @@ template<class CARTA> bool JogoBasico<CARTA>::move_carta_mj(std::size_t m /* = 0
 	return true;
 }
 
-template<class CARTA> bool JogoBasico<CARTA>::move_carta_mm(std::size_t m1, std::size_t m2 /* = 0 */, bool m1_cima /* = true */, bool m2_cima /* = true */){
+template<class CARTA, class MESA> bool JogoBasico<CARTA, MESA>::move_carta_mm(std::size_t m1, std::size_t m2 /* = 0 */, bool m1_cima /* = true */, bool m2_cima /* = true */){
 
 	if(_mesa.tamanho_monte(m1) == 0) return false;
 
@@ -469,22 +469,22 @@ template<class CARTA> bool JogoBasico<CARTA>::move_carta_mm(std::size_t m1, std:
 	return true;
 }
 
-template<class CARTA> void JogoBasico<CARTA>::novo_monte(){
+template<class CARTA, class MESA> void JogoBasico<CARTA, MESA>::novo_monte(){
 
 	_mesa.novo_monte();
 }
 
-template<class CARTA> void JogoBasico<CARTA>::deleta_monte(std::size_t i){
+template<class CARTA, class MESA> void JogoBasico<CARTA, MESA>::deleta_monte(std::size_t i){
 
 	_mesa.deleta_monte(i);
 }
 
-template<class CARTA> std::vector<std::pair<bool, CARTA> > JogoBasico<CARTA>::mostra_monte(std::size_t pos_monte) const{
+template<class CARTA, class MESA> std::vector<std::pair<bool, CARTA> > JogoBasico<CARTA, MESA>::mostra_monte(std::size_t pos_monte) const{
 
 	return _mesa.mostra_monte(pos_monte);
 }
 
-template<class CARTA> void JogoBasico<CARTA>::verifica_fim_de_jogo()
+template<class CARTA, class MESA> void JogoBasico<CARTA, MESA>::verifica_fim_de_jogo()
 {
 	switch(_regra->fim())
 	{
@@ -526,7 +526,7 @@ template<class CARTA> void JogoBasico<CARTA>::verifica_fim_de_jogo()
 
 }
 
-template<class CARTA> void JogoBasico<CARTA>::verifica_vitoria() {
+template<class CARTA, class MESA> void JogoBasico<CARTA, MESA>::verifica_vitoria() {
 
 	if(!_jogando) return;
 
@@ -557,7 +557,7 @@ template<class CARTA> void JogoBasico<CARTA>::verifica_vitoria() {
 	}
 }
 
-template<class CARTA> void JogoBasico<CARTA>::verifica_jogadores_derrotados()
+template<class CARTA, class MESA> void JogoBasico<CARTA, MESA>::verifica_jogadores_derrotados()
 {
 	if(!jogando()) return;
 
@@ -594,7 +594,7 @@ template<class CARTA> void JogoBasico<CARTA>::verifica_jogadores_derrotados()
 	}
 }
 
-template<class CARTA> bool JogoBasico<CARTA>::todos_jogadores_derrotados() {
+template<class CARTA, class MESA> bool JogoBasico<CARTA, MESA>::todos_jogadores_derrotados() {
 
 	if(numero_jogadores_aptos() == 0){
 		declara_fim_de_jogo();
@@ -604,7 +604,7 @@ template<class CARTA> bool JogoBasico<CARTA>::todos_jogadores_derrotados() {
 }
 
 
-template<class CARTA> void JogoBasico<CARTA>::verifica_fim_zero_cartas(){
+template<class CARTA, class MESA> void JogoBasico<CARTA, MESA>::verifica_fim_zero_cartas(){
 
 	for(std::size_t i = 0; i < numero_de_jogadores(); i++){
 
@@ -615,7 +615,7 @@ template<class CARTA> void JogoBasico<CARTA>::verifica_fim_zero_cartas(){
 	}
 }
 
-template<class CARTA> void JogoBasico<CARTA>::verifica_jogador_unico(){
+template<class CARTA, class MESA> void JogoBasico<CARTA, MESA>::verifica_jogador_unico(){
 
 	if(todos_jogadores_derrotados()) return;
 
@@ -637,12 +637,12 @@ template<class CARTA> void JogoBasico<CARTA>::verifica_jogador_unico(){
 	declara_vencedor(last);
 }
 
-template<class CARTA> std::size_t JogoBasico<CARTA>::numero_jogadores_aptos(){
+template<class CARTA, class MESA> std::size_t JogoBasico<CARTA, MESA>::numero_jogadores_aptos(){
 
 	return _mesa.numero_jogadores_aptos();
 }
 
-template<class CARTA> void JogoBasico<CARTA>::verifica_jogador_pontuacao_maxima(){
+template<class CARTA, class MESA> void JogoBasico<CARTA, MESA>::verifica_jogador_pontuacao_maxima(){
 
 	if(todos_jogadores_derrotados()) return;
 
@@ -662,7 +662,7 @@ template<class CARTA> void JogoBasico<CARTA>::verifica_jogador_pontuacao_maxima(
 	declara_vencedor(jogador_vencedor);
 }
 
-template<class CARTA> void JogoBasico<CARTA>::verifica_jogador_pontuacao_minima(){
+template<class CARTA, class MESA> void JogoBasico<CARTA, MESA>::verifica_jogador_pontuacao_minima(){
 
 	if(todos_jogadores_derrotados()) return;
 
@@ -682,7 +682,7 @@ template<class CARTA> void JogoBasico<CARTA>::verifica_jogador_pontuacao_minima(
 	declara_vencedor(jogador_vencedor);
 }
 
-template<class CARTA> void JogoBasico<CARTA>::verifica_jogador_mais_cartas(){
+template<class CARTA, class MESA> void JogoBasico<CARTA, MESA>::verifica_jogador_mais_cartas(){
 
 	if(todos_jogadores_derrotados()) return;
 
@@ -702,7 +702,7 @@ template<class CARTA> void JogoBasico<CARTA>::verifica_jogador_mais_cartas(){
 	declara_vencedor(jogador_vencedor);
 }
 
-template<class CARTA> void JogoBasico<CARTA>::verifica_jogador_menos_cartas(){
+template<class CARTA, class MESA> void JogoBasico<CARTA, MESA>::verifica_jogador_menos_cartas(){
 
 	if(todos_jogadores_derrotados()) return;
 
@@ -722,36 +722,36 @@ template<class CARTA> void JogoBasico<CARTA>::verifica_jogador_menos_cartas(){
 	declara_vencedor(jogador_vencedor);
 }
 
-template<class CARTA> void JogoBasico<CARTA>::declara_fim_de_jogo(){
+template<class CARTA, class MESA> void JogoBasico<CARTA, MESA>::declara_fim_de_jogo(){
 
 	_jogando = false;
 }
 
-template<class CARTA> void JogoBasico<CARTA>::declara_vencedor(std::size_t j){
+template<class CARTA, class MESA> void JogoBasico<CARTA, MESA>::declara_vencedor(std::size_t j){
 
 	_jog_atual = j;
 
 	_jogando = false;
 }
 
-template<class CARTA> void JogoBasico<CARTA>::_coloca_monte(CARTA c, std::size_t m, bool topo){
+template<class CARTA, class MESA> void JogoBasico<CARTA, MESA>::_coloca_monte(CARTA c, std::size_t m, bool topo){
 
 	if(topo) _mesa.coloca_topo(c, m);
 	else _mesa.coloca_baixo(c, m);
 }
 
-template<class CARTA> CARTA JogoBasico<CARTA>::_pega_monte(std::size_t m, bool topo){
+template<class CARTA, class MESA> CARTA JogoBasico<CARTA, MESA>::_pega_monte(std::size_t m, bool topo){
 
 	if(topo) return _mesa.pega_topo(m);
 	else return _mesa.pega_baixo(m);
 }
     
-template <class CARTA> void JogoBasico<CARTA>::vira_carta_monte(std::size_t m /* = 0 */, bool m_cima /* = true */){
+template<class CARTA, class MESA> void JogoBasico<CARTA, MESA>::vira_carta_monte(std::size_t m /* = 0 */, bool m_cima /* = true */){
 
 	_mesa.vira_carta_monte(m, m_cima);
 }
 
-template <class CARTA> void JogoBasico<CARTA>::vira_carta_jogador(std::size_t pos_carta, std::size_t j /* = jogador_atual */){
+template<class CARTA, class MESA> void JogoBasico<CARTA, MESA>::vira_carta_jogador(std::size_t pos_carta, std::size_t j /* = jogador_atual */){
     
 	if(j == jogador_atual) j = _jog_atual;
 
@@ -759,45 +759,45 @@ template <class CARTA> void JogoBasico<CARTA>::vira_carta_jogador(std::size_t po
 }
 
 
-template<class CARTA> void JogoBasico<CARTA>::distribuir(){
+template<class CARTA, class MESA> void JogoBasico<CARTA, MESA>::distribuir(){
 
 	_mesa.distribuir(cartas_jogadores());
 }
         
-template <class CARTA> void JogoBasico<CARTA>::muda_jogador_atual(int novapos){
+template<class CARTA, class MESA> void JogoBasico<CARTA, MESA>::muda_jogador_atual(int novapos){
     _jog_atual = novapos;
 }
 
-template <class CARTA> void JogoBasico<CARTA>::muda_aptidao(int pos){
+template<class CARTA, class MESA> void JogoBasico<CARTA, MESA>::muda_aptidao(int pos){
 	_mesa.muda_aptidao(pos);
 }
 
-template <class CARTA> bool JogoBasico<CARTA>::esta_apto(int pos){
+template<class CARTA, class MESA> bool JogoBasico<CARTA, MESA>::esta_apto(int pos){
 	return _mesa.esta_apto(pos);
 }
 
-template <class CARTA> void JogoBasico<CARTA>::restaurar_monte_inicial(){
+template<class CARTA, class MESA> void JogoBasico<CARTA, MESA>::restaurar_monte_inicial(){
 	_mesa.restaurar_monte_inicial();
 }
 
-template <class CARTA> void JogoBasico<CARTA>::limpa_outros_montes(){
+template<class CARTA, class MESA> void JogoBasico<CARTA, MESA>::limpa_outros_montes(){
 	_mesa.limpa_outros_montes();
 }
 
-template <class CARTA> void JogoBasico<CARTA>::embaralhar_monte_principal(){
+template<class CARTA, class MESA> void JogoBasico<CARTA, MESA>::embaralhar_monte_principal(){
 	_mesa.embaralhar_monte_principal();
 }
 
-template <class CARTA> void JogoBasico<CARTA>::esvazia_mao(std::size_t _jogador){
+template<class CARTA, class MESA> void JogoBasico<CARTA, MESA>::esvazia_mao(std::size_t _jogador){
 	_mesa.esvazia_mao(_jogador);
 	return ;
 }
 
-template <class CARTA> std::vector<CARTA> JogoBasico<CARTA>::mostra_mao_jogador_consulta(int pos){
+template<class CARTA, class MESA> std::vector<CARTA> JogoBasico<CARTA, MESA>::mostra_mao_jogador_consulta(int pos){
 	return _mesa.ver_jogador(pos).mostra_mao();
 }
 
-using Jogo = JogoBasico<Carta>;
+using Jogo = JogoBasico<Carta, Mesa>;
 
 } /* namespace p3 */
 

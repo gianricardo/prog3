@@ -9,6 +9,7 @@
 #define SRC_JOGOTRUNFO_H_
 
 #include <memory>
+#include <iostream>
 
 #include "jogo.h"
 #include "regra.h"
@@ -18,11 +19,15 @@
 class Jogo_trunfo : public p3::JogoBasico<Carta_trunfo>{
 public:
 	Jogo_trunfo(p3::Regra *regra, std::vector<std::string> nomes);
-	Jogada::Atributos recebe_jogada();
-	void realiza_jogada();
+	Jogada recebe_jogada();
+	void realiza_jogada(Jogada jogada);
 
 private:
-	void checa_jogada_valida();
+	void move_carta_jogador_vencedor(size_t jogador_vencedor);
+	void move_carta_empate();
+	int checa_super_trunfo();
+	size_t jogador_oponente();
+	Carta_trunfo carta_super_trunfo;
 
 };
 
