@@ -8,9 +8,6 @@
 #ifndef NAPOLEAO_H_
 #define NAPOLEAO_H_
 
-#define MOSTRA true
-#define SIMULACAO true
-
 #include <memory>
 
 #include "jogo.h"
@@ -21,11 +18,11 @@
 using namespace p3;
 class Napoleao {
 public:
-	Napoleao();
+	Napoleao(Regra *Rules, std::vector<std::string> nomes, int jogadores, bool SIMULACAO);
 	void inicia_jogo(); // comeca o jogo
 	virtual ~Napoleao();
 
-private:
+public:
 	std::unique_ptr<Jogo> _jogo;
 	unsigned int _turno = 1;
 	Carta::Naipe _trunfo = Carta::Naipe::Ouros;
@@ -34,22 +31,38 @@ private:
 	int _inicio = 0;
 	std::vector<std::unique_ptr<JogadorNapoleao> > _jogadores;
 	Carta::Naipe _naipe_inicial = Carta::Naipe::Ouros;
-	int _declarante_rodadas = 0;
+	int _declarante_turnos = 0;
+	int _vencedor_turno = 0;
 
-	bool inicia_rodada(); // comeca uma nova rodada
+	int numero_de_jogadores();
+	std::string nome_jogador_atual();
+	void muda_jogador_atual(unsigned int pos);
+	int aposta_maxima();
+	void define_declarante(int pos);
+	bool pergunta_turnos(int pos, bool zero);
+	std::vector<Carta> mostra_mao_jogador_atual();
+	int posicao_jogador_atual();
+	int posicao_declarante();
+	bool declarante_escolhe_trunfo();
+	Carta::Naipe naipe_trunfo();
+	bool primeira_jogada(int pos);
+	Carta jogada_normal(int pos);
+	void joga_monte(Carta nova, int pos);
+	int posicao_vencedor_turno();
+	bool declarante_venceu_turno();
+	int declarante_turnos_feitos();
+	bool declarante_venceu_rodada();
+	int max_rodadas();
+
+	void rodada_conf_inicio();
 	void define_trunfo(Carta::Naipe trunfo); // define qual vai ser o trunfo do turno
 	void pergunta_turnos(int pos); //pergunta pros jogadores qual a qtd de turnos que eles irão fazer
 	void imprime_mao_atual(); //imprime a mao do jogador atual.
-	std::string imprime_naipe(Carta::Naipe card);
-	std::string imprime_naipe(int card);
-	int inicio_turno(unsigned int primeiro);
 	int napoleao_jogada(int pos);
-	void declarante_escolhe_trunfo();
 	Carta carta_jogador_atual(int pos);
 	Carta carta_maior();
-	std::string imprime_carta(Carta card);
 	bool compara_cartas(Carta topo, Carta nova);
-	void imprime_pontuacao();
+	std::vector<int> vetor_pontuacao();
 	void fim_do_jogo();
 	void limpa_mao();
 };
