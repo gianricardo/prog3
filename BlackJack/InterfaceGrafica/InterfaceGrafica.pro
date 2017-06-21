@@ -24,8 +24,55 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+    ../banco_21.cpp \
+    ../ia_dealer_21.cpp \
+    ../interface_21.cpp \
+    ../jogo_21.cpp \
+    ../regra_21.cpp \
+    ../../carteado/src/p3/baralho.cpp \
+    ../../carteado/src/p3/carta.cpp \
+    ../../carteado/src/p3/jogador.cpp \
+    ../../carteado/src/p3/jogo.cpp \
+    ../../carteado/src/p3/mesa.cpp \
+    ../../carteado/src/p3/regra.cpp \
+    mainwindow.cpp \
+    nova_aposta.cpp \
+    novo.cpp \
+    bemvindo.cpp \
+    n_aposta.cpp \
+    dealer.cpp \
+    continua.cpp \
+    parabens.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += \
+    ../banco_21.h \
+    ../ia_dealer_21.h \
+    ../interface_21.h \
+    ../jogo_21.h \
+    ../regra_21.h \
+    ../../carteado/src/p3/baralho.h \
+    ../../carteado/src/p3/carta.h \
+    ../../carteado/src/p3/jogador.h \
+    ../../carteado/src/p3/jogo.h \
+    ../../carteado/src/p3/mesa.h \
+    ../../carteado/src/p3/regra.h \
+    mainwindow.h \
+    nova_aposta.h \
+    novo.h \
+    bemvindo.h \
+    n_aposta.h \
+    dealer.h \
+    continua.h \
+    parabens.h
 
-FORMS    += mainwindow.ui
+FORMS    += \
+    mainwindow.ui \
+    nova_aposta.ui \
+    novo.ui \
+    bemvindo.ui \
+    n_aposta.ui \
+    dealer.ui \
+    continua.ui \
+    parabens.ui
+
+RESOURCES +=

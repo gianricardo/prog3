@@ -12,3 +12,8 @@ novo::~novo()
 {
     delete ui;
 }
+
+QString novo::nome()
+{
+    return ui->lineEdit->text();
+}

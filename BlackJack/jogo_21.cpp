@@ -182,6 +182,5 @@ void BlackJack::play(Interface &iu){
         }
     }
     
-    iu.obrigado();
     return;
 }

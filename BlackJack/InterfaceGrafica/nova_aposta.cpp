@@ -12,3 +12,7 @@ nova_aposta::~nova_aposta()
 {
     delete ui;
 }
+
+int nova_aposta::val(){
+    return ui->lcdNumber->value();
+}
