@@ -82,6 +82,7 @@ bool BlackJack::dobrar_aposta(){
         ultima_aposta=ultima_aposta*2;
         return Banco.set_aposta(ultima_aposta);
     }
+    ultima_aposta=saldo();
     return Banco.set_aposta(saldo());
 }
 
@@ -181,6 +182,5 @@ void BlackJack::play(Interface &iu){
             continuar=iu.continuar();
         }
     }
-    
     return;
 }
