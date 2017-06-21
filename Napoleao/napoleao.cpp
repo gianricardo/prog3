@@ -123,36 +123,7 @@ int Napoleao::max_rodadas(){
 	return _jogo->max_rodadas();
 }
 
-
-/*void Napoleao::inicia_jogo(){
-	std::cout << "NAPOLEAO: Inicio inicia jogo" << std::endl;
-	for(int rodada = 0; rodada < _jogo->max_rodadas(); rodada++){
-		std::cout << "@@@@@@@@@@@@@@ INICIO DA RODADA " << rodada <<  "@@@@@@@@@@@@@@@@@" << std::endl;
-		bool vit_declarante = inicia_rodada();
-
-		if(vit_declarante) {
-			std::cout << "O declarante venceu a rodada! Ele ganhou " <<_aposta_max << " pontos!" << std::endl;
-			_jogo->jogador_soma_pontos(_aposta_max,_declarante);
-		} else {
-			std::cout << "O declarante perdeu a rodada! Todos, menos ele, ganharam " <<_aposta_max << " pontos!" << std::endl;
-			for(unsigned int i = 0; i < _jogo->numero_de_jogadores(); i++){
-				if ((int)i == _declarante) continue;
-				_jogo->jogador_soma_pontos(_aposta_max,(int)i);
-			}
-		}
-		std::cout << "A pontuacao ate agora eh:" << std::endl;
-		imprime_pontuacao();
-		std::cout << "@@@@@@ FIM DA RODADA @@@@@@" << std::endl;
-	}
-	_jogo->muda_jogador_atual(_jogo->numero_de_jogadores()-1);
-	std::cout << "$$$ PONTUACAO FINAL $$$" << std::endl;;
-	imprime_pontuacao();
-
-	fim_do_jogo();
-	std::cout << "NAPOLEAO: Fim inicia jogo" << std::endl;
-}*/
-
-void Napoleao::rodada_conf_inicio() {
+void Napoleao::jogo_conf_inicio() {
 	_aposta_max = 0;
 	_declarante = 0;
 	_declarante_turnos = 0;
@@ -160,6 +131,16 @@ void Napoleao::rodada_conf_inicio() {
 	limpa_mao();
 	_jogo->restaurar_monte_inicial();
 	_jogo->embaralhar_monte_principal();
+}
+
+void Napoleao::rodada_conf_inicio(){
+	while(_jogo->move_carta_mm(1,0)){}
+	//_jogo->restaurar_monte_inicial();
+	_jogo->embaralhar_monte_principal();
+	_aposta_max = 0;
+	_declarante = 0;
+	_declarante_turnos = 0;
+	_vencedor_turno = 0;
 	_jogo->distribuir();
 }
 

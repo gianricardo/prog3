@@ -11,7 +11,7 @@
 #include "napoleao.h"
 
 #define MAO 5
-#define SIMULACAO false
+#define SIMULACAO true
 #define MOSTRA true
 
 class Tela {
@@ -21,7 +21,6 @@ public:
 	virtual ~Tela();
 private:
 	std::unique_ptr<Napoleao> _nap;
-
 	void tela_inicia_rodada();
 	void pergunta_turnos(int pos);
 	void imprime_mao_atual();

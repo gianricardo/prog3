@@ -54,6 +54,7 @@ public:
 	bool declarante_venceu_rodada();
 	int max_rodadas();
 
+	void jogo_conf_inicio();
 	void rodada_conf_inicio();
 	void define_trunfo(Carta::Naipe trunfo); // define qual vai ser o trunfo do turno
 	void pergunta_turnos(int pos); //pergunta pros jogadores qual a qtd de turnos que eles irão fazer

@@ -40,6 +40,7 @@ Tela::~Tela() {
 
 void Tela::inicia_jogo() {
 	std::cout << "TELA: Inicio inicia jogo" << std::endl;
+	_nap->jogo_conf_inicio();
 	for(int rodada = 0; rodada < _nap->max_rodadas(); rodada++){
 		std::cout << "@@@@@@@@@@@@@@ INICIO DA RODADA " << rodada <<  "@@@@@@@@@@@@@@@@@" << std::endl;
 
@@ -53,8 +54,10 @@ void Tela::inicia_jogo() {
 		std::cout << "A pontuacao ate agora eh:" << std::endl;
 		imprime_pontuacao();
 		std::cout << "@@@@@@ FIM DA RODADA @@@@@@" << std::endl;
-
 	}
+	_nap->muda_jogador_atual(_nap->numero_de_jogadores()-1);
+	std::cout << "$$$ PONTUACAO FINAL $$$" << std::endl;;
+	imprime_pontuacao();
 
 }
 
