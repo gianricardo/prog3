@@ -14,6 +14,29 @@ Jogo_trunfo::Jogo_trunfo(p3::Regra *regra, std::vector<std::string> nomes) :
 	novo_monte(); 	//monte de empate
 }
 
+void Jogo_trunfo::jogar()
+{
+	Jogada jogada(Jogada::Atributos::INVALIDA);
+
+	while(jogando())
+	{
+		imprime_numero_cartas();
+		if(posicao_jogador_atual() == 1)
+		{
+			jogada = Inteligencia_artificial::escolhe_jogada();
+		}
+		else {
+			jogada = recebe_jogada();
+		}
+
+		realiza_jogada(jogada);
+
+		fim_jogada();
+	}
+
+	std::cout << nome_jogador_atual() << " venceu o jogo!\n";
+}
+
 Jogada Jogo_trunfo::recebe_jogada()
 {
 	if(!jogando()) return Jogada(Jogada::Atributos::INVALIDA);
@@ -72,8 +95,7 @@ void Jogo_trunfo::realiza_jogada(Jogada jogada)
 		else if(mostra_mao_jogador_consulta(posicao_jogador_atual())[0].participacao_gps() ==
 				mostra_mao_jogador_consulta(jogador_oponente())[0].participacao_gps())
 		{
-			determina_acao_jogador_vencedor(-1, jogada);
-			realiza_jogada(jogada);	//Chama a funcao novamente em caso de empate
+			determina_acao_jogador_vencedor(2, jogada);
 		}
 
 		//Jogador oponente vencedor
@@ -89,8 +111,7 @@ void Jogo_trunfo::realiza_jogada(Jogada jogada)
 		else if(mostra_mao_jogador_consulta(posicao_jogador_atual())[0].titulos_mundiais_construtores() ==
 				mostra_mao_jogador_consulta(jogador_oponente())[0].titulos_mundiais_construtores())
 		{
-			determina_acao_jogador_vencedor(-1, jogada);
-			realiza_jogada(jogada);
+			determina_acao_jogador_vencedor(2, jogada);
 		}
 
 		else
@@ -105,8 +126,7 @@ void Jogo_trunfo::realiza_jogada(Jogada jogada)
 		else if(mostra_mao_jogador_consulta(posicao_jogador_atual())[0].vitorias() ==
 				mostra_mao_jogador_consulta(jogador_oponente())[0].vitorias())
 		{
-			determina_acao_jogador_vencedor(-1, jogada);
-			realiza_jogada(jogada);
+			determina_acao_jogador_vencedor(2, jogada);
 		}
 
 		else
@@ -121,8 +141,7 @@ void Jogo_trunfo::realiza_jogada(Jogada jogada)
 		else if(mostra_mao_jogador_consulta(posicao_jogador_atual())[0].pole_positions() ==
 				mostra_mao_jogador_consulta(jogador_oponente())[0].pole_positions())
 		{
-			determina_acao_jogador_vencedor(-1, jogada);
-			realiza_jogada(jogada);
+			determina_acao_jogador_vencedor(2, jogada);
 		}
 
 		else
@@ -137,8 +156,7 @@ void Jogo_trunfo::realiza_jogada(Jogada jogada)
 		else if(mostra_mao_jogador_consulta(posicao_jogador_atual())[0].gps_com_podios() ==
 				mostra_mao_jogador_consulta(jogador_oponente())[0].gps_com_podios())
 		{
-			determina_acao_jogador_vencedor(-1, jogada);
-			realiza_jogada(jogada);
+			determina_acao_jogador_vencedor(2, jogada);
 		}
 
 		else
@@ -169,6 +187,8 @@ void Jogo_trunfo::move_carta_jogador_vencedor(size_t jogador_vencedor)
 	{
 		move_carta_mj(1, jogador_vencedor);
 	}
+
+	_ultimo_jogador_vencedor = jogador_vencedor;
 }
 
 size_t Jogo_trunfo::jogador_oponente()
@@ -188,6 +208,32 @@ void Jogo_trunfo::determina_acao_jogador_vencedor(size_t jogador_vencedor, Jogad
 
 	//Quebra de linha apos feita a comparacao
 	std::cout << "\n\n";
+}
+
+void Jogo_trunfo::fim_jogada()
+{
+	if(!_jogando) return;
+
+	_jog_atual = ultimo_jogador_vencedor();
+
+	_rodada++;
+
+	verifica_jogadores_derrotados();
+	verifica_fim_de_jogo();
+	verifica_vitoria();
+}
+
+int Jogo_trunfo::ultimo_jogador_vencedor()
+{
+	return _ultimo_jogador_vencedor;
+}
+
+void Jogo_trunfo::imprime_numero_cartas()
+{
+	std::cout 	<< _mesa.ver_jogador(0).nome() << " - numero de cartas: "
+				<< mostra_mao_jogador_consulta(0).size() << std::endl
+				<< _mesa.ver_jogador(1).nome() << " - numero de cartas: "
+				<< mostra_mao_jogador_consulta(1).size() << std::endl;
 }
 
 void Jogo_trunfo::move_carta_empate()
@@ -210,8 +256,8 @@ int Jogo_trunfo::checa_super_trunfo()
 
 void Jogo_trunfo::imprime_atributo_escolhido(Jogada jogada)
 {
-	size_t jogador_1 = posicao_jogador_atual();
-	size_t jogador_2 = !jogador_1;
+	size_t jogador_1 = 0;
+	size_t jogador_2 = 1;
 
 	switch(jogada.atributo_escolhido())
 	{
