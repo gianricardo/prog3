@@ -7,6 +7,10 @@ bemvindo::bemvindo(QWidget *parent) :
 {
     ui->setupUi(this);
 }
+void bemvindo::texto(QString a){
+    ui->lineEdit->insert("Bom jogo ");
+    ui->lineEdit->insert(a);
+}
 
 bemvindo::~bemvindo()
 {

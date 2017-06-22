@@ -14,7 +14,7 @@ class novo : public QDialog
 public:
     explicit novo(QWidget *parent = 0);
     ~novo();
-
+    QString nome();
 private:
     Ui::novo *ui;
 };

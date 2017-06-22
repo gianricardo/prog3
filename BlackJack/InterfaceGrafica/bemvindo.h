@@ -14,9 +14,11 @@ class bemvindo : public QDialog
 public:
     explicit bemvindo(QWidget *parent = 0);
     ~bemvindo();
+    void texto(QString a);
 
 private:
     Ui::bemvindo *ui;
+
 };
 
 #endif // BEMVINDO_H
