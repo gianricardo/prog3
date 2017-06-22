@@ -20,6 +20,9 @@ Window::Window(QWidget *parent) :
     rectangle = scene->addRect(100, 0, 80, 100, outlinePen, blueBrush);
 
     rectangle->setFlag(QGraphicsItem::ItemIsMovable);
+
+    //std::cout << frente.load(":/imagens/none.png") << std::endl;
+
 }
 
 Window::~Window()

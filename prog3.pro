@@ -18,7 +18,7 @@ STDPROJECT = PacienciaSpyder
 isEmpty(PROJECT){ PROJECT = $$STDPROJECT }
 
 # Input
-HEADERS += $$system("find $${FRAMEWORK_PATH} -type f -name '*.h' ! -name 'ui_*'") $$system("find $${PROJECT} -type f -name '*.h' ! -name 'ui_*'")
+HEADERS += $$system("find $${FRAMEWORK_PATH} -type f -name '*.h'") $$system("find $${PROJECT} -type f -name '*.h'")
 SOURCES += $$system("find $${FRAMEWORK_PATH} -type f -name '*.cpp' ! -name 'moc_*'") $$system("find $${PROJECT} -type f -name '*.cpp' ! -name 'moc_*'")
 FORMS += $$system("find $${FRAMEWORK_PATH} -type f -name '*.ui'") $$system("find $${PROJECT} -type f -name '*.ui'")
 RESOURCES += $$system("find $${FRAMEWORK_PATH} -type f -name '*.qrc'") $$system("find $${PROJECT} -type f -name '*.qrc'")
