@@ -1,24 +1,29 @@
-/*
 #ifndef WINDOW_H
 #define WINDOW_H
 
-#include <QApplication>
-#include <QWidget>
+#include <QMainWindow>
+#include <QGraphicsScene>
+#include <QAbstractAnimation>
+#include <QGraphicsView>
+#include <QGraphicsItem>
 
+namespace Ui {
+class Window;
+}
 
-class Window : public QWidget {
-    
+class Window : public QMainWindow
+{
     Q_OBJECT
 
 public:
+    explicit Window(QWidget *parent = 0);
+    ~Window();
 
-    explicit Window(QWidget *parent = nullptr) ;
-        
-    
 private:
-    
+    Ui::Window *ui;
 
+    QGraphicsScene *scene;
+    QGraphicsRectItem *rectangle;
 };
 
-#endif
-*/
+#endif // WINDOW_H

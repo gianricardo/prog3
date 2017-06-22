@@ -3,6 +3,11 @@
 #define CARDS_H
 
 #include <carta.h>
+#include <QPainter>
+#include <QWidget>
+#include <QStyleOptionGraphicsItem>
+#include <QGraphicsItem>
+#include <QGraphicsSceneMouseEvent>
 
 class OneSuitCard : public p3::Carta {
     
@@ -45,6 +50,5 @@ public:
     
     FourSuitsCard(int num, Naipe np);
 };
-
 
 #endif

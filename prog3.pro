@@ -14,7 +14,7 @@ DEBUGFLAGS = -g
 MEMCHECKER = valgrind
 MEMCHECKFLAGS = 
 
-STDPROJECT = BlackJack
+STDPROJECT = PacienciaSpyder
 isEmpty(PROJECT){ PROJECT = $$STDPROJECT }
 
 # Input

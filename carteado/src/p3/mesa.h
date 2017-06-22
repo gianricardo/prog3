@@ -138,7 +138,7 @@ public:
 	//chama o método esvazia_mao do jogador
 	void esvazia_mao(std::size_t _jogador);
 
-private:
+protected:
     //monte principal
     BaralhoBasico<CARTA> _monte;
 

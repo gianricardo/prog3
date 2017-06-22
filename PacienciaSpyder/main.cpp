@@ -1,13 +1,40 @@
 
-//#include <QApplication>
-//#include "window.h"
+#include <QPainter>
+#include <QWidget>
+#include <QStyleOptionGraphicsItem>
+#include <QGraphicsItem>
+#include <QGraphicsSceneMouseEvent>
+
+#include <QApplication>
+#include "window.h"
 
 #include "game.h"
 
 using namespace p3;
 
-int main(){
+class jogador : public Jogador{
     
+    using Jogador::Jogador;
+    
+};
+
+class mesa : public MesaBasica<Carta, jogador>{
+    
+    using MesaBasica<Carta, jogador>::MesaBasica;
+};
+
+class jogo : public JogoBasico<Carta, mesa>{
+    
+    using JogoBasico<Carta, mesa>::JogoBasico;
+};
+
+
+int main(int argc, char **argv){
+    
+    mesa m;
+    
+    jogo j(new Regra(0, 0), {});
+    /*
     OneSuitGame game("player");
     
     game.show();
@@ -55,6 +82,13 @@ int main(){
             game.show();
         }
     }
-    
-    return 0;
+    */
+
+    QApplication a(argc, argv);
+
+    Window w;
+    w.show();
+
+    return a.exec();
+
 }
