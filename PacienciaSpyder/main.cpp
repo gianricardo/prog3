@@ -30,11 +30,9 @@ class jogo : public JogoBasico<Carta, mesa>{
 
 
 int main(int argc, char **argv){
-    
-    mesa m;
-    
-    jogo j(new Regra(0, 0), {});
     /*
+    jogo j(new Regra(0, 0), {});
+
     OneSuitGame game("player");
     
     game.show();
@@ -82,7 +80,7 @@ int main(int argc, char **argv){
             game.show();
         }
     }
-    */
+    return 0;*/
 
     QApplication a(argc, argv);
 

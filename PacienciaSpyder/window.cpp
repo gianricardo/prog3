@@ -2,6 +2,8 @@
 #include "window.h"
 #include "ui_window.h"
 
+#include <iostream>
+
 Window::Window(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Window)
@@ -21,8 +23,9 @@ Window::Window(QWidget *parent) :
 
     rectangle->setFlag(QGraphicsItem::ItemIsMovable);
 
-    //std::cout << frente.load(":/imagens/none.png") << std::endl;
+    QPixmap imagem;
 
+    std::cout << imagem.load(":/PacienciaSpyder/img/none.png") << std::endl;
 }
 
 Window::~Window()
