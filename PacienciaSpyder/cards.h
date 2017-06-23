@@ -2,7 +2,7 @@
 #ifndef CARDS_H
 #define CARDS_H
 
-#include <memory>
+#include <QSharedPointer>
 
 #include <carta.h>
 #include <QPainter>
@@ -15,11 +15,14 @@ class CardImage : public QGraphicsItem {
 
 public:
 
-    CardImage(std::shared_ptr<QPixmap> front, std::shared_ptr<QPixmap> back);
+    CardImage();
+    CardImage(QSharedPointer<QPixmap> front, QSharedPointer<QPixmap> back);
+
+
 
 private:
 
-    std::shared_ptr<QPixmap> _front, _back;
+    QSharedPointer<QPixmap> _front, _back;
 };
 
 class OneSuitCard : public p3::Carta {

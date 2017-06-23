@@ -1,7 +1,7 @@
 
 #include "cards.h"
 
-CardImage::CardImage(std::shared_ptr<QPixmap> front, std::shared_ptr<QPixmap> back) :
+CardImage::CardImage(QSharedPointer<QPixmap> front, QSharedPointer<QPixmap> back) :
      _front(front), _back(back){
 
 }

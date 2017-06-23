@@ -88,7 +88,7 @@ public:
     //exclui todas as cartas do vetor de cartas e deixa o monte com tamanho 0
     void esvazia_monte();
 
-private:
+protected:
 
     //guarda o numero de cartas inicial passado ao baralho
 	std::size_t _numerocartas;

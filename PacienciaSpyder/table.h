@@ -5,13 +5,13 @@
 
 #include <mesa.h>
 
-#include "cards.h"
+#include "deck.h"
 
-class OneSuitTable : public p3::MesaBasica<OneSuitCard>
+class OneSuitTable : public p3::MesaBasica<OneSuitCard, p3::JogadorBasico<OneSuitCard>, Deck<OneSuitCard> >
 {
 public:
 
-    using p3::MesaBasica<OneSuitCard>::MesaBasica;
+    using p3::MesaBasica<OneSuitCard, p3::JogadorBasico<OneSuitCard>, Deck<OneSuitCard> >::MesaBasica;
 
     OneSuitTable();
 
