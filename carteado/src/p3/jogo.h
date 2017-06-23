@@ -15,7 +15,7 @@
 
 namespace p3 {
 
-template<class CARTA, class MESA = MesaBasica<CARTA, JogadorBasico<CARTA> > >
+template<class CARTA, class MESA = MesaBasica<CARTA, JogadorBasico<CARTA>, BaralhoBasico<CARTA> > >
 class JogoBasico {
 public:
 
