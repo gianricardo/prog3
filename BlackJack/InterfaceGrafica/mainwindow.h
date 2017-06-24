@@ -7,6 +7,7 @@
 #include <QGraphicsView>
 #include <QGraphicsItem>
 #include <QMessageBox>
+#include <QTimer>
 #include "nova_aposta.h"
 #include "novo.h"
 #include "bemvindo.h"
@@ -15,7 +16,7 @@
 #include "continua.h"
 #include "parabens.h"
 #include "../../carteado/src/p3/carta.h"
-
+#include "imagem_carta.h"
 
 
 namespace Ui {
@@ -42,7 +43,7 @@ public:
     bool continuar();
     void vencedor(bool a, int b, int c);
     void placar_rodada(int saldo, int aposta);
-    void mostra_maos(/*std::vector<p3::Carta> d, std::vector<p3::Carta> p*/);
+    void mostra_maos(std::vector<p3::Carta> d, std::vector<p3::Carta> p);
     void obrigado();
     void closeEvent(QCloseEvent*);
 
@@ -60,7 +61,7 @@ private:
     int ultimaaposta;
     int saldo;
     int ac;
-    QGraphicsScene *scene;
+    QGraphicsScene* scene;
     QGraphicsPixmapItem *imagem;
 };
 

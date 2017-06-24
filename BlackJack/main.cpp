@@ -1,34 +1,20 @@
-//
-//  main.cpp
-//  21
-//
-//  Created by Andre Luigi on 22/05/17.
-//  Copyright © 2017 Andre Luigi. All rights reserved.
-//
-//
-//
-//  git clone https://github.com/gianricardo/prog3.git
-//  qmake -spec macx-xcode PROJECT=BlackJack
-//
-//
 
-#include <iostream>
-#include <vector>
+#include <QApplication>
+
+#include "InterfaceGrafica/mainwindow.h"
+#include "base/jogo_21.h"
+#include "base/regra_21.h"
+
+int main(int argc, char *argv[])
+{
+    QApplication a(argc, argv);
+    MainWindow w;
 
 
-#include "jogo_21.h"
-#include "regra_21.h"
-#include "interface_21.h"
-
-
-using namespace p3;
-
-int main(void) {
-    
-    Interface iu;
+    w.show();
     Regra21 *rules = new Regra21();
-    BlackJack game(rules, iu.novo_jogo());
-    game.play(iu);
+    BlackJack game(rules, w.novo_jogo());
+    game.play(w);
     return 0;
-}
 
+}
