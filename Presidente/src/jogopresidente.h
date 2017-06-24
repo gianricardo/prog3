@@ -11,18 +11,23 @@
 #include <vector>
 #include <string>
 #include <algorithm>
-#include "jogo.h"
+#include "../../carteado/src/p3/jogo.h"
+#include "../../Presidente/Presidente/telapresidente.h"
+#include <QTimer>
+#include <QEventLoop>
 
 using namespace p3;
 
-class JogoPresidente : public p3::Jogo{
+class JogoPresidente : public Jogo{
 public:
-	JogoPresidente(p3::Regra *r,std::vector<std::string> p);
+        JogoPresidente(p3::Regra *r,std::vector<std::string> p,TelaPresidente &ui);
 	virtual ~JogoPresidente();
+	void play();
+private:
 	int acha_carta_jogavel(std::vector<Carta>,int,int);
 	int how_many_in_the_hand(std::vector<Carta>,int);
 	void joga_cartas(int,int);
-	void fim_jogada() override;
+        void fim_jogada();
 	void add_position(int jogador);
 	void pass_card(std::vector<int> v, int pos1, int pos2);
 	std::vector<int> find_highest(int,std::size_t);
@@ -36,8 +41,8 @@ public:
 	void verifica_jogador_pontuacao_maxima() override;
 	void declara_vencedor(std::size_t j) override;
 	void verifica_jogador_unico() override;
-private:
 	void ordena_mao_jogador();
 	std::vector<int> _positions;
+        TelaPresidente *_ui;
 };
 #endif /* JOGOPRESIDENTE_H_ */
