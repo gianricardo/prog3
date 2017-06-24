@@ -6,7 +6,7 @@
  */
 
 #include "regrapresidente.h"
-#include "regra.h"
+#include "../../carteado/src/p3/regra.h"
 
 RegraPresidente::RegraPresidente(std::size_t numero_de_jogadores,int cartas_jogadores,int rodadas,int pontuacao_max,
 		  int menor_pontuacao,int cartas_inicial,modo_fim fim,condicao_vitoria vit,condicao_derrota der) :

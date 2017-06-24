@@ -4,3 +4,8 @@ OneSuitTable::OneSuitTable() : p3::MesaBasica<OneSuitCard, p3::JogadorBasico<One
 {
 
 }
+
+void OneSuitTable::assign_to_scene(QGraphicsScene *scene){
+
+    this->_monte.assign_to_scene(scene);
+}

@@ -7,8 +7,9 @@
 
 #include "jogopresidente.h"
 
-JogoPresidente::JogoPresidente(p3::Regra *r,std::vector<std::string> p) : p3::Jogo(r,p){
+JogoPresidente::JogoPresidente(Regra *r, std::vector<std::string> p, TelaPresidente &ui) : Jogo(r,p){
 	ordena_mao_jogador();
+    _ui=&ui;
 }
 
 JogoPresidente::~JogoPresidente() {
@@ -31,6 +32,7 @@ void JogoPresidente::joga_cartas(int carta,int numerocartas){
 	while(i!=numerocartas){
 		for(int j=0;j<4;j++){
 			if(move_carta_jm(p3::Carta(carta,(Carta::Naipe)j),_jog_atual,i+1,true)){
+                vira_carta_monte(i+1,true);
 				i++;
 				break;
 			}
@@ -53,7 +55,6 @@ void JogoPresidente::fim_jogada(){
 		jogador_soma_pontos(2,_positions[1]);
 		jogador_soma_pontos(1,_positions[2]);
 		limpa_outros_montes();
-		verifica_fim_de_jogo();
 		restaurar_monte_inicial();
 		embaralhar_monte_principal();
 		distribuir();
@@ -66,10 +67,21 @@ void JogoPresidente::fim_jogada(){
 		pass_card(find_highest(1,retorna_vicebobo()),retorna_vicebobo(),retorna_vicepres());
 		pass_card(find_lowest(1,retorna_vicepres()),retorna_vicepres(),retorna_vicebobo());
 		ordena_mao_jogador();
+		for(std::size_t i=0;i<13;i++){
+			vira_carta_jogador(i,0);
+		}
+        std::vector<int> pts;
+        for(int i=0;i<4;i++){
+            muda_jogador_atual(i);
+            pts.push_back(pontuacao_jogador_atual());
+        }
+        _ui->show_position(_positions);
+        _ui->show_pontuation(pts);
+        verifica_fim_de_jogo();
 		_rodada++;
 		muda_jogador_atual(retorna_pres());
 		_positions.clear();
-		std::cout<<"============================="<<std::endl;
+        ;
 	}
 }
 
@@ -97,7 +109,7 @@ std::vector<int> JogoPresidente::find_highest(int numbercards,std::size_t player
 	std::vector<int> cards;
 	int maior=0;
 	int maior2=0;
-	for(auto c : mostra_mao_jogador(player)){
+	for(auto c : mostra_mao_jogador_consulta(player)){
 		if(c.numero() >= maior && c.numero()>=maior2){
 			maior2=maior;
 			maior=c.numero();
@@ -114,7 +126,7 @@ std::vector<int> JogoPresidente::find_lowest(int numbercards,std::size_t player)
 	std::vector<int> cards;
 	int menor=14;
 	int menor2=14;
-	for(auto c : mostra_mao_jogador(player)){
+	for(auto c : mostra_mao_jogador_consulta(player)){
 		if(c.numero() <= menor && c.numero()<=menor2){
 			menor2=menor;
 			menor=c.numero();
@@ -165,16 +177,7 @@ void JogoPresidente::verifica_jogador_pontuacao_maxima(){
 }
 
 void JogoPresidente::declara_vencedor(std::size_t j){
-	std::cout<<"O jogador vencedor foi o da posicao "<<j<<std::endl;
-	std::cout<<"Pontuacoes:\n";
-	muda_jogador_atual(0);
-	std::cout<<"Jogador 0: "<<pontuacao_jogador_atual()<<std::endl;
-	muda_jogador_atual(1);
-	std::cout<<"Jogador 1: "<<pontuacao_jogador_atual()<<std::endl;
-	muda_jogador_atual(2);
-	std::cout<<"Jogador 2: "<<pontuacao_jogador_atual()<<std::endl;
-	muda_jogador_atual(3);
-	std::cout<<"Jogador 3: "<<pontuacao_jogador_atual()<<std::endl;
+    _ui->show_winner(j);
 }
 
 void JogoPresidente::verifica_jogador_unico(){
@@ -187,7 +190,7 @@ void JogoPresidente::verifica_jogador_unico(){
 		}
 	}
 	if(jog_aptos > 1) return;
-	std::vector<Carta> cards = mostra_mao_jogador(last);
+	std::vector<Carta> cards = mostra_mao_jogador_consulta(last);
 	for(auto c : cards){
 		_mesa.jogador_tira_carta(c,last);
 	}
@@ -197,7 +200,7 @@ void JogoPresidente::verifica_jogador_unico(){
 
 void JogoPresidente::ordena_mao_jogador(){
 	std::vector<Carta> hand;
-	for(auto c : mostra_mao_jogador(0)){
+	for(auto c : mostra_mao_jogador_consulta(0)){
 		hand.push_back(c);
 		_mesa.jogador_tira_carta(c,0);
 	}
@@ -207,5 +210,88 @@ void JogoPresidente::ordena_mao_jogador(){
 	std::sort(hand.begin(), hand.end(), compara);
 	for(int k=0;k<13;k++){
 		_mesa.jogador_recebe_carta(hand[k],0);
+	}
+}
+
+void JogoPresidente::play(){
+	std::vector<Carta> playing,montes;
+	novo_monte();
+	novo_monte();
+	novo_monte();
+	novo_monte();
+    int card=0;
+	int last_played_card=-1;
+	int number_of_cards_played=0;
+	int wining;
+	int count;
+    int time_wait=500;
+	unsigned int pass_count=0;
+	for(std::size_t i=0;i<13;i++){
+		vira_carta_jogador(i,0);
+	}
+    while(!_ui->tela_inicio()){}
+	while(jogando()){
+        for(int i=1;i<=number_of_cards_played;i++) montes.push_back(_pega_monte(i,true));
+        _ui->show_hand(mostra_mao_jogador_consulta(0),mostra_mao_jogador_consulta(1),mostra_mao_jogador_consulta(2),mostra_mao_jogador_consulta(3));
+        _ui->show_montes(montes);
+        int i=1;
+        for(auto m : montes){ _coloca_monte(m,i,true); i++;}
+        montes.clear();
+		playing=mostra_mao_jogador_consulta(posicao_jogador_atual());
+		if(posicao_jogador_atual()==0 && esta_apto(0)){
+            card=playing[_ui->get_play()-1].numero();
+            if(card>last_played_card && how_many_in_the_hand(playing,card)>=number_of_cards_played){
+				wining=posicao_jogador_atual();
+				count=how_many_in_the_hand(playing,card);
+				joga_cartas(card,number_of_cards_played!=0?number_of_cards_played:count);
+				last_played_card=card;
+				number_of_cards_played = number_of_cards_played!=0?number_of_cards_played:count;
+				if(mostra_mao_jogador_consulta(posicao_jogador_atual()).size()==0 && esta_apto((int)posicao_jogador_atual())==true){
+					muda_aptidao((int)posicao_jogador_atual());
+					add_position((int)posicao_jogador_atual());
+                    time_wait=1;
+				}
+				pass_count=0;
+			}else pass_count++;
+		}else if(esta_apto((int)posicao_jogador_atual())){
+			card=acha_carta_jogavel(playing,number_of_cards_played,last_played_card);
+			if(card!=0){
+				wining=posicao_jogador_atual();
+				count=how_many_in_the_hand(playing,card);
+				joga_cartas(card,number_of_cards_played!=0?number_of_cards_played:count);
+				last_played_card=card;
+				number_of_cards_played = number_of_cards_played!=0?number_of_cards_played:count;
+				if(mostra_mao_jogador_consulta(posicao_jogador_atual()).size()==0 && esta_apto((int)posicao_jogador_atual())){
+					muda_aptidao((int)posicao_jogador_atual());
+					add_position((int)posicao_jogador_atual());
+				}
+				pass_count=0;
+			}else pass_count++;
+		}
+        for(int i=1;i<=number_of_cards_played;i++) montes.push_back(_pega_monte(i,true));
+        _ui->show_hand(mostra_mao_jogador_consulta(0),mostra_mao_jogador_consulta(1),mostra_mao_jogador_consulta(2),mostra_mao_jogador_consulta(3));
+        _ui->show_montes(montes);
+        i=1;
+        for(auto m : montes){ _coloca_monte(m,i,true); i++;}
+        montes.clear();
+        QEventLoop espera;
+        QTimer::singleShot(time_wait,&espera,SLOT(quit()));
+        espera.exec();
+		if(last_played_card==13 || pass_count==(numero_jogadores_aptos()-1)){
+            if(esta_apto(wining))	muda_jogador_atual(wining);
+			last_played_card=-1;
+			number_of_cards_played=0;
+		}
+		if(last_played_card!=-1 || !esta_apto(posicao_jogador_atual())){
+			if(posicao_jogador_atual()==3) muda_jogador_atual(0);
+			else muda_jogador_atual(posicao_jogador_atual()+1);
+		}
+		if(numero_jogadores_aptos()==0){
+			last_played_card=-1;
+			number_of_cards_played=0;
+		}
+        verifica_jogador_unico();
+        if(numero_jogadores_aptos()==0) time_wait=500;
+        fim_jogada();
 	}
 }

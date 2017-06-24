@@ -16,8 +16,16 @@ public:
 
     Deck() : p3::BaralhoBasico<CARD>() {}
 
-    void set_images(std::map<OneSuitCard, std::string> front_images , std::string back_image);
+    void assign_to_scene(QGraphicsScene *scene);
 
 };
+
+template<class CARD> void Deck<CARD>::assign_to_scene(QGraphicsScene *scene){
+
+    for(auto& card : p3::BaralhoBasico<CARD>::_monte){
+
+        card.assign_to_scene(scene);
+    }
+}
 
 #endif // DECK_H
