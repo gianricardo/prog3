@@ -4,9 +4,10 @@
 
 #include <iostream>
 
-Window::Window(QWidget *parent) :
+GameWindow::GameWindow(std::string player, QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::Window)
+    ui(new Ui::Window),
+    game(player)
 {
     ui->setupUi(this);
 
@@ -26,9 +27,18 @@ Window::Window(QWidget *parent) :
     QPixmap imagem;
 
     std::cout << imagem.load(":/PacienciaSpyder/img/none.png") << std::endl;
+
+    auto item = new CardImage(0, 3);
+
+    item->setPos(5, 0);
+
+    //item->setFlag(QGraphicsItem::ItemIsMovable);
+
+    scene->addItem(item);
+
 }
 
-Window::~Window()
+GameWindow::~GameWindow()
 {
     delete ui;
 }

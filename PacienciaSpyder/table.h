@@ -1,8 +1,6 @@
 #ifndef TABLE_H
 #define TABLE_H
 
-#include <map>
-
 #include <mesa.h>
 
 #include "deck.h"
@@ -15,7 +13,8 @@ public:
 
     OneSuitTable();
 
-    void set_images(std::map<OneSuitCard, std::string> front_images , std::string back_image);
+    void assign_to_scene(QGraphicsScene *scene);
+
 };
 
 #endif // TABLE_H

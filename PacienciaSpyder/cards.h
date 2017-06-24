@@ -4,28 +4,40 @@
 
 #include <QSharedPointer>
 
-#include <carta.h>
 #include <QPainter>
 #include <QWidget>
 #include <QStyleOptionGraphicsItem>
 #include <QGraphicsItem>
 #include <QGraphicsSceneMouseEvent>
+#include <QGraphicsScene>
+
+#include <carta.h>
 
 class CardImage : public QGraphicsItem {
 
 public:
 
-    CardImage();
-    CardImage(QSharedPointer<QPixmap> front, QSharedPointer<QPixmap> back);
+    CardImage(int num, int np);
 
+    QRectF boundingRect() const {
+        return QRectF(x(), y(), 65, 100);
+    }
 
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){
+
+        Q_UNUSED(option);
+        Q_UNUSED(widget);
+
+        painter->drawPixmap(x(),y(), (show_front) ? _front : _back);
+    }
 
 private:
 
-    QSharedPointer<QPixmap> _front, _back;
+    QPixmap _front, _back;
+    bool show_front;
 };
 
-class OneSuitCard : public p3::Carta {
+class OneSuitCard : public p3::Carta{
     
 public:
 
@@ -33,38 +45,18 @@ public:
     static const int n_naipes = 1;
     
     enum class Naipe {Espadas};
-    
+
     using p3::Carta::Carta;
-    
+
     OneSuitCard(int num, Naipe np = Naipe::Espadas);
-    
-};
 
+    void assign_to_scene(QGraphicsScene *scene);
 
-class TwoSuitsCard : public p3::Carta {
-    
-public:
+    void assing_image(QSharedPointer<CardImage> image);
 
-    static const int n_numeros = 13;
-    static const int n_naipes = 2;
-    
-    enum class Naipe {Espadas, Copas};
-    
-    using p3::Carta::Carta;
-    
-    TwoSuitsCard(int num, Naipe np);
-};
+private:
 
-class FourSuitsCard : public p3::Carta {
-    
-public:
-
-    static const int n_numeros = 13;
-    static const int n_naipes = 4;
-    
-    using p3::Carta::Naipe;
-    
-    FourSuitsCard(int num, Naipe np);
+    QSharedPointer<CardImage> _image;
 };
 
 #endif
