@@ -30,6 +30,8 @@ public:
 
     void click_event(int n_deck, int n_position){
 
+        Q_UNUSED(n_position);
+
         std::cout << "clicked" << std::endl;
 
         if(n_deck == -2){

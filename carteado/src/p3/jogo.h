@@ -37,7 +37,7 @@ public:
 	void reiniciar();
 
 	 //Termina a jogada do jogador atual, caso ele seja o ultimo jogador, muda a rodada
-	virtual void fim_jogada();
+	virtual bool fim_jogada();
 
     //Retorna se o jogo esta em andamento
 	bool jogando() const;
@@ -319,9 +319,11 @@ template<class CARTA, class MESA> void JogoBasico<CARTA, MESA>::reiniciar(){
 	}
 }
 
-template<class CARTA, class MESA> void JogoBasico<CARTA, MESA>::fim_jogada(){
+template<class CARTA, class MESA> bool JogoBasico<CARTA, MESA>::fim_jogada(){
 
-	if(!_jogando) return;
+	if(!_jogando) return false;
+
+    if(max_rodadas() > 0)  if(_rodada >= (std::size_t) max_rodadas()) return false;
 
 	while(1){
 
@@ -339,6 +341,8 @@ template<class CARTA, class MESA> void JogoBasico<CARTA, MESA>::fim_jogada(){
 		if(_mesa.ver_jogador(_jog_atual).esta_apto()) break;
 
 	}
+
+	return true;
 }
 
 template<class CARTA, class MESA> bool JogoBasico<CARTA, MESA>::jogando() const {
@@ -534,7 +538,7 @@ template<class CARTA, class MESA> void JogoBasico<CARTA, MESA>::verifica_vitoria
 	switch(_regra->cond_vit())
 	{
 	case Regra::condicao_vitoria::padrao :
-		verifica_jogador_unico();
+		if(numero_de_jogadores() > 1) verifica_jogador_unico();
 		break;
 
 	case Regra::condicao_vitoria::maior_pontuacao :

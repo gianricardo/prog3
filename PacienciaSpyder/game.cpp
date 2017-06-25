@@ -34,13 +34,21 @@ void OneSuitGame::next_turn(){
     std::cout << jogando() << std::endl;
     std::cout << turn() << std::endl;
 
-    if(turn() > 4) return;
+    if(!JogoBasico<OneSuitCard, OneSuitTable>::fim_jogada()) return;
+
+    if(turn() == 6){
+
+        if(stack_image != nullptr){
+
+            delete stack_image;
+
+            stack_image = nullptr;
+        }
+    }
     
     _distribute();
     
     _turn_all();
-    
-    JogoBasico<OneSuitCard, OneSuitTable>::fim_jogada();
 }
 
 void OneSuitGame::draw(){
