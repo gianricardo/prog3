@@ -59,5 +59,12 @@
     </qresource>
     <qresource prefix="/">
         <file>ohterimg/dealer.png</file>
+        <file>ohterimg/icon.png</file>
+        <file>ohterimg/chips2.png</file>
+        <file>ohterimg/chips1.png</file>
+        <file>ohterimg/pobre.jpg</file>
+        <file>ohterimg/logo.png</file>
+        <file>ohterimg/bemvindo.jpg</file>
+        <file>ohterimg/mais.jpg</file>
     </qresource>
 </RCC>

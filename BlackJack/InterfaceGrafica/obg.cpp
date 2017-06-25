@@ -6,6 +6,7 @@ obg::obg(QWidget *parent) :
     ui(new Ui::obg)
 {
     ui->setupUi(this);
+    this->setWindowFlags ( Qt::CustomizeWindowHint );
 }
 
 obg::~obg()

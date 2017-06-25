@@ -19,6 +19,10 @@ class Regra21: public Regra{
 public:
     //cria regra com as especificacoes de 21
     Regra21();
+    //verifica a pontuacao da carta de acordo com o seu numero
+    //recebe o numero da carta
+    //retorna quantos pontos ela vale
+    int verifica_ponto (int a);
     
 };
 

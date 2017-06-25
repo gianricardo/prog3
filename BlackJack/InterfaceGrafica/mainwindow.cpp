@@ -13,13 +13,18 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->graphicsView->setScene(scene);
     this->setWindowState(Qt::WindowMaximized);
     this->setWindowFlags ( Qt::CustomizeWindowHint );
+
     ac=1;
 }
 
 MainWindow::~MainWindow()
 {
     qDeleteAll(scene->items());
+    delete ui->acaow;
+    delete ui->placarw;
     delete scene;
+    delete imagem;
+    delete ui->centralwidget;
     delete ui;
 }
 
@@ -31,18 +36,21 @@ void MainWindow::placar(int total){
 
 int MainWindow::aposta(){
     nova_aposta na;
-    na.setModal(true);
+    na.show();
     na.exec();
     ui->apostaatual->clear();
     ui->apostaatual->insert(QStringLiteral("$%1,00").arg(na.val()));
-    return na.val();
+    int res = na.val();
+    na.close();
+    return res;
 }
 
 std::string MainWindow::novo_jogo(){
     novo nj;
-    nj.setModal(true);
+    nj.show();
     nj.exec();
     nome=nj.nome();
+    nj.close();
     ui->nomedojogador->insert(nome);
     return nome.toStdString();
 }
@@ -51,6 +59,7 @@ void MainWindow::boas_vindas(){
     bemvindo bv;
     bv.texto(nome);
     bv.exec();
+    bv.close();
 }
 
 void MainWindow::naposta(){
@@ -66,6 +75,7 @@ int MainWindow::jogue(){
     QObject::connect(ui->double_2, SIGNAL(clicked()),&loop, SLOT(quit()));
     QObject::connect(ui->stay, SIGNAL(clicked()),&loop, SLOT(quit()));
     loop.exec();
+    loop.quit();
     int i=ac;
     ui->acaow->hide();
     return i;
@@ -91,12 +101,15 @@ void MainWindow::on_actionstay_triggered()
 void MainWindow::vez_dealer(){
     dealer d;
     d.exec();
+    d.close();
 }
 
 bool MainWindow::continuar(){
     continua c;
     c.exec();
-    return c.result();
+    bool re = c.result();
+    c.close();
+    return re;
 }
 
 void MainWindow::vencedor(bool a, int b, int c){
@@ -109,6 +122,7 @@ void MainWindow::vencedor(bool a, int b, int c){
     parabens p;
     p.insere(texto);
     p.exec();
+    p.close();
     qDeleteAll(scene->items());
 }
 
@@ -161,18 +175,11 @@ void MainWindow::mostra_maos(std::vector<p3::Carta> d, std::vector<p3::Carta> p)
 }
 
 void MainWindow::obrigado(){
-    QMessageBox msgBox;
-    msgBox.setText("Obrigado por jogar!");
-    msgBox.setInformativeText(":)");
-    msgBox.setStandardButtons(QMessageBox::Ok);
-    msgBox.exec();
+    obg o;
+    o.show();
+    o.exec();
+    o.close();
     qApp -> closeAllWindows();
     qApp -> quit();
     qApp ->quitOnLastWindowClosed();
-}
-
-
-void   MainWindow::closeEvent(QCloseEvent*)
-{
-    qApp->quit();
 }

@@ -45,8 +45,8 @@
   <widget class="QLCDNumber" name="lcdNumber">
    <property name="geometry">
     <rect>
-     <x>12</x>
-     <y>22</y>
+     <x>10</x>
+     <y>20</y>
      <width>201</width>
      <height>81</height>
     </rect>
@@ -84,8 +84,32 @@
     <string>Faça sua aposta</string>
    </property>
   </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>-160</x>
+     <y>-10</y>
+     <width>411</width>
+     <height>221</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="imagens.qrc">:/ohterimg/chips2.png</pixmap>
+   </property>
+  </widget>
+  <zorder>label_2</zorder>
+  <zorder>buttonBox_2</zorder>
+  <zorder>dial</zorder>
+  <zorder>lcdNumber</zorder>
+  <zorder>line</zorder>
+  <zorder>label</zorder>
  </widget>
- <resources/>
+ <resources>
+  <include location="imagens.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonBox_2</sender>

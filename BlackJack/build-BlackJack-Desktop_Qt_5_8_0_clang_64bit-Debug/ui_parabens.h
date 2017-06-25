@@ -16,6 +16,7 @@
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QDialogButtonBox>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QTextEdit>
 
 QT_BEGIN_NAMESPACE
@@ -25,6 +26,7 @@ class Ui_parabens
 public:
     QDialogButtonBox *buttonBox;
     QTextEdit *textEdit;
+    QLabel *label;
 
     void setupUi(QDialog *parabens)
     {
@@ -44,8 +46,15 @@ public:
         buttonBox->setStandardButtons(QDialogButtonBox::Ok);
         textEdit = new QTextEdit(parabens);
         textEdit->setObjectName(QStringLiteral("textEdit"));
-        textEdit->setGeometry(QRect(10, 10, 381, 141));
+        textEdit->setGeometry(QRect(10, 10, 361, 131));
         textEdit->setReadOnly(true);
+        label = new QLabel(parabens);
+        label->setObjectName(QStringLiteral("label"));
+        label->setGeometry(QRect(200, 0, 311, 251));
+        label->setPixmap(QPixmap(QString::fromUtf8(":/ohterimg/chips1.png")));
+        label->raise();
+        buttonBox->raise();
+        textEdit->raise();
 
         retranslateUi(parabens);
         QObject::connect(buttonBox, SIGNAL(accepted()), parabens, SLOT(accept()));
@@ -57,6 +66,7 @@ public:
     void retranslateUi(QDialog *parabens)
     {
         parabens->setWindowTitle(QApplication::translate("parabens", "Dialog", Q_NULLPTR));
+        label->setText(QString());
     } // retranslateUi
 
 };

@@ -25,6 +25,7 @@ class Ui_continua
 {
 public:
     QVBoxLayout *verticalLayout;
+    QLabel *label_2;
     QLabel *label;
     QDialogButtonBox *buttonBox;
 
@@ -32,11 +33,18 @@ public:
     {
         if (continua->objectName().isEmpty())
             continua->setObjectName(QStringLiteral("continua"));
-        continua->resize(214, 80);
+        continua->resize(314, 457);
         verticalLayout = new QVBoxLayout(continua);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        label_2 = new QLabel(continua);
+        label_2->setObjectName(QStringLiteral("label_2"));
+        label_2->setPixmap(QPixmap(QString::fromUtf8(":/ohterimg/mais.jpg")));
+
+        verticalLayout->addWidget(label_2);
+
         label = new QLabel(continua);
         label->setObjectName(QStringLiteral("label"));
+        label->setAlignment(Qt::AlignCenter);
 
         verticalLayout->addWidget(label);
 
@@ -59,7 +67,8 @@ public:
     void retranslateUi(QDialog *continua)
     {
         continua->setWindowTitle(QApplication::translate("continua", "Dialog", Q_NULLPTR));
-        label->setText(QApplication::translate("continua", "Deseja jogar uma nova partida?", Q_NULLPTR));
+        label_2->setText(QString());
+        label->setText(QApplication::translate("continua", "Gostaria de jogar mais uma partida?", Q_NULLPTR));
     } // retranslateUi
 
 };

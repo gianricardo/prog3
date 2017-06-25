@@ -17,18 +17,20 @@ public:
     Banco21();
     //determina valor da aposta da rodada
     //false se o valor nao vor valido
+    //recebe o valor da aposta
     //a aposta minima é cinco
     bool set_aposta(int a);
-    //mostra valor da aposta da rodada
+    //retorna valor da aposta da rodada
     int get_aposta();
-    //mostra quanto dinheiro o jogador tem
+    //retorna quanto dinheiro o jogador tem
     int get_dj();
-    //mostra quanto dinheiro o cassino tem
+    //retorna quanto dinheiro o cassino tem
     int get_dc();
     //atualiza os valores que o cassino e o jogador tem no banco e zera a aposta
-    //entra true jogador ganha, false cassino ganha
+    //recebe true jogador ganha, false cassino ganha
     void resultado(bool a);
-    //true caso o jogador tenha dinheiro para jogar e false caso nao;
+    //verifica se o jogador tem saldo para apostar
+    //retorna true caso o jogador tenha dinheiro para jogar e false caso nao;
     bool autoriza_jogada();
 private:
     //dinheiro do cassino no banco

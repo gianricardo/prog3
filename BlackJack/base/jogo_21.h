@@ -29,9 +29,10 @@ public:
     BlackJack(Regra21 * rules, std::string nome_jogador);
     //mostra a carta que esta escondida na mao do dealer
     void revela_mao_dealer();
-    //retorna a soma dos pontos da mao do jogador na pos ops
+    //retorna a soma dos pontos da mao do participante na posicao pos
+    //recebe a posicao do participante pos
     int soma_mao(std::size_t pos);
-    //adicioa uma carta virada para cima a mao do jogador na posicao pos
+    //adicioa uma carta virada para cima a mao do participante na posicao pos
     void hit(std::size_t pos);
     //inicia a partia, usar apos criar e apos reiniciar
     void inicia_rodada_21( );
@@ -46,13 +47,17 @@ public:
     //retorna o nome do jogador
     std::string nome_jogador();
     //realiza uma aposta
+    //recebe o valor da nova aposta
     void apostar(int);
     //dobra o valor da aposta;
+    //torna allin caso tenha menos saldo que a aposta dobrada
+    //retorna false caso nao consiga apostar e true caso consiga
     bool dobrar_aposta ();
     //verifica ganhador
-    //true=jogador, false=dealer;
+    //retorna: true=jogador, false=dealer;
     bool verifica_ganhador();
     //verifica se o jogador pode apostar;
+    //true se pode, false se nao
     bool pode_apostar();
     //mostra quanto dinheiro o jogador tem no banco
     int saldo();
@@ -60,24 +65,25 @@ public:
     std::vector<Carta> mao_dealer();
     //mostra a mao do jogador
     std::vector<Carta> mao_jogador();
-    
+    //realiza a jogada
+    //recebe 1 para hit, 2 para dobrar a aposta e 3 para encerrar jogada
+    //retorna true caso o jogador queira continuar jogando e false caso nao
     bool jogada(int i);
-    
+    //retorna o valor da ultima aposta
     int aposta();
-    
+    //gerencia a partida, recebe interface grafica (MainWindow)
     void play (MainWindow & I);
 
 private:
-    
+    //banco
     Banco21 Banco;
     //posicao do jogador
     std::size_t const pos_jogador = 1;
     //posicao do dealer
     std::size_t const pos_dealer = 0;
+    //valor da ultima aposta
     int ultima_aposta;
     
-    //verifica quantos pontos a carta vale, decebe numero da carta
-    int verifica_ponto(int num_carta);
 };
 
 

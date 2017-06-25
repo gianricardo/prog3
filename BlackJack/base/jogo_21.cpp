@@ -18,17 +18,14 @@ void BlackJack::revela_mao_dealer(){
 
 
 int BlackJack::soma_mao(std::size_t pos){
+    Regra21  r;
     int soma=0;
     for(auto a:mostra_mao_jogador(pos)){
-        soma = soma+verifica_ponto(a.numero());
+        soma = soma+r.verifica_ponto(a.numero());
     }
     return soma;
 }
 
-int BlackJack::verifica_ponto (int a){
-    if(a>10) return 10;
-    return a;
-}
 
 void BlackJack::hit(std::size_t player_pos){
     move_carta_mj(0,player_pos,false);

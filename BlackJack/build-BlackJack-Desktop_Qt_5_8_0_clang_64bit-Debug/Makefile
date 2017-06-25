@@ -68,7 +68,8 @@ SOURCES       = ../base/banco_21.cpp \
 		../../carteado/src/p3/jogo.cpp \
 		../../carteado/src/p3/mesa.cpp \
 		../../carteado/src/p3/regra.cpp \
-		../main.cpp qrc_imagens.cpp \
+		../main.cpp \
+		../InterfaceGrafica/obg.cpp qrc_imagens.cpp \
 		moc_bemvindo.cpp \
 		moc_continua.cpp \
 		moc_dealer.cpp \
@@ -76,7 +77,8 @@ SOURCES       = ../base/banco_21.cpp \
 		moc_n_aposta.cpp \
 		moc_nova_aposta.cpp \
 		moc_novo.cpp \
-		moc_parabens.cpp
+		moc_parabens.cpp \
+		moc_obg.cpp
 OBJECTS       = banco_21.o \
 		ia_dealer_21.o \
 		interface_21.o \
@@ -98,6 +100,7 @@ OBJECTS       = banco_21.o \
 		mesa.o \
 		regra.o \
 		main.o \
+		obg.o \
 		qrc_imagens.o \
 		moc_bemvindo.o \
 		moc_continua.o \
@@ -106,7 +109,8 @@ OBJECTS       = banco_21.o \
 		moc_n_aposta.o \
 		moc_nova_aposta.o \
 		moc_novo.o \
-		moc_parabens.o
+		moc_parabens.o \
+		moc_obg.o
 DIST          = ../InterfaceGrafica/cartasimg/00.jpg \
 		../InterfaceGrafica/cartasimg/01.jpg \
 		../InterfaceGrafica/cartasimg/010.jpg \
@@ -360,7 +364,8 @@ DIST          = ../InterfaceGrafica/cartasimg/00.jpg \
 		../../carteado/src/p3/jogador.h \
 		../../carteado/src/p3/jogo.h \
 		../../carteado/src/p3/mesa.h \
-		../../carteado/src/p3/regra.h ../base/banco_21.cpp \
+		../../carteado/src/p3/regra.h \
+		../InterfaceGrafica/obg.h ../base/banco_21.cpp \
 		../base/ia_dealer_21.cpp \
 		../base/interface_21.cpp \
 		../base/jogo_21.cpp \
@@ -380,7 +385,8 @@ DIST          = ../InterfaceGrafica/cartasimg/00.jpg \
 		../../carteado/src/p3/jogo.cpp \
 		../../carteado/src/p3/mesa.cpp \
 		../../carteado/src/p3/regra.cpp \
-		../main.cpp
+		../main.cpp \
+		../InterfaceGrafica/obg.cpp
 QMAKE_TARGET  = BlackJack
 DESTDIR       = 
 TARGET        = BlackJack.app/Contents/MacOS/BlackJack
@@ -389,7 +395,7 @@ TARGET        = BlackJack.app/Contents/MacOS/BlackJack
 first: all
 ####### Build rules
 
-$(TARGET): ui_bemvindo.h ui_continua.h ui_dealer.h ui_mainwindow.h ui_n_aposta.h ui_nova_aposta.h ui_novo.h ui_parabens.h $(OBJECTS)  
+$(TARGET): ui_bemvindo.h ui_continua.h ui_dealer.h ui_mainwindow.h ui_n_aposta.h ui_nova_aposta.h ui_novo.h ui_parabens.h ui_obg.h $(OBJECTS)  
 	@test -d BlackJack.app/Contents/MacOS/ || mkdir -p BlackJack.app/Contents/MacOS/
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
@@ -787,9 +793,9 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../InterfaceGrafica/imagens.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /Users/andreluigi/Qt/5.8/clang_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../base/banco_21.h ../base/ia_dealer_21.h ../base/interface_21.h ../base/jogo_21.h ../base/regra_21.h ../InterfaceGrafica/bemvindo.h ../InterfaceGrafica/continua.h ../InterfaceGrafica/dealer.h ../InterfaceGrafica/imagem_carta.h ../InterfaceGrafica/mainwindow.h ../InterfaceGrafica/n_aposta.h ../InterfaceGrafica/nova_aposta.h ../InterfaceGrafica/novo.h ../InterfaceGrafica/parabens.h ../../carteado/src/p3/baralho.h ../../carteado/src/p3/carta.h ../../carteado/src/p3/jogador.h ../../carteado/src/p3/jogo.h ../../carteado/src/p3/mesa.h ../../carteado/src/p3/regra.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../base/banco_21.cpp ../base/ia_dealer_21.cpp ../base/interface_21.cpp ../base/jogo_21.cpp ../base/regra_21.cpp ../InterfaceGrafica/bemvindo.cpp ../InterfaceGrafica/continua.cpp ../InterfaceGrafica/dealer.cpp ../InterfaceGrafica/imagem_carta.cpp ../InterfaceGrafica/mainwindow.cpp ../InterfaceGrafica/n_aposta.cpp ../InterfaceGrafica/nova_aposta.cpp ../InterfaceGrafica/novo.cpp ../InterfaceGrafica/parabens.cpp ../../carteado/src/p3/baralho.cpp ../../carteado/src/p3/carta.cpp ../../carteado/src/p3/jogador.cpp ../../carteado/src/p3/jogo.cpp ../../carteado/src/p3/mesa.cpp ../../carteado/src/p3/regra.cpp ../main.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../InterfaceGrafica/bemvindo.ui ../InterfaceGrafica/continua.ui ../InterfaceGrafica/dealer.ui ../InterfaceGrafica/mainwindow.ui ../InterfaceGrafica/n_aposta.ui ../InterfaceGrafica/nova_aposta.ui ../InterfaceGrafica/novo.ui ../InterfaceGrafica/parabens.ui $(DISTDIR)/
+	$(COPY_FILE) --parents ../base/banco_21.h ../base/ia_dealer_21.h ../base/interface_21.h ../base/jogo_21.h ../base/regra_21.h ../InterfaceGrafica/bemvindo.h ../InterfaceGrafica/continua.h ../InterfaceGrafica/dealer.h ../InterfaceGrafica/imagem_carta.h ../InterfaceGrafica/mainwindow.h ../InterfaceGrafica/n_aposta.h ../InterfaceGrafica/nova_aposta.h ../InterfaceGrafica/novo.h ../InterfaceGrafica/parabens.h ../../carteado/src/p3/baralho.h ../../carteado/src/p3/carta.h ../../carteado/src/p3/jogador.h ../../carteado/src/p3/jogo.h ../../carteado/src/p3/mesa.h ../../carteado/src/p3/regra.h ../InterfaceGrafica/obg.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../base/banco_21.cpp ../base/ia_dealer_21.cpp ../base/interface_21.cpp ../base/jogo_21.cpp ../base/regra_21.cpp ../InterfaceGrafica/bemvindo.cpp ../InterfaceGrafica/continua.cpp ../InterfaceGrafica/dealer.cpp ../InterfaceGrafica/imagem_carta.cpp ../InterfaceGrafica/mainwindow.cpp ../InterfaceGrafica/n_aposta.cpp ../InterfaceGrafica/nova_aposta.cpp ../InterfaceGrafica/novo.cpp ../InterfaceGrafica/parabens.cpp ../../carteado/src/p3/baralho.cpp ../../carteado/src/p3/carta.cpp ../../carteado/src/p3/jogador.cpp ../../carteado/src/p3/jogo.cpp ../../carteado/src/p3/mesa.cpp ../../carteado/src/p3/regra.cpp ../main.cpp ../InterfaceGrafica/obg.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../InterfaceGrafica/bemvindo.ui ../InterfaceGrafica/continua.ui ../InterfaceGrafica/dealer.ui ../InterfaceGrafica/mainwindow.ui ../InterfaceGrafica/n_aposta.ui ../InterfaceGrafica/nova_aposta.ui ../InterfaceGrafica/novo.ui ../InterfaceGrafica/parabens.ui ../InterfaceGrafica/obg.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -817,7 +823,14 @@ compiler_rcc_clean:
 	-$(DEL_FILE) qrc_imagens.cpp
 qrc_imagens.cpp: ../InterfaceGrafica/imagens.qrc \
 		/Users/andreluigi/Qt/5.8/clang_64/bin/rcc \
+		../InterfaceGrafica/ohterimg/icon.png \
+		../InterfaceGrafica/ohterimg/mais.jpg \
+		../InterfaceGrafica/ohterimg/chips2.png \
+		../InterfaceGrafica/ohterimg/bemvindo.jpg \
 		../InterfaceGrafica/ohterimg/dealer.png \
+		../InterfaceGrafica/ohterimg/logo.png \
+		../InterfaceGrafica/ohterimg/chips1.png \
+		../InterfaceGrafica/ohterimg/pobre.jpg \
 		../InterfaceGrafica/cartasimg/23.jpg \
 		../InterfaceGrafica/cartasimg/15.jpg \
 		../InterfaceGrafica/cartasimg/2.jpg \
@@ -882,9 +895,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /Users/andreluigi/Qt/5.8/clang_64/mkspecs/features/data/dummy.cpp
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ -pipe -stdlib=libc++ -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk -mmacosx-version-min=10.9 $(EXPORT_QMAKE_XARCH_CFLAGS) -g -std=gnu++11 -Wall -W -dM -E -o moc_predefs.h /Users/andreluigi/Qt/5.8/clang_64/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_bemvindo.cpp moc_continua.cpp moc_dealer.cpp moc_mainwindow.cpp moc_n_aposta.cpp moc_nova_aposta.cpp moc_novo.cpp moc_parabens.cpp
+compiler_moc_header_make_all: moc_bemvindo.cpp moc_continua.cpp moc_dealer.cpp moc_mainwindow.cpp moc_n_aposta.cpp moc_nova_aposta.cpp moc_novo.cpp moc_parabens.cpp moc_obg.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_bemvindo.cpp moc_continua.cpp moc_dealer.cpp moc_mainwindow.cpp moc_n_aposta.cpp moc_nova_aposta.cpp moc_novo.cpp moc_parabens.cpp
+	-$(DEL_FILE) moc_bemvindo.cpp moc_continua.cpp moc_dealer.cpp moc_mainwindow.cpp moc_n_aposta.cpp moc_nova_aposta.cpp moc_novo.cpp moc_parabens.cpp moc_obg.cpp
 moc_bemvindo.cpp: /Users/andreluigi/Qt/5.8/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		/Users/andreluigi/Qt/5.8/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
 		../InterfaceGrafica/bemvindo.h \
@@ -930,6 +943,7 @@ moc_mainwindow.cpp: /Users/andreluigi/Qt/5.8/clang_64/lib/QtWidgets.framework/He
 		/Users/andreluigi/Qt/5.8/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		/Users/andreluigi/Qt/5.8/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
 		../InterfaceGrafica/novo.h \
+		../InterfaceGrafica/obg.h \
 		../InterfaceGrafica/bemvindo.h \
 		../InterfaceGrafica/n_aposta.h \
 		../InterfaceGrafica/dealer.h \
@@ -978,11 +992,18 @@ moc_parabens.cpp: /Users/andreluigi/Qt/5.8/clang_64/lib/QtWidgets.framework/Head
 		/Users/andreluigi/Qt/5.8/clang_64/bin/moc
 	/Users/andreluigi/Qt/5.8/clang_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/Users/andreluigi/Qt/5.8/clang_64/mkspecs/macx-clang -I/Users/andreluigi/Documents/UFSC/prog3/21/prog3/BlackJack -I/Users/andreluigi/Qt/5.8/clang_64/lib/QtWidgets.framework/Headers -I/Users/andreluigi/Qt/5.8/clang_64/lib/QtGui.framework/Headers -I/Users/andreluigi/Qt/5.8/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/usr/local/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/8.1.0/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -F/Users/andreluigi/Qt/5.8/clang_64/lib ../InterfaceGrafica/parabens.h -o moc_parabens.cpp
 
+moc_obg.cpp: /Users/andreluigi/Qt/5.8/clang_64/lib/QtWidgets.framework/Headers/QDialog \
+		/Users/andreluigi/Qt/5.8/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
+		../InterfaceGrafica/obg.h \
+		moc_predefs.h \
+		/Users/andreluigi/Qt/5.8/clang_64/bin/moc
+	/Users/andreluigi/Qt/5.8/clang_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/Users/andreluigi/Qt/5.8/clang_64/mkspecs/macx-clang -I/Users/andreluigi/Documents/UFSC/prog3/21/prog3/BlackJack -I/Users/andreluigi/Qt/5.8/clang_64/lib/QtWidgets.framework/Headers -I/Users/andreluigi/Qt/5.8/clang_64/lib/QtGui.framework/Headers -I/Users/andreluigi/Qt/5.8/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/usr/local/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/8.1.0/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -F/Users/andreluigi/Qt/5.8/clang_64/lib ../InterfaceGrafica/obg.h -o moc_obg.cpp
+
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_bemvindo.h ui_continua.h ui_dealer.h ui_mainwindow.h ui_n_aposta.h ui_nova_aposta.h ui_novo.h ui_parabens.h
+compiler_uic_make_all: ui_bemvindo.h ui_continua.h ui_dealer.h ui_mainwindow.h ui_n_aposta.h ui_nova_aposta.h ui_novo.h ui_parabens.h ui_obg.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_bemvindo.h ui_continua.h ui_dealer.h ui_mainwindow.h ui_n_aposta.h ui_nova_aposta.h ui_novo.h ui_parabens.h
+	-$(DEL_FILE) ui_bemvindo.h ui_continua.h ui_dealer.h ui_mainwindow.h ui_n_aposta.h ui_nova_aposta.h ui_novo.h ui_parabens.h ui_obg.h
 ui_bemvindo.h: ../InterfaceGrafica/bemvindo.ui \
 		/Users/andreluigi/Qt/5.8/clang_64/bin/uic
 	/Users/andreluigi/Qt/5.8/clang_64/bin/uic ../InterfaceGrafica/bemvindo.ui -o ui_bemvindo.h
@@ -1014,6 +1035,10 @@ ui_novo.h: ../InterfaceGrafica/novo.ui \
 ui_parabens.h: ../InterfaceGrafica/parabens.ui \
 		/Users/andreluigi/Qt/5.8/clang_64/bin/uic
 	/Users/andreluigi/Qt/5.8/clang_64/bin/uic ../InterfaceGrafica/parabens.ui -o ui_parabens.h
+
+ui_obg.h: ../InterfaceGrafica/obg.ui \
+		/Users/andreluigi/Qt/5.8/clang_64/bin/uic
+	/Users/andreluigi/Qt/5.8/clang_64/bin/uic ../InterfaceGrafica/obg.ui -o ui_obg.h
 
 compiler_rez_source_make_all:
 compiler_rez_source_clean:
@@ -1067,6 +1092,7 @@ jogo_21.o: ../base/jogo_21.cpp ../base/jogo_21.h \
 		/Users/andreluigi/Qt/5.8/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		/Users/andreluigi/Qt/5.8/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
 		../InterfaceGrafica/novo.h \
+		../InterfaceGrafica/obg.h \
 		../InterfaceGrafica/bemvindo.h \
 		../InterfaceGrafica/n_aposta.h \
 		../InterfaceGrafica/dealer.h \
@@ -1091,13 +1117,13 @@ regra_21.o: ../base/regra_21.cpp ../base/regra_21.h \
 bemvindo.o: ../InterfaceGrafica/bemvindo.cpp ../InterfaceGrafica/bemvindo.h \
 		/Users/andreluigi/Qt/5.8/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		/Users/andreluigi/Qt/5.8/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
-		../ui_bemvindo.h
+		ui_bemvindo.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bemvindo.o ../InterfaceGrafica/bemvindo.cpp
 
 continua.o: ../InterfaceGrafica/continua.cpp ../InterfaceGrafica/continua.h \
 		/Users/andreluigi/Qt/5.8/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		/Users/andreluigi/Qt/5.8/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
-		../ui_continua.h
+		ui_continua.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o continua.o ../InterfaceGrafica/continua.cpp
 
 dealer.o: ../InterfaceGrafica/dealer.cpp ../InterfaceGrafica/dealer.h \
@@ -1109,7 +1135,7 @@ dealer.o: ../InterfaceGrafica/dealer.cpp ../InterfaceGrafica/dealer.h \
 		/Users/andreluigi/Qt/5.8/clang_64/lib/QtWidgets.framework/Headers/qgraphicsview.h \
 		/Users/andreluigi/Qt/5.8/clang_64/lib/QtWidgets.framework/Headers/QGraphicsItem \
 		/Users/andreluigi/Qt/5.8/clang_64/lib/QtWidgets.framework/Headers/qgraphicsitem.h \
-		../ui_dealer.h
+		ui_dealer.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o dealer.o ../InterfaceGrafica/dealer.cpp
 
 imagem_carta.o: ../InterfaceGrafica/imagem_carta.cpp ../InterfaceGrafica/imagem_carta.h \
@@ -1144,6 +1170,7 @@ mainwindow.o: ../InterfaceGrafica/mainwindow.cpp ../InterfaceGrafica/mainwindow.
 		/Users/andreluigi/Qt/5.8/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		/Users/andreluigi/Qt/5.8/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
 		../InterfaceGrafica/novo.h \
+		../InterfaceGrafica/obg.h \
 		../InterfaceGrafica/bemvindo.h \
 		../InterfaceGrafica/n_aposta.h \
 		../InterfaceGrafica/dealer.h \
@@ -1159,31 +1186,31 @@ mainwindow.o: ../InterfaceGrafica/mainwindow.cpp ../InterfaceGrafica/mainwindow.
 		/Users/andreluigi/Qt/5.8/clang_64/lib/QtCore.framework/Headers/qstring.h \
 		/Users/andreluigi/Qt/5.8/clang_64/lib/QtGui.framework/Headers/QPainter \
 		/Users/andreluigi/Qt/5.8/clang_64/lib/QtGui.framework/Headers/qpainter.h \
-		../ui_mainwindow.h
+		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../InterfaceGrafica/mainwindow.cpp
 
 n_aposta.o: ../InterfaceGrafica/n_aposta.cpp ../InterfaceGrafica/n_aposta.h \
 		/Users/andreluigi/Qt/5.8/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		/Users/andreluigi/Qt/5.8/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
-		../ui_n_aposta.h
+		ui_n_aposta.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o n_aposta.o ../InterfaceGrafica/n_aposta.cpp
 
 nova_aposta.o: ../InterfaceGrafica/nova_aposta.cpp ../InterfaceGrafica/nova_aposta.h \
 		/Users/andreluigi/Qt/5.8/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		/Users/andreluigi/Qt/5.8/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
-		../ui_nova_aposta.h
+		ui_nova_aposta.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o nova_aposta.o ../InterfaceGrafica/nova_aposta.cpp
 
 novo.o: ../InterfaceGrafica/novo.cpp ../InterfaceGrafica/novo.h \
 		/Users/andreluigi/Qt/5.8/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		/Users/andreluigi/Qt/5.8/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
-		../ui_novo.h
+		ui_novo.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o novo.o ../InterfaceGrafica/novo.cpp
 
 parabens.o: ../InterfaceGrafica/parabens.cpp ../InterfaceGrafica/parabens.h \
 		/Users/andreluigi/Qt/5.8/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		/Users/andreluigi/Qt/5.8/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
-		../ui_parabens.h
+		ui_parabens.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o parabens.o ../InterfaceGrafica/parabens.cpp
 
 baralho.o: ../../carteado/src/p3/baralho.cpp ../../carteado/src/p3/baralho.h \
@@ -1236,6 +1263,7 @@ main.o: ../main.cpp /Users/andreluigi/Qt/5.8/clang_64/lib/QtWidgets.framework/He
 		/Users/andreluigi/Qt/5.8/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		/Users/andreluigi/Qt/5.8/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
 		../InterfaceGrafica/novo.h \
+		../InterfaceGrafica/obg.h \
 		../InterfaceGrafica/bemvindo.h \
 		../InterfaceGrafica/n_aposta.h \
 		../InterfaceGrafica/dealer.h \
@@ -1263,6 +1291,12 @@ main.o: ../main.cpp /Users/andreluigi/Qt/5.8/clang_64/lib/QtWidgets.framework/He
 		../base/ia_dealer_21.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../main.cpp
 
+obg.o: ../InterfaceGrafica/obg.cpp ../InterfaceGrafica/obg.h \
+		/Users/andreluigi/Qt/5.8/clang_64/lib/QtWidgets.framework/Headers/QDialog \
+		/Users/andreluigi/Qt/5.8/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
+		ui_obg.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obg.o ../InterfaceGrafica/obg.cpp
+
 qrc_imagens.o: qrc_imagens.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_imagens.o qrc_imagens.cpp
 
@@ -1289,6 +1323,9 @@ moc_novo.o: moc_novo.cpp
 
 moc_parabens.o: moc_parabens.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_parabens.o moc_parabens.cpp
+
+moc_obg.o: moc_obg.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_obg.o moc_obg.cpp
 
 ####### Install
 

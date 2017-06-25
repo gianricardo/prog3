@@ -18,6 +18,7 @@
 
 class IA_Dealer{
 public:
+    //constutor, recebe a pontuacao da mao do jogador
     IA_Dealer (int pj);
     //return true caso queira hit, false caso queira parar;
     bool decidir(int mp);

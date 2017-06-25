@@ -35,13 +35,7 @@ public:
     QAction *actionstay;
     QWidget *centralwidget;
     QGridLayout *gridLayout_2;
-    QFrame *placarw;
-    QGridLayout *gridLayout;
-    QLineEdit *saldo;
-    QLineEdit *apostaatual;
-    QLabel *label_2;
-    QLineEdit *nomedojogador;
-    QLabel *label;
+    QFrame *line;
     QWidget *acaow;
     QVBoxLayout *verticalLayout;
     QLabel *label_3;
@@ -50,7 +44,13 @@ public:
     QPushButton *stay;
     QSpacerItem *verticalSpacer;
     QGraphicsView *graphicsView;
-    QFrame *line;
+    QFrame *placarw;
+    QGridLayout *gridLayout;
+    QLabel *label;
+    QLineEdit *apostaatual;
+    QLineEdit *saldo;
+    QLabel *label_2;
+    QLineEdit *nomedojogador;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -69,47 +69,12 @@ public:
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
         gridLayout_2 = new QGridLayout(centralwidget);
         gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
-        placarw = new QFrame(centralwidget);
-        placarw->setObjectName(QStringLiteral("placarw"));
-        placarw->setEnabled(true);
-        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(placarw->sizePolicy().hasHeightForWidth());
-        placarw->setSizePolicy(sizePolicy);
-        placarw->setBaseSize(QSize(0, 0));
-        gridLayout = new QGridLayout(placarw);
-        gridLayout->setObjectName(QStringLiteral("gridLayout"));
-        saldo = new QLineEdit(placarw);
-        saldo->setObjectName(QStringLiteral("saldo"));
-        saldo->setReadOnly(true);
+        line = new QFrame(centralwidget);
+        line->setObjectName(QStringLiteral("line"));
+        line->setFrameShape(QFrame::HLine);
+        line->setFrameShadow(QFrame::Sunken);
 
-        gridLayout->addWidget(saldo, 5, 0, 1, 1);
-
-        apostaatual = new QLineEdit(placarw);
-        apostaatual->setObjectName(QStringLiteral("apostaatual"));
-        apostaatual->setReadOnly(true);
-
-        gridLayout->addWidget(apostaatual, 7, 0, 1, 1);
-
-        label_2 = new QLabel(placarw);
-        label_2->setObjectName(QStringLiteral("label_2"));
-
-        gridLayout->addWidget(label_2, 6, 0, 1, 1);
-
-        nomedojogador = new QLineEdit(placarw);
-        nomedojogador->setObjectName(QStringLiteral("nomedojogador"));
-        nomedojogador->setReadOnly(true);
-
-        gridLayout->addWidget(nomedojogador, 1, 0, 1, 1);
-
-        label = new QLabel(placarw);
-        label->setObjectName(QStringLiteral("label"));
-
-        gridLayout->addWidget(label, 4, 0, 1, 1);
-
-
-        gridLayout_2->addWidget(placarw, 0, 1, 1, 1);
+        gridLayout_2->addWidget(line, 1, 1, 1, 1);
 
         acaow = new QWidget(centralwidget);
         acaow->setObjectName(QStringLiteral("acaow"));
@@ -148,12 +113,47 @@ public:
 
         gridLayout_2->addWidget(graphicsView, 0, 0, 3, 1);
 
-        line = new QFrame(centralwidget);
-        line->setObjectName(QStringLiteral("line"));
-        line->setFrameShape(QFrame::HLine);
-        line->setFrameShadow(QFrame::Sunken);
+        placarw = new QFrame(centralwidget);
+        placarw->setObjectName(QStringLiteral("placarw"));
+        placarw->setEnabled(true);
+        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(placarw->sizePolicy().hasHeightForWidth());
+        placarw->setSizePolicy(sizePolicy);
+        placarw->setBaseSize(QSize(0, 0));
+        gridLayout = new QGridLayout(placarw);
+        gridLayout->setObjectName(QStringLiteral("gridLayout"));
+        label = new QLabel(placarw);
+        label->setObjectName(QStringLiteral("label"));
 
-        gridLayout_2->addWidget(line, 1, 1, 1, 1);
+        gridLayout->addWidget(label, 3, 0, 1, 1);
+
+        apostaatual = new QLineEdit(placarw);
+        apostaatual->setObjectName(QStringLiteral("apostaatual"));
+        apostaatual->setReadOnly(true);
+
+        gridLayout->addWidget(apostaatual, 6, 0, 1, 1);
+
+        saldo = new QLineEdit(placarw);
+        saldo->setObjectName(QStringLiteral("saldo"));
+        saldo->setReadOnly(true);
+
+        gridLayout->addWidget(saldo, 4, 0, 1, 1);
+
+        label_2 = new QLabel(placarw);
+        label_2->setObjectName(QStringLiteral("label_2"));
+
+        gridLayout->addWidget(label_2, 5, 0, 1, 1);
+
+        nomedojogador = new QLineEdit(placarw);
+        nomedojogador->setObjectName(QStringLiteral("nomedojogador"));
+        nomedojogador->setReadOnly(true);
+
+        gridLayout->addWidget(nomedojogador, 0, 0, 1, 1);
+
+
+        gridLayout_2->addWidget(placarw, 0, 1, 1, 1);
 
         MainWindow->setCentralWidget(centralwidget);
 
@@ -171,14 +171,14 @@ public:
         actionhit->setText(QApplication::translate("MainWindow", "hit", Q_NULLPTR));
         actiondouble->setText(QApplication::translate("MainWindow", "double", Q_NULLPTR));
         actionstay->setText(QApplication::translate("MainWindow", "stay", Q_NULLPTR));
-        saldo->setText(QApplication::translate("MainWindow", "$1000,00", Q_NULLPTR));
-        apostaatual->setText(QApplication::translate("MainWindow", "$0,00", Q_NULLPTR));
-        label_2->setText(QApplication::translate("MainWindow", "Aposta atual:", Q_NULLPTR));
-        label->setText(QApplication::translate("MainWindow", "Saldo:", Q_NULLPTR));
         label_3->setText(QApplication::translate("MainWindow", "Selecione uma a\303\247\303\243o:", Q_NULLPTR));
         hit->setText(QApplication::translate("MainWindow", "Pedir carta", Q_NULLPTR));
         double_2->setText(QApplication::translate("MainWindow", "Dobrar aposta", Q_NULLPTR));
         stay->setText(QApplication::translate("MainWindow", "Finalijar jogada", Q_NULLPTR));
+        label->setText(QApplication::translate("MainWindow", "Saldo:", Q_NULLPTR));
+        apostaatual->setText(QApplication::translate("MainWindow", "$0,00", Q_NULLPTR));
+        saldo->setText(QApplication::translate("MainWindow", "$1000,00", Q_NULLPTR));
+        label_2->setText(QApplication::translate("MainWindow", "Aposta atual:", Q_NULLPTR));
     } // retranslateUi
 
 };

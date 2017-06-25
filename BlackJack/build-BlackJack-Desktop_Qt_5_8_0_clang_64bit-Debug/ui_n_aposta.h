@@ -15,7 +15,6 @@
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QDialogButtonBox>
-#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 
@@ -24,33 +23,31 @@ QT_BEGIN_NAMESPACE
 class Ui_n_aposta
 {
 public:
-    QGridLayout *gridLayout;
     QLabel *label;
     QDialogButtonBox *buttonBox;
+    QLabel *label_2;
 
     void setupUi(QDialog *n_aposta)
     {
         if (n_aposta->objectName().isEmpty())
             n_aposta->setObjectName(QStringLiteral("n_aposta"));
-        n_aposta->resize(315, 94);
+        n_aposta->resize(271, 259);
         QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(n_aposta->sizePolicy().hasHeightForWidth());
         n_aposta->setSizePolicy(sizePolicy);
-        gridLayout = new QGridLayout(n_aposta);
-        gridLayout->setObjectName(QStringLiteral("gridLayout"));
         label = new QLabel(n_aposta);
         label->setObjectName(QStringLiteral("label"));
-
-        gridLayout->addWidget(label, 0, 0, 1, 1);
-
+        label->setGeometry(QRect(12, 12, 291, 16));
         buttonBox = new QDialogButtonBox(n_aposta);
         buttonBox->setObjectName(QStringLiteral("buttonBox"));
+        buttonBox->setGeometry(QRect(-40, 230, 303, 26));
         buttonBox->setStandardButtons(QDialogButtonBox::Ok);
-
-        gridLayout->addWidget(buttonBox, 1, 0, 1, 1);
-
+        label_2 = new QLabel(n_aposta);
+        label_2->setObjectName(QStringLiteral("label_2"));
+        label_2->setGeometry(QRect(12, 34, 251, 201));
+        label_2->setPixmap(QPixmap(QString::fromUtf8(":/ohterimg/pobre.jpg")));
 
         retranslateUi(n_aposta);
         QObject::connect(buttonBox, SIGNAL(accepted()), n_aposta, SLOT(accept()));
@@ -62,6 +59,7 @@ public:
     {
         n_aposta->setWindowTitle(QApplication::translate("n_aposta", "Dialog", Q_NULLPTR));
         label->setText(QApplication::translate("n_aposta", "Voc\303\252 n\303\243o tem mais saldo para apostar.", Q_NULLPTR));
+        label_2->setText(QString());
     } // retranslateUi
 
 };

@@ -11,5 +11,8 @@ n_aposta::n_aposta(QWidget *parent) :
 
 n_aposta::~n_aposta()
 {
+    delete ui->buttonBox;
+    delete ui->label;
+    delete ui->label_2;
     delete ui;
 }

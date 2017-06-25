@@ -31,6 +31,7 @@ public:
     QLCDNumber *lcdNumber;
     QFrame *line;
     QLabel *label;
+    QLabel *label_2;
 
     void setupUi(QDialog *nova_aposta)
     {
@@ -48,7 +49,7 @@ public:
         dial->setMaximum(10000);
         lcdNumber = new QLCDNumber(nova_aposta);
         lcdNumber->setObjectName(QStringLiteral("lcdNumber"));
-        lcdNumber->setGeometry(QRect(12, 22, 201, 81));
+        lcdNumber->setGeometry(QRect(10, 20, 201, 81));
         lcdNumber->setDigitCount(5);
         lcdNumber->setProperty("intValue", QVariant(5));
         line = new QFrame(nova_aposta);
@@ -59,6 +60,16 @@ public:
         label = new QLabel(nova_aposta);
         label->setObjectName(QStringLiteral("label"));
         label->setGeometry(QRect(10, 0, 121, 16));
+        label_2 = new QLabel(nova_aposta);
+        label_2->setObjectName(QStringLiteral("label_2"));
+        label_2->setGeometry(QRect(-160, -10, 411, 221));
+        label_2->setPixmap(QPixmap(QString::fromUtf8(":/ohterimg/chips2.png")));
+        label_2->raise();
+        buttonBox_2->raise();
+        dial->raise();
+        lcdNumber->raise();
+        line->raise();
+        label->raise();
 
         retranslateUi(nova_aposta);
         QObject::connect(buttonBox_2, SIGNAL(accepted()), nova_aposta, SLOT(accept()));
@@ -71,6 +82,7 @@ public:
     {
         nova_aposta->setWindowTitle(QApplication::translate("nova_aposta", "Dialog", Q_NULLPTR));
         label->setText(QApplication::translate("nova_aposta", "Fa\303\247a sua aposta", Q_NULLPTR));
+        label_2->setText(QString());
     } // retranslateUi
 
 };

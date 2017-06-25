@@ -11,6 +11,8 @@ parabens::parabens(QWidget *parent) :
 
 parabens::~parabens()
 {
+    delete ui->buttonBox;
+    delete ui->label;
     delete ui;
 }
 

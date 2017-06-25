@@ -38,13 +38,14 @@ SOURCES += \
     InterfaceGrafica/nova_aposta.cpp \
     InterfaceGrafica/novo.cpp \
     InterfaceGrafica/parabens.cpp \
-    ../../carteado/src/p3/baralho.cpp \
-    ../../carteado/src/p3/carta.cpp \
-    ../../carteado/src/p3/jogador.cpp \
-    ../../carteado/src/p3/jogo.cpp \
-    ../../carteado/src/p3/mesa.cpp \
-    ../../carteado/src/p3/regra.cpp \
-    main.cpp
+    ../carteado/src/p3/baralho.cpp \
+    ../carteado/src/p3/carta.cpp \
+    ../carteado/src/p3/jogador.cpp \
+    ../carteado/src/p3/jogo.cpp \
+    ../carteado/src/p3/mesa.cpp \
+    ../carteado/src/p3/regra.cpp \
+    main.cpp \
+    InterfaceGrafica/obg.cpp
 
 HEADERS  += \
     base/banco_21.h \
@@ -61,12 +62,13 @@ HEADERS  += \
     InterfaceGrafica/nova_aposta.h \
     InterfaceGrafica/novo.h \
     InterfaceGrafica/parabens.h \
-    ../../carteado/src/p3/baralho.h \
-    ../../carteado/src/p3/carta.h \
-    ../../carteado/src/p3/jogador.h \
-    ../../carteado/src/p3/jogo.h \
-    ../../carteado/src/p3/mesa.h \
-    ../../carteado/src/p3/regra.h
+    ../carteado/src/p3/baralho.h \
+    ../carteado/src/p3/carta.h \
+    ../carteado/src/p3/jogador.h \
+    ../carteado/src/p3/jogo.h \
+    ../carteado/src/p3/mesa.h \
+    ../carteado/src/p3/regra.h \
+    InterfaceGrafica/obg.h
 
 FORMS    += \
     InterfaceGrafica/bemvindo.ui \
@@ -76,7 +78,8 @@ FORMS    += \
     InterfaceGrafica/n_aposta.ui \
     InterfaceGrafica/nova_aposta.ui \
     InterfaceGrafica/novo.ui \
-    InterfaceGrafica/parabens.ui
+    InterfaceGrafica/parabens.ui \
+    InterfaceGrafica/obg.ui
 
 RESOURCES += \
     InterfaceGrafica/imagens.qrc
