@@ -8,6 +8,7 @@
 #include <QGraphicsItem>
 
 #include "game.h"
+#include "cardimage.h"
 
 namespace Ui {
 class Window;
@@ -18,16 +19,15 @@ class GameWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit GameWindow(std::string player, QWidget *parent = 0);
+    explicit GameWindow(QWidget *parent = 0);
     ~GameWindow();
 
 private:
     Ui::Window *ui;
 
     QGraphicsScene *scene;
-    QGraphicsRectItem *rectangle;
 
-    OneSuitGame game;
+    OneSuitGame *game;
 };
 
 #endif // WINDOW_H

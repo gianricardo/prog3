@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/PacienciaSpyder/">
-        <file>img/</file>
         <file>img/0_1.png</file>
         <file>img/0_2.png</file>
         <file>img/0_3.png</file>
@@ -14,5 +13,6 @@
         <file>img/0_11.png</file>
         <file>img/0_12.png</file>
         <file>img/0_13.png</file>
+        <file>img/back.png</file>
     </qresource>
 </RCC>

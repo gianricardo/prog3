@@ -4,10 +4,9 @@
 
 #include <iostream>
 
-GameWindow::GameWindow(std::string player, QWidget *parent) :
+GameWindow::GameWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::Window),
-    game(player)
+    ui(new Ui::Window)
 {
     ui->setupUi(this);
 
@@ -15,27 +14,23 @@ GameWindow::GameWindow(std::string player, QWidget *parent) :
 
     ui->graphicsView->setScene(scene);
 
-    QBrush greenBrush(Qt::green);
-    QBrush blueBrush(Qt::blue);
-    QPen outlinePen(Qt::black);
-    outlinePen.setWidth(2);
+    ui->graphicsView->setSceneRect(this->frameGeometry());
+    ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff );
 
-    rectangle = scene->addRect(100, 0, 80, 100, outlinePen, blueBrush);
-
-    rectangle->setFlag(QGraphicsItem::ItemIsMovable);
-
-    QPixmap imagem;
-
-    std::cout << imagem.load(":/PacienciaSpyder/img/none.png") << std::endl;
-
-    auto item = new CardImage(0, 3);
+    auto item = new CardImage(3, 0);
 
     item->setPos(5, 0);
 
     //item->setFlag(QGraphicsItem::ItemIsMovable);
 
-    scene->addItem(item);
+    //scene->addItem(item);
 
+    item->setUp(true);
+
+    game = new OneSuitGame("player", scene);
+
+    game->draw();
 }
 
 GameWindow::~GameWindow()

@@ -4,16 +4,15 @@
 #include <mesa.h>
 
 #include "deck.h"
+#include "player.h"
 
-class OneSuitTable : public p3::MesaBasica<OneSuitCard, p3::JogadorBasico<OneSuitCard>, Deck<OneSuitCard> >
+class OneSuitTable : public p3::MesaBasica<OneSuitCard, Player<OneSuitCard>, Deck<OneSuitCard> >
 {
 public:
 
-    using p3::MesaBasica<OneSuitCard, p3::JogadorBasico<OneSuitCard>, Deck<OneSuitCard> >::MesaBasica;
+    using p3::MesaBasica<OneSuitCard, Player<OneSuitCard>, Deck<OneSuitCard> >::MesaBasica;
 
     OneSuitTable();
-
-    void assign_to_scene(QGraphicsScene *scene);
 
 };
 

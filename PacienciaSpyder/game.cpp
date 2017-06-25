@@ -1,9 +1,10 @@
 
 #include "game.h"
 
-OneSuitGame::OneSuitGame(std::string player) : JogoBasico<OneSuitCard, OneSuitTable>(new Rules(), std::vector<std::string>(1, player)) {
+OneSuitGame::OneSuitGame(std::string player, QGraphicsScene *scene /*= nullptr */) :
+    JogoBasico<OneSuitCard, OneSuitTable>(new Rules(), std::vector<std::string>(1, player)), _scene(scene){
     
-    for(int i = 0; i < 10; i++) JogoBasico<OneSuitCard, OneSuitTable>::novo_monte();
+    for(std::size_t i = 0; i < number_of_rows; i++) JogoBasico<OneSuitCard, OneSuitTable>::novo_monte();
     
     for(int i = 0; i < 5; i++) _distribute(0, 9);
     
@@ -21,11 +22,57 @@ void OneSuitGame::next_turn(){
     JogoBasico<OneSuitCard, OneSuitTable>::fim_jogada();
 }
 
-void OneSuitGame::show(){
+void OneSuitGame::draw(){
+
+    if(_scene == nullptr) std::cout << "OneSuitGame::draw() - Need an scene" << std::endl;
+
+
+    for(auto image : _images) delete image;
+
+    _images.clear();
+
+    std::vector<std::pair<bool, OneSuitCard> > cards[number_of_rows];
+
+    for(std::size_t i = 0; i < number_of_rows; i++){
+
+        cards[i] = JogoBasico<OneSuitCard, OneSuitTable>::mostra_monte(i+1);
+    }
+
+    for(std::size_t i = 0; i < number_of_rows; i++){
+
+        std::size_t size = cards[i].size();
+
+        for(std::size_t j = 0; j < size; j++){
+
+            CardImage *im = nullptr;
+
+            if(cards[i][j].first){
+
+                im = new CardImage(cards[i][j].second.numero(), (int) cards[i][j].second.naipe());
+
+                im->setUp(true);
+
+            }else{
+
+                im = new CardImage();
+            }
+
+            im->setX(35*i);
+            im->setY(10*j);
+
+            _scene->addItem(im);
+
+            _images.push_back(im);
+        }
+    }
+
+}
+
+void OneSuitGame::show_ascii(){
     
-    std::vector<std::pair<bool, OneSuitCard> > cards[10];
+    std::vector<std::pair<bool, OneSuitCard> > cards[number_of_rows];
     
-    for(int i = 0; i < 10; i++){
+    for(std::size_t i = 0; i < number_of_rows; i++){
         
         cards[i] = JogoBasico<OneSuitCard, OneSuitTable>::mostra_monte(i+1);
     }
@@ -40,7 +87,7 @@ void OneSuitGame::show(){
         
         _continue = false;
         
-        for(int j = 0; j < 10; j++){
+        for(std::size_t j = 0; j < number_of_rows; j++){
             
             if(cards[j].size() > (std::size_t) i){
                 
@@ -91,8 +138,8 @@ void OneSuitGame::show(){
 
 bool OneSuitGame::move(std::size_t deck1, std::size_t deck2, std::size_t n_cards){
     
-    if(deck1 >= 10) return false;
-    if(deck2 >= 10) return false;
+    if(deck1 >= number_of_rows) return false;
+    if(deck2 >= number_of_rows) return false;
     
     auto d1 = JogoBasico<OneSuitCard, OneSuitTable>::mostra_monte(deck1 + 1);
     auto d2 = JogoBasico<OneSuitCard, OneSuitTable>::mostra_monte(deck2 + 1);
@@ -139,11 +186,6 @@ void OneSuitGame::_distribute(int start, int end){
     end += 2;
     
     for(int i = start; i < end; i++) JogoBasico<OneSuitCard, OneSuitTable>::move_carta_m(i, true, false);
-}
-
-void OneSuitGame::assign_to_scene(QGraphicsScene *scene){
-
-    p3::JogoBasico<OneSuitCard, OneSuitTable>::_mesa.assign_to_scene(scene);
 }
 
 void OneSuitGame::_turn_all(){

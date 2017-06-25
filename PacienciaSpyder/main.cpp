@@ -10,28 +10,8 @@
 
 #include "game.h"
 
-using namespace p3;
-
-class jogador : public Jogador{
-    
-    using Jogador::Jogador;
-    
-};
-
-class mesa : public MesaBasica<Carta, jogador>{
-    
-    using MesaBasica<Carta, jogador>::MesaBasica;
-};
-
-class jogo : public JogoBasico<Carta, mesa>{
-    
-    using JogoBasico<Carta, mesa>::JogoBasico;
-};
-
-
 int main(int argc, char **argv){
     /*
-    jogo j(new Regra(0, 0), {});
 
     OneSuitGame game("player");
     
@@ -84,7 +64,7 @@ int main(int argc, char **argv){
 
     QApplication a(argc, argv);
 
-    GameWindow g("player");
+    GameWindow g;
     g.show();
 
     return a.exec();
