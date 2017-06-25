@@ -18,22 +18,15 @@ GameWindow::GameWindow(QWidget *parent) :
     ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff );
 
-    auto item = new CardImage(3, 0);
-
-    item->setPos(5, 0);
-
-    //item->setFlag(QGraphicsItem::ItemIsMovable);
-
-    //scene->addItem(item);
-
-    item->setUp(true);
-
     game = new OneSuitGame("player", scene);
 
     game->draw();
+
 }
 
 GameWindow::~GameWindow()
 {
     delete ui;
+
+    if(game != nullptr) delete game;
 }

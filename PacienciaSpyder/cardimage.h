@@ -10,10 +10,15 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QGraphicsScene>
 
-class CardImage : public QObject, public QGraphicsItem {
+class CardImageMouseEventHandler {
 
-    Q_OBJECT
-    Q_INTERFACES(QGraphicsItem)
+public:
+
+    virtual void click_event(int n_deck, int n_position) = 0;
+    virtual void release_event(int n_deck, int n_postion) = 0;
+};
+
+class CardImage : public QGraphicsItem {
 
 public:
 
@@ -38,6 +43,21 @@ public:
         show_front = up;
     }
 
+    void setDeck(int deck){
+
+        n_deck = deck;
+    }
+
+    void setDeckPosition(int deck_position){
+
+        n_position = deck_position;
+    }
+
+    void setMouseHandler(CardImageMouseEventHandler *handler){
+
+        _handler = handler;
+    }
+
     QRectF boundingRect() const {
         return QRectF(x(), y(), 65, 100);
     }
@@ -50,18 +70,20 @@ public:
         painter->drawPixmap(x(),y(), (show_front) ? _front : _back);
     }
 
-signals:
+    void mousePressEvent(QGraphicsSceneMouseEvent *event){
 
-    void pressed(int n_deck, int n_position);
-    void released(int n_deck, int n_position);
-    void moved(int n_deck, int n_position);
+        if(event->button() != Qt::LeftButton) return;
+
+        if(_handler != nullptr) _handler->click_event(n_deck, n_position);
+    }
 
 private:
 
     QPixmap _front, _back;
     bool show_front;
 
-    //int n_deck, n_position;
+    int n_deck, n_position;
+    CardImageMouseEventHandler *_handler;
 };
 
 #endif // CARDIMAGE_H

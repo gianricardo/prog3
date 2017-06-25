@@ -325,8 +325,6 @@ template<class CARTA, class MESA> void JogoBasico<CARTA, MESA>::fim_jogada(){
 
 	while(1){
 
-		if(_mesa.ver_jogador(_jog_atual).esta_apto()) break;
-
 		if(++_jog_atual == numero_de_jogadores()){
 
 			_jog_atual = 0;
@@ -338,6 +336,7 @@ template<class CARTA, class MESA> void JogoBasico<CARTA, MESA>::fim_jogada(){
 			verifica_vitoria();
 		}
 		
+		if(_mesa.ver_jogador(_jog_atual).esta_apto()) break;
 
 	}
 }

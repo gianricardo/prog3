@@ -1,6 +1,6 @@
 #include "cardimage.h"
 
-CardImage::CardImage(int num, int np){
+CardImage::CardImage(int num, int np) : _handler(nullptr), n_deck(-1), n_position(-1) {
 
     if(num != -1) setCard(num, np);
 

@@ -8,13 +8,15 @@
 #include "table.h"
 #include "cardimage.h"
 
-class OneSuitGame : private p3::JogoBasico<OneSuitCard, OneSuitTable>{
+class OneSuitGame : public CardImageMouseEventHandler, private p3::JogoBasico<OneSuitCard, OneSuitTable>{
 
 public:
 
     static const std::size_t number_of_rows = 10;
     
     OneSuitGame(std::string player, QGraphicsScene *scene = nullptr);
+
+    ~OneSuitGame();
     
     void next_turn();
 
@@ -25,6 +27,23 @@ public:
     bool move(std::size_t deck1, std::size_t deck2, std::size_t n_cards);
 
     std::size_t turn() const;
+
+    void click_event(int n_deck, int n_position){
+
+        std::cout << "clicked" << std::endl;
+
+        if(n_deck == -2){
+
+            next_turn();
+
+            draw();
+        }
+    }
+
+    void release_event(int, int){
+
+
+    }
 
 private:
     
@@ -38,6 +57,7 @@ private:
 
     std::vector<CardImage *> _images;
 
+    CardImage *stack_image;
 };
 
 #endif

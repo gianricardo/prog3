@@ -11,9 +11,30 @@ OneSuitGame::OneSuitGame(std::string player, QGraphicsScene *scene /*= nullptr *
     _distribute(0, 3);
     
     _turn_all();
+
+    stack_image = new CardImage();
+
+    stack_image->setX(315);
+    stack_image->setY(180);
+
+    scene->addItem(stack_image);
+
+    stack_image->setDeck(-2);
+
+    stack_image->setMouseHandler(this);
+}
+
+OneSuitGame::~OneSuitGame(){
+
+    if(stack_image != nullptr) delete stack_image;
 }
 
 void OneSuitGame::next_turn(){
+
+    std::cout << jogando() << std::endl;
+    std::cout << turn() << std::endl;
+
+    if(turn() > 4) return;
     
     _distribute();
     
