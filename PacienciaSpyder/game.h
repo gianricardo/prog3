@@ -142,22 +142,7 @@ private:
 
         deck1_images.erase(start_it, end_it);
 
-        if(deck1_images.size() == 0){
-
-            CardImage *img = new BlankCardImage();
-
-            img->setX(35*deck1);
-            img->setY(0);
-            img->setDeck(deck1);
-            img->setDeckPosition(-1);
-            img->setZValue(0);
-
-            img->setMouseHandler(this);
-
-            deck1_images.push_back(img);
-
-            _scene->addItem(img);
-        }
+        if(deck1_images.size() == 0) _gen_blank_image(deck1);
     }
 
     void _turn_card_image(int deck){
@@ -173,6 +158,23 @@ private:
 
             img->update();
         }
+    }
+
+    void _gen_blank_image(int deck){
+
+        CardImage *img = new BlankCardImage();
+
+        img->setX(35*deck);
+        img->setY(0);
+        img->setDeck(deck);
+        img->setDeckPosition(-1);
+        img->setZValue(0);
+
+        img->setMouseHandler(this);
+
+        _card_images[deck].push_back(img);
+
+        _scene->addItem(img);
     }
 
     QGraphicsScene *_scene;
