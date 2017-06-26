@@ -176,6 +176,5 @@ void MainWindow::obrigado(){
     o.exec();
     o.close();
     qApp -> closeAllWindows();
-    //qApp -> quit();
     qApp ->quitOnLastWindowClosed();
 }

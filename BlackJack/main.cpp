@@ -15,7 +15,6 @@ int main(int argc, char *argv[])
     Regra21 *rules = new Regra21();
     BlackJack game(rules, w.novo_jogo());
     game.play(w);
-    //a.quit();
     return 0;
 
 }
