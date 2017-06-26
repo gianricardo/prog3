@@ -233,7 +233,7 @@ protected:
 
 	void _coloca_monte(CARTA c, std::size_t m, bool topo);	//coloca a carta c no topo(se for true) do monte m
 
-	CARTA _pega_monte(std::size_t m, bool topo);	//pega uma carta do topo(se for true) do monte m
+	virtual CARTA _pega_monte(std::size_t m, bool topo);	//pega uma carta do topo(se for true) do monte m
 
 	std::unique_ptr<Regra> _regra;		//ponteiro para a regra do jogo
 	MESA _mesa;			//objeto da classe mesa que representa a mesa do jogo

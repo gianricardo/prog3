@@ -38,6 +38,9 @@ public:
     //Pega uma carta de baixo de um monte de cartas especificado
 	CARTA pega_baixo(std::size_t monte = 0);
 
+	//Retorna uma carta do topo do monte (Nao da pop no baralho).
+	CARTA verifica_topo(std::size_t monte = 0);
+
 	 //Coloca uma carta no topo de um monte de cartas especificado
 	void coloca_topo(CARTA c, std::size_t i = 0);
     
@@ -200,6 +203,13 @@ template<class CARTA, class JOGADOR, class BARALHO> CARTA MesaBasica<CARTA, JOGA
 	if(monte == 0) return _monte.pega_baixo();
 
 	return _outros_montes[monte-1].pega_baixo();
+}
+
+template<class CARTA, class JOGADOR, class BARALHO> CARTA MesaBasica<CARTA, JOGADOR, BARALHO>::verifica_topo(std::size_t monte/* = 0 */){
+
+	if(monte == 0) return _monte.retorna_topo();
+
+	return _outros_montes[monte-1].retorna_topo();
 }
 
 template<class CARTA, class JOGADOR, class BARALHO> void MesaBasica<CARTA, JOGADOR, BARALHO>::coloca_topo(CARTA c, std::size_t i /* = 0 */){
