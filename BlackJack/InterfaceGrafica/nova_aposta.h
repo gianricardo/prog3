@@ -14,6 +14,7 @@ class nova_aposta : public QDialog
 public:
     explicit nova_aposta(QWidget *parent = 0);
     ~nova_aposta();
+    //retorna o valor da aposta (valor mostrado no display)
     int val();
 
 private:

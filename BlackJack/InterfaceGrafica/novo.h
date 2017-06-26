@@ -14,6 +14,7 @@ class novo : public QDialog
 public:
     explicit novo(QWidget *parent = 0);
     ~novo();
+    //retorna qstring com o nome inserido
     QString nome();
 private:
     Ui::novo *ui;

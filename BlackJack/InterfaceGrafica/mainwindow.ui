@@ -55,7 +55,7 @@
        <item>
         <widget class="QPushButton" name="stay">
          <property name="text">
-          <string>Finalijar jogada</string>
+          <string>Finalizar jogada</string>
          </property>
         </widget>
        </item>

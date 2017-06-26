@@ -31,7 +31,7 @@ public:
     {
         if (dealer->objectName().isEmpty())
             dealer->setObjectName(QStringLiteral("dealer"));
-        dealer->resize(519, 408);
+        dealer->resize(519, 412);
         QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -39,7 +39,7 @@ public:
         dealer->setSizePolicy(sizePolicy);
         label = new QLabel(dealer);
         label->setObjectName(QStringLiteral("label"));
-        label->setGeometry(QRect(10, 380, 85, 16));
+        label->setGeometry(QRect(10, 380, 111, 16));
         label->setAlignment(Qt::AlignCenter);
         label_2 = new QLabel(dealer);
         label_2->setObjectName(QStringLiteral("label_2"));

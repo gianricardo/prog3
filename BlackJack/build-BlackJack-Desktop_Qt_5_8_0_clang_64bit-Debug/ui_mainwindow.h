@@ -174,7 +174,7 @@ public:
         label_3->setText(QApplication::translate("MainWindow", "Selecione uma a\303\247\303\243o:", Q_NULLPTR));
         hit->setText(QApplication::translate("MainWindow", "Pedir carta", Q_NULLPTR));
         double_2->setText(QApplication::translate("MainWindow", "Dobrar aposta", Q_NULLPTR));
-        stay->setText(QApplication::translate("MainWindow", "Finalijar jogada", Q_NULLPTR));
+        stay->setText(QApplication::translate("MainWindow", "Finalizar jogada", Q_NULLPTR));
         label->setText(QApplication::translate("MainWindow", "Saldo:", Q_NULLPTR));
         apostaatual->setText(QApplication::translate("MainWindow", "$0,00", Q_NULLPTR));
         saldo->setText(QApplication::translate("MainWindow", "$1000,00", Q_NULLPTR));

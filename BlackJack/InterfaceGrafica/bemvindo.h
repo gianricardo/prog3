@@ -14,6 +14,7 @@ class bemvindo : public QDialog
 public:
     explicit bemvindo(QWidget *parent = 0);
     ~bemvindo();
+    //recebe o nome a ser exibido (nome do jogador)
     void texto(QString a);
 
 private:

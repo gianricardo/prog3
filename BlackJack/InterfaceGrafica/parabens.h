@@ -14,6 +14,7 @@ class parabens : public QDialog
 public:
     explicit parabens(QWidget *parent = 0);
     ~parabens();
+    //recebe o texto que exibirá
     void insere(QString texto);
 private:
     Ui::parabens *ui;

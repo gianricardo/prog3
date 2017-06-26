@@ -14,15 +14,12 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         trunfoui.cpp \
-    card.cpp \
-    welcome.cpp
+    card.cpp
 
 HEADERS  += trunfoui.h \
-    card.h \
-    welcome.h
+    card.h
 
-FORMS    += trunfoui.ui \
-    welcome.ui
+FORMS    += trunfoui.ui
 
 RESOURCES += \
     cards.qrc

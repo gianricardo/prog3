@@ -16,6 +16,9 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                QWidget *widget = 0);
 
+    int width();
+    int height();
+
 private:
     int index;
     QPixmap front;

@@ -12,6 +12,7 @@ class continua : public QDialog
     Q_OBJECT
 
 public:
+    //retornara true se o jogador quiser continuar e false se nao
     explicit continua(QWidget *parent = 0);
     ~continua();
 
