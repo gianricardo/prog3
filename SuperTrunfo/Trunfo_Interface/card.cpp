@@ -20,3 +20,13 @@ void Card::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
     else        painter->drawPixmap(boundingRect().x(),boundingRect().y(), boundingRect().width(),
                                     boundingRect().height(), back);
 }
+
+int Card::width()
+{
+    return boundingRect().width();
+}
+
+int Card::height()
+{
+    return boundingRect().height();
+}
