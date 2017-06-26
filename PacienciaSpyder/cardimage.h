@@ -9,6 +9,7 @@
 #include <QGraphicsItem>
 #include <QGraphicsSceneMouseEvent>
 #include <QGraphicsScene>
+#include <QGraphicsEffect>
 
 class CardImageMouseEventHandler {
 
@@ -21,6 +22,9 @@ public:
 class CardImage : public QGraphicsItem {
 
 public:
+
+    static const std::size_t x_size = 65;
+    static const std::size_t y_size = 100;
 
     CardImage() : CardImage(-1, -1) {}
     CardImage(int num, int np);
@@ -35,7 +39,7 @@ public:
             std::cout << "CardImage - No image named\""  << image_name << '\"';
         }
 
-        _front = _front.scaled(65,100);
+        _front = _front.scaled(x_size, y_size);
     }
 
     void setUp(bool up){
@@ -48,9 +52,19 @@ public:
         n_deck = deck;
     }
 
+    int deck(){
+
+        return n_deck;
+    }
+
     void setDeckPosition(int deck_position){
 
         n_position = deck_position;
+    }
+
+    int deckPosition(){
+
+        return n_position;
     }
 
     void setMouseHandler(CardImageMouseEventHandler *handler){
@@ -58,11 +72,23 @@ public:
         _handler = handler;
     }
 
-    QRectF boundingRect() const {
-        return QRectF(x(), y(), 65, 100);
+    void setTransparent(bool op){
+
+        if(op){
+
+            opacityeffect->setOpacity(0.8);
+        }
+        else{
+
+            opacityeffect->setOpacity(1);
+        }
     }
 
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){
+    QRectF boundingRect() const {
+        return QRectF(x(), y(), x_size, y_size);
+    }
+
+    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){
 
         Q_UNUSED(option);
         Q_UNUSED(widget);
@@ -84,6 +110,32 @@ private:
 
     int n_deck, n_position;
     CardImageMouseEventHandler *_handler;
+    QGraphicsOpacityEffect *opacityeffect;
 };
+
+class BlankCardImage : public CardImage {
+
+public:
+
+    BlankCardImage(){
+
+        blank_image.load(":/PacienciaSpyder/img/blank.png");
+
+        blank_image = blank_image.scaled(x_size, y_size);
+    }
+
+    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override {
+
+        Q_UNUSED(option);
+        Q_UNUSED(widget);
+
+        painter->drawPixmap(x(),y(), blank_image);
+    }
+
+private:
+
+    QPixmap blank_image;
+};
+
 
 #endif // CARDIMAGE_H

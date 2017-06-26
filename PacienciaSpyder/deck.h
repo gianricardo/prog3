@@ -16,6 +16,15 @@ public:
 
     Deck() : p3::BaralhoBasico<CARD>() {}
 
+    const CARD top() const {
+
+        return this->_monte.front();
+    }
+    const CARD bottom() const {
+
+        return this->_monte.back();
+    }
+
 };
 
 #endif // DECK_H

@@ -14,6 +14,9 @@ public:
 
     OneSuitTable();
 
+    const OneSuitCard top_card(std::size_t deck);
+    const OneSuitCard bottom_card(std::size_t deck);
+
 };
 
 #endif // TABLE_H

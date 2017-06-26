@@ -20,7 +20,7 @@ GameWindow::GameWindow(QWidget *parent) :
 
     game = new OneSuitGame("player", scene);
 
-    game->draw();
+    //game->draw();
 
 }
 
