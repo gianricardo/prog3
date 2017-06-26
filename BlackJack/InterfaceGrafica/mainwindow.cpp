@@ -20,11 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     qDeleteAll(scene->items());
-    delete ui->acaow;
-    delete ui->placarw;
     delete scene;
-    delete imagem;
-    delete ui->centralwidget;
     delete ui;
 }
 
@@ -75,7 +71,7 @@ int MainWindow::jogue(){
     QObject::connect(ui->double_2, SIGNAL(clicked()),&loop, SLOT(quit()));
     QObject::connect(ui->stay, SIGNAL(clicked()),&loop, SLOT(quit()));
     loop.exec();
-    loop.quit();
+    //loop.quit();
     int i=ac;
     ui->acaow->hide();
     return i;
@@ -180,6 +176,6 @@ void MainWindow::obrigado(){
     o.exec();
     o.close();
     qApp -> closeAllWindows();
-    qApp -> quit();
+    //qApp -> quit();
     qApp ->quitOnLastWindowClosed();
 }
