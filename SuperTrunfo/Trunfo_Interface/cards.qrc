@@ -1,0 +1,37 @@
+<RCC>
+    <qresource prefix="/new">
+        <file>Cartas/trunfo_8d.jpg</file>
+        <file>Cartas/trunfo_8c.jpg</file>
+        <file>Cartas/trunfo_8b.jpg</file>
+        <file>Cartas/trunfo_8a.jpg</file>
+        <file>Cartas/trunfo_7d.jpg</file>
+        <file>Cartas/trunfo_7c.jpg</file>
+        <file>Cartas/trunfo_7b.jpg</file>
+        <file>Cartas/trunfo_7a.jpg</file>
+        <file>Cartas/trunfo_6d.jpg</file>
+        <file>Cartas/trunfo_6c.jpg</file>
+        <file>Cartas/trunfo_6b.jpg</file>
+        <file>Cartas/trunfo_6a.jpg</file>
+        <file>Cartas/trunfo_5d.jpg</file>
+        <file>Cartas/trunfo_5c.jpg</file>
+        <file>Cartas/trunfo_5b.jpg</file>
+        <file>Cartas/trunfo_5a.jpg</file>
+        <file>Cartas/trunfo_4d.jpg</file>
+        <file>Cartas/trunfo_4c.jpg</file>
+        <file>Cartas/trunfo_4b.jpg</file>
+        <file>Cartas/trunfo_4a.jpg</file>
+        <file>Cartas/trunfo_3d.jpg</file>
+        <file>Cartas/trunfo_3c.jpg</file>
+        <file>Cartas/trunfo_3b.jpg</file>
+        <file>Cartas/trunfo_3a.jpg</file>
+        <file>Cartas/trunfo_2d.jpg</file>
+        <file>Cartas/trunfo_2c.jpg</file>
+        <file>Cartas/trunfo_2b.jpg</file>
+        <file>Cartas/trunfo_2a.jpg</file>
+        <file>Cartas/trunfo_1d.jpg</file>
+        <file>Cartas/trunfo_1c.jpg</file>
+        <file>Cartas/trunfo_1b.jpg</file>
+        <file>Cartas/trunfo_1a.jpg</file>
+        <file>Cartas/back_card.png</file>
+    </qresource>
+</RCC>
