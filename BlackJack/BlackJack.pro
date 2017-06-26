@@ -143,3 +143,8 @@ DISTFILES += \
     InterfaceGrafica/cartasimg/91.jpg \
     InterfaceGrafica/ohterimg/dealer.png \
     InterfaceGrafica/cartasimg/base.psd
+
+run.depends = $$TARGET
+run.commands = ./$$TARGET
+
+QMAKE_EXTRA_TARGETS = run
