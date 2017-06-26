@@ -169,7 +169,11 @@ bool OneSuitGame::move(std::size_t deck1, std::size_t deck2, std::size_t n_cards
             _card_images[deck2].erase(_card_images[deck2].end() - 13,  _card_images[deck2].end());
         }
 
-        if(this->_mesa.bottom_card(deck2 + 1).numero() == 0) {
+        if(this->_mesa.tamanho_monte(deck2 + 1) == 0){
+
+            _gen_blank_image(deck2);
+        }
+        else if(this->_mesa.bottom_card(deck2 + 1).numero() == 0) {
 
             this->vira_carta_monte(deck2 + 1, false);
 
