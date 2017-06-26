@@ -43,16 +43,37 @@
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>381</width>
-     <height>141</height>
+     <width>361</width>
+     <height>131</height>
     </rect>
    </property>
    <property name="readOnly">
     <bool>true</bool>
    </property>
   </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>200</x>
+     <y>0</y>
+     <width>311</width>
+     <height>251</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="imagens.qrc">:/ohterimg/chips1.png</pixmap>
+   </property>
+  </widget>
+  <zorder>label</zorder>
+  <zorder>buttonBox</zorder>
+  <zorder>textEdit</zorder>
  </widget>
- <resources/>
+ <resources>
+  <include location="imagens.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>

@@ -6,10 +6,15 @@ novo::novo(QWidget *parent) :
     ui(new Ui::novo)
 {
     ui->setupUi(this);
+    this->setWindowFlags ( Qt::CustomizeWindowHint );
 }
 
 novo::~novo()
 {
+    delete ui->lineEdit;
+    delete ui->buttonBox;
+    delete ui->label;
+    delete ui->label_2;
     delete ui;
 }
 

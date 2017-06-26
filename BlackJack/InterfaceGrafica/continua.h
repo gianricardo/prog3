@@ -15,6 +15,7 @@ public:
     explicit continua(QWidget *parent = 0);
     ~continua();
 
+
 private:
     Ui::continua *ui;
 };

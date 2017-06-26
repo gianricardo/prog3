@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>214</width>
-    <height>80</height>
+    <width>314</width>
+    <height>457</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,9 +15,22 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="imagens.qrc">:/ohterimg/mais.jpg</pixmap>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>Deseja jogar uma nova partida?</string>
+      <string>Gostaria de jogar mais uma partida?</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
     </widget>
    </item>
@@ -36,7 +49,9 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="imagens.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>

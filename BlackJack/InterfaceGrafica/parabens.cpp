@@ -6,10 +6,13 @@ parabens::parabens(QWidget *parent) :
     ui(new Ui::parabens)
 {
     ui->setupUi(this);
+    this->setWindowFlags ( Qt::CustomizeWindowHint );
 }
 
 parabens::~parabens()
 {
+    delete ui->buttonBox;
+    delete ui->label;
     delete ui;
 }
 

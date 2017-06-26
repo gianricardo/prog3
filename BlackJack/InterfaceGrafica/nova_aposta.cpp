@@ -6,10 +6,17 @@ nova_aposta::nova_aposta(QWidget *parent) :
     ui(new Ui::nova_aposta)
 {
     ui->setupUi(this);
+    this->setWindowFlags ( Qt::CustomizeWindowHint );
 }
 
 nova_aposta::~nova_aposta()
 {
+    delete ui->dial;
+    delete ui->lcdNumber;
+    delete ui->line;
+    delete ui->buttonBox_2;
+    delete ui->label;
+    delete ui->label_2;
     delete ui;
 }
 

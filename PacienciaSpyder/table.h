@@ -1,21 +1,22 @@
 #ifndef TABLE_H
 #define TABLE_H
 
-#include <map>
-
 #include <mesa.h>
 
 #include "deck.h"
+#include "player.h"
 
-class OneSuitTable : public p3::MesaBasica<OneSuitCard, p3::JogadorBasico<OneSuitCard>, Deck<OneSuitCard> >
+class OneSuitTable : public p3::MesaBasica<OneSuitCard, Player<OneSuitCard>, Deck<OneSuitCard> >
 {
 public:
 
-    using p3::MesaBasica<OneSuitCard, p3::JogadorBasico<OneSuitCard>, Deck<OneSuitCard> >::MesaBasica;
+    using p3::MesaBasica<OneSuitCard, Player<OneSuitCard>, Deck<OneSuitCard> >::MesaBasica;
 
     OneSuitTable();
 
-    void set_images(std::map<OneSuitCard, std::string> front_images , std::string back_image);
+    const OneSuitCard top_card(std::size_t deck);
+    const OneSuitCard bottom_card(std::size_t deck);
+
 };
 
 #endif // TABLE_H

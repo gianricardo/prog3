@@ -7,23 +7,27 @@
 #include <QGraphicsView>
 #include <QGraphicsItem>
 
+#include "game.h"
+#include "cardimage.h"
+
 namespace Ui {
 class Window;
 }
 
-class Window : public QMainWindow
+class GameWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit Window(QWidget *parent = 0);
-    ~Window();
+    explicit GameWindow(QWidget *parent = 0);
+    ~GameWindow();
 
 private:
     Ui::Window *ui;
 
     QGraphicsScene *scene;
-    QGraphicsRectItem *rectangle;
+
+    OneSuitGame *game;
 };
 
 #endif // WINDOW_H

@@ -16,7 +16,14 @@ public:
 
     Deck() : p3::BaralhoBasico<CARD>() {}
 
-    void set_images(std::map<OneSuitCard, std::string> front_images , std::string back_image);
+    const CARD top() const {
+
+        return this->_monte.front();
+    }
+    const CARD bottom() const {
+
+        return this->_monte.back();
+    }
 
 };
 

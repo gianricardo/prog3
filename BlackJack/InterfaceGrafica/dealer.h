@@ -2,6 +2,9 @@
 #define DEALER_H
 
 #include <QDialog>
+#include <QGraphicsScene>
+#include <QGraphicsView>
+#include <QGraphicsItem>
 
 namespace Ui {
 class dealer;

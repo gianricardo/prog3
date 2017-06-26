@@ -6,9 +6,17 @@ dealer::dealer(QWidget *parent) :
     ui(new Ui::dealer)
 {
     ui->setupUi(this);
+
+    this->setWindowFlags ( Qt::CustomizeWindowHint );
+
+
+
 }
 
 dealer::~dealer()
 {
+    delete ui->buttonBox;
+    delete ui->label;
+    delete ui->label_2;
     delete ui;
 }

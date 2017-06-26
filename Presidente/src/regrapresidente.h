@@ -8,7 +8,7 @@
 #ifndef REGRAPRESIDENTE_H_
 #define REGRAPRESIDENTE_H_
 
-#include "regra.h"
+#include "../../carteado/src/p3/regra.h"
 using namespace p3;
 
 class RegraPresidente : public Regra{
