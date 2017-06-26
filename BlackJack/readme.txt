@@ -1,15 +1,14 @@
 Como compilar:
 
 Linux:
-	Abra o terminal na pasta onde está o makefile (prog3/BlckJack)
+	Abra o terminal na pasta onde está o makefile (prog3/BlackJack)
 	de o comando: “make run”.
 	
 	Caso deseje refazer o makefile:
-	Abra o terminal na pasta onde está o arquivo .pro (prog3/BlckJack)
+	Abra o terminal na pasta onde está o arquivo .pro (prog3/BlackJack)
 	de o comando “qmake”;
 	em seguida “make”;
 	e por fim “make clean”;
-	e para abrir de um duplo clique no aplicativo que surgirá na pasta;	
 	ou insira o comando “./BlackJack”.
 
 	
