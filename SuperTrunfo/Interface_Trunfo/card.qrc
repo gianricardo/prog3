@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/new">
+        <file>trunfo_1c.jpg</file>
+        <file>trunfo_1b.jpg</file>
+        <file>trunfo_1a.jpg</file>
+        <file>back_card.png</file>
+    </qresource>
+</RCC>
