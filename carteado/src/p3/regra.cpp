@@ -69,4 +69,35 @@ int Regra::pontuacao_carta_mao() const {
 	return _pont_cartas_mao;
 }
 
+//TODO implementada por bruno:
+int Regra::compara(Carta c1, Carta c2, Carta c3){
+	return 0;
+}
+
+bool Regra::checa_fim_rodada(std::size_t pont){return false;}
+
+void Regra::jogador_ganhou_rodada(std::size_t jogador,std::size_t rodada){return;}
+
+std::size_t Regra::jogador_ganhou_turno(){return 0;}
+
+void Regra::recomeca_turno(){return;}
+
+bool Regra::fim_turno(std::size_t rodada, std::size_t ganhou){return false;}
+
+int Regra::valor_pontuacao(bool cond,int valor){return 0;}
+
+std::size_t Regra::jogador_comeca(){
+	return 0;
+}
+
+void Regra::jogador_comeca(std::size_t n_pos){return;}
+
+std::size_t Regra::jogador_termina(){return 0;}
+
+void Regra::jogador_termina(std::size_t n_pos){return;}
+
+std::size_t Regra::jogador_comeca_turno(){return 0;}
+
+void Regra::jogador_comeca_turno(std::size_t n_pos){return;}
+
 } /* namespace p3 */

@@ -9,6 +9,7 @@
 #define REGRA_H_
 
 #include <string>
+#include "carta.h"
 
 namespace p3 {
 
@@ -72,6 +73,46 @@ public:
 
 	//retorna a pontuacao automatica por carta na mao
 	int pontuacao_carta_mao() const;
+
+	//TODO implementada por bruno:
+
+	//compara as cartas
+	virtual int compara(Carta c1, Carta c2, Carta c3);
+
+	//checa se a rodada acabou
+	virtual bool checa_fim_rodada(std::size_t pos);
+
+	//
+	virtual void jogador_ganhou_rodada(std::size_t jogador,std::size_t rodada);
+
+	//checa o ganhador do turno
+	virtual std::size_t jogador_ganhou_turno();
+
+	virtual void recomeca_turno();
+
+	//checa se o turno chegou ao fim
+	virtual bool fim_turno(std::size_t rodada, std::size_t ganhou);
+
+	//retorna o valor da pontuacao
+	virtual int valor_pontuacao(bool cond,int valor);
+
+	//retorna o jogador que comeca a rodada
+	virtual std::size_t jogador_comeca();
+
+	//define o jogador que comeca a rodada
+	virtual void jogador_comeca(std::size_t n_pos);
+
+	//retorna o jogador em que a rodada termina
+	virtual std::size_t jogador_termina();
+
+	//define o jogador em que a rodada termina
+	virtual void jogador_termina(std::size_t n_pos);
+
+	//retorna o jogador em que o turno comeca
+	virtual std::size_t jogador_comeca_turno();
+
+	//define o jogador em que o turno comeca
+	virtual void jogador_comeca_turno(std::size_t n_pos);
 
 protected:
 
