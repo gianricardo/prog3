@@ -43,7 +43,6 @@ private:
     QGraphicsTextItem *text;
     QGraphicsRectItem *rect;
     QGraphicsPixmapItem *imagem;
-    p4::Jogo_Truco *game;
     p4::Regra_Truco *rule;
 };
 

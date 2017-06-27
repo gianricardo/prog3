@@ -196,3 +196,8 @@ void Jogo2::fimDeJogo(unsigned int pos){
     }
     close();
 }
+
+void Jogo2::on_pushButton_3_clicked()
+{
+    close();
+}

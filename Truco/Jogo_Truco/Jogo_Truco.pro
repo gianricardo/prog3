@@ -20,7 +20,6 @@ SOURCES += main.cpp\
     help.cpp \
     jogo2.cpp \
     name.cpp \
-    nome.cpp \
     qcarta.cpp \
     qjogo.cpp
 
@@ -31,7 +30,6 @@ HEADERS  += mainwindow.h \
     help.h \
     jogo2.h \
     name.h \
-    nome.h \
     qcarta.h \
     qjogo.h
 

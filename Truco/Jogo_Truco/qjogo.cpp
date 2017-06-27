@@ -15,6 +15,12 @@ Qjogo::Qjogo(QWidget *parent, QString n_name) :
 
 Qjogo::~Qjogo()
 {
+    qmao.clear();
+    qmao1.clear();
+    qmao2.clear();
+    qmao3.clear();
+    qbaralho.clear();
+    delete vira;
     delete ui;
 }
 
@@ -412,5 +418,5 @@ void Qjogo::JogadoresAsCegas(){
 
 void Qjogo::on_pushButton_clicked()
 {
-    close();
+    QApplication::quit();
 }

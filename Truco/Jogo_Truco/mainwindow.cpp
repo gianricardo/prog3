@@ -55,26 +55,31 @@ void MainWindow::on_pushButton_clicked()
     nome.setModal(true);
     nome.exec();
 
-    rule = new p4::Regra_Truco(nome.numero_jogadores(),3,3,12,0,40);
     _numero_jogadores = nome.numero_jogadores();
+
+    close();
 
     if(nome.nome().size() > 0){
         if(nome.numero_jogadores() == 4){
+            rule = new p4::Regra_Truco(nome.numero_jogadores(),3,3,12,0,40);
             _jogo= new Qjogo(0,nome.nome());
             _jogadores.emplace_back((nome.nome().toStdString()));
             _jogadores.emplace_back("Computer1");
             _jogadores.emplace_back("Computer2");
             _jogadores.emplace_back("Computer3");
-            game = new p4::Jogo_Truco(rule,jogadores(),_jogo);
-            game->jogar();
+
+            p4::Jogo_Truco game(rule,jogadores(),_jogo);
+            game.jogar();
 
         }
         else if(nome.numero_jogadores() == 2){
+            rule = new p4::Regra_Truco(nome.numero_jogadores(),3,3,12,0,40);
             _jogo2 = new Jogo2(0,nome.nome());
             _jogadores.emplace_back((nome.nome().toStdString()));
             _jogadores.emplace_back("Computer1");
-            game = new p4::Jogo_Truco(rule, jogadores(),_jogo2);
-            game->jogar();
+            p4::Jogo_Truco game(rule, jogadores(),_jogo2);
+            game.jogar();
+
         }
     }
 
@@ -102,5 +107,5 @@ int MainWindow::numero_jogadores(){
 
 void MainWindow::on_pushButton_3_clicked()
 {
-    close();
+    QApplication::quit();
 }
