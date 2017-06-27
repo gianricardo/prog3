@@ -23,8 +23,6 @@ GameWindow::GameWindow(QWidget *parent) :
     game = new OneSuitGame("player", scene);
 
     game->setEventHandler(this);
-
-    this->setWindowTitle("");
 }
 
 GameWindow::~GameWindow()
