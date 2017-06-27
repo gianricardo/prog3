@@ -20,13 +20,17 @@ public:
 	Estado_jogo();
 	virtual ~Estado_jogo();
 
-	bool inicia_jogo(std::string nome);
+	static bool inicia_jogo(std::string nome);
 	bool realiza_jogada(int p_m1, int p_m2);
+	bool fim_jogo();
 
 	bool distribuir();
+	//int pontuacao();
+
 	void restaura_monte_inicial() override;
 
-	Carta _pega_monte(std::size_t m) override;
+	Carta* _pega_monte(std::size_t m) override;
+
 };
 
 } /* namespace p3 */

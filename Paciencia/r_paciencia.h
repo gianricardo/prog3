@@ -17,8 +17,8 @@ public:
 
 	R_Paciencia();
 
-	bool verifica_ordem (int num1, int num2) const;
-	bool verifica_naipe (Carta::Naipe n1, Carta::Naipe n2) const;
+	static bool verifica_ordem (int num1, int num2) const;
+	static bool verifica_naipe (Carta::Naipe n1, Carta::Naipe n2) const;
 
 };
 

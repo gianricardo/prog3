@@ -15,7 +15,7 @@ R_Paciencia::R_Paciencia() : p3::Regra(1, 0, -1, 52, 0, 52, Regra::modo_fim::pon
 
 }
 
-bool R_Paciencia::verifica_ordem (int num1, int num2) const{
+static bool R_Paciencia::verifica_ordem (int num1, int num2) const{
 
 	if(num1 == (num2 - 1))
 		return true;
@@ -23,7 +23,7 @@ bool R_Paciencia::verifica_ordem (int num1, int num2) const{
 	return false;
 }
 
-bool R_Paciencia::verifica_naipe (Carta::Naipe n1, Carta::Naipe n2) const{
+static bool R_Paciencia::verifica_naipe (Carta::Naipe n1, Carta::Naipe n2) const{
 
 	if(n1 == n2)
 		return true;
