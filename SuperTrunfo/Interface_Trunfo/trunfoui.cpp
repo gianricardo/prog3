@@ -70,6 +70,7 @@ void TrunfoUI::reset_game_scene()
 void TrunfoUI::closeEvent(QCloseEvent *e)
 {
     _window_closed = true;
+    if(loop.isRunning()) loop.quit();
     QMainWindow::closeEvent(e);
 }
 
