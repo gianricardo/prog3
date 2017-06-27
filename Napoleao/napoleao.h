@@ -10,7 +10,7 @@
 
 #include <memory>
 
-#include "jogo.h"
+#include "../carteado/src/p3/jogo.h"
 #include "jogadornapoleao.h"
 #include "napoleaopessoa.h"
 #include "napoleaoia.h"
@@ -38,26 +38,29 @@ public:
 	std::string nome_jogador_atual();
 	void muda_jogador_atual(unsigned int pos);
 	int aposta_maxima();
+	void set_aposta_maxima(int val);
 	void define_declarante(int pos);
-	bool pergunta_turnos(int pos, bool zero);
+	void define_naipe(int naipe);
+	int pergunta_turnos(int pos, bool zero);
 	std::vector<Carta> mostra_mao_jogador_atual();
 	int posicao_jogador_atual();
 	int posicao_declarante();
-	bool declarante_escolhe_trunfo();
+	int declarante_escolhe_trunfo();
 	Carta::Naipe naipe_trunfo();
-	bool primeira_jogada(int pos);
+    int primeira_jogada(int pos);
+    void first_move(int first);
 	Carta jogada_normal(int pos);
+    void executa_jogada(int pos);
 	void joga_monte(Carta nova, int pos);
 	int posicao_vencedor_turno();
 	bool declarante_venceu_turno();
 	int declarante_turnos_feitos();
 	bool declarante_venceu_rodada();
 	int max_rodadas();
-
 	void jogo_conf_inicio();
 	void rodada_conf_inicio();
 	void define_trunfo(Carta::Naipe trunfo); // define qual vai ser o trunfo do turno
-	void pergunta_turnos(int pos); //pergunta pros jogadores qual a qtd de turnos que eles irão fazer
+	//void pergunta_turnos(int pos); //pergunta pros jogadores qual a qtd de turnos que eles irão fazer
 	void imprime_mao_atual(); //imprime a mao do jogador atual.
 	int napoleao_jogada(int pos);
 	Carta carta_jogador_atual(int pos);

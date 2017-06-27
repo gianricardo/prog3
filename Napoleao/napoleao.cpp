@@ -46,22 +46,30 @@ int Napoleao::aposta_maxima(){
 	return _aposta_max;
 }
 
+void Napoleao::set_aposta_maxima(int val){
+	_aposta_max = val;
+}
+
 void Napoleao::define_declarante(int pos) {
 	_declarante = pos;
 }
 
-bool Napoleao::pergunta_turnos(int pos, bool zero) {
-	int trunfo_atual = _jogadores[pos]->jogador_pergunta_turnos();
+void Napoleao::define_naipe(int naipe) {
+	define_trunfo((Carta::Naipe)naipe);
+}
 
+int Napoleao::pergunta_turnos(int pos, bool zero) {
+	if(pos == 0) return -1;
+	int trunfo_atual = _jogadores[pos]->jogador_pergunta_turnos();
 	if(trunfo_atual != 0 && zero) {
-		if(trunfo_atual < _aposta_max || trunfo_atual > 5) return false;
+		if(trunfo_atual < _aposta_max || trunfo_atual > 5) return 0;
 	}
 
 	if(trunfo_atual > _aposta_max) {
 		_aposta_max = trunfo_atual;
 		_declarante = pos;
 	}
-	return true;
+	return 1;
 }
 
 std::vector<Carta> Napoleao::mostra_mao_jogador_atual(){
@@ -76,12 +84,13 @@ int Napoleao::posicao_declarante(){
 	return _declarante;
 }
 
-bool Napoleao::declarante_escolhe_trunfo(){
+int Napoleao::declarante_escolhe_trunfo(){
 	int trunfo;
 	trunfo = _jogadores[_declarante]->escolhe_trunfo();
-	if(trunfo < 0 || trunfo > 3) return false;
+	if(trunfo == -1) return -1;
+	if(trunfo < 0 || trunfo > 3) return 0;
 	define_trunfo((Carta::Naipe) trunfo);
-	return true;
+	return 1;
 }
 
 Carta::Naipe Napoleao::naipe_trunfo(){
@@ -149,26 +158,43 @@ void Napoleao::define_trunfo(Carta::Naipe trunfo) {
 	_trunfo = trunfo;
 }
 
-bool Napoleao::primeira_jogada(int pos){
-	int first = napoleao_jogada(pos); // pergunta a posicao da carta que a pessoa escolheu
-	if(first == -1) return false;
+int Napoleao::primeira_jogada(int pos){
+    int first = napoleao_jogada(pos); // pergunta a posicao da carta que a pessoa escolheu
+    if(first == -2) return -1;
+    if(first == -1) return 0;
 
 	_vencedor_turno = pos;
 
 	Carta maior = carta_jogador_atual(first);
 	_naipe_inicial = maior.naipe();
 	_jogo->move_carta_jm(maior,pos,1);
-	return true;
+    return 1;
+}
+
+void Napoleao::first_move(int first){
+    Carta maior = carta_jogador_atual(first);
+    _naipe_inicial = maior.naipe();
+    _jogo->move_carta_jm(maior,0,1);
 }
 
 Carta Napoleao::jogada_normal(int pos){
+	// -2 é a entrada da pessoa
 	int jogada = napoleao_jogada(pos); // pergunta a posicao da carta que a pessoa escolheu
+	if(jogada == -2){
+		Carta ret(14, (typename Carta::Naipe) 0);
+		return ret;
+	}
 	if(jogada == -1) {
 		Carta ret(0, (typename Carta::Naipe) 0);
 		return ret;
 	}
 	Carta nova = carta_jogador_atual(jogada);
 	return nova;
+}
+
+void Napoleao::executa_jogada(int pos){
+    Carta nova = carta_jogador_atual(pos);
+    joga_monte(nova,0);
 }
 
 void Napoleao::joga_monte(Carta nova, int pos){
@@ -184,7 +210,7 @@ void Napoleao::joga_monte(Carta nova, int pos){
 
 int Napoleao::napoleao_jogada(int pos){
 	int jogada = _jogadores[pos]->jogador_jogada();
-
+    if(jogada == -1) return -2;
 	if(jogada < 0 || jogada > (int)_jogo->cartas_jogadores() - (int)_turno) {
 		std::cout << "NAPOLEAO JOGADA Carta invalida" << std::endl;
 		return -1;

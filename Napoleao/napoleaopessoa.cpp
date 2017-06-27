@@ -35,7 +35,8 @@ std::string NapoleaoPessoa::nome() {
 }
 
 int NapoleaoPessoa::resposta(){
-	int resp;
-	std::cin >> resp;
-	return resp;
+//	int resp;
+//	std::cin >> resp;
+//	return resp;
+    return -1;
 }

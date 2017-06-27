@@ -227,8 +227,8 @@ void Tela::primeira_jogada(int primeiro) {
     int escolha = _nap->primeira_jogada(primeiro);
     if(escolha == -1){
         int card = w->pergunta_carta();
+        while(card > 5 - (int)_nap->)
         _nap->first_move(card);
-
         w->atualiza_cartas(0);
         imprime_mao_atual();
     }
