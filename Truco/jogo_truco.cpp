@@ -9,8 +9,9 @@
 
 namespace p4 {
 
-Jogo_Truco::Jogo_Truco(p3::Regra *regra, std::vector<std::string> nomes):p3::Jogo(regra, nomes){
-    interface = new Qjogo(0,QString::fromStdString(nomes[0]));
+Jogo_Truco::Jogo_Truco(p3::Regra *regra, std::vector<std::string> nomes, Qjogo *_interface):p3::Jogo(regra, nomes),
+interface{_interface}{
+
 	_truco = false;
 	_valor_truco = 0;
 
@@ -20,6 +21,8 @@ Jogo_Truco::Jogo_Truco(p3::Regra *regra, std::vector<std::string> nomes):p3::Jog
 	_cond_rodada = true;
 	_turno = true;
 	_rodada = 0;
+
+    interface->iniciaScene();
 
     interface->mostraBaralho(mostra_monte(0));
     interface->mostraMaoInicio(mostra_mao_jogador_pos(0));
@@ -54,9 +57,9 @@ void Jogo_Truco::jogar(){
             jogador_ganhando = 0;
 
             if(checa_mao_de_11() == 2){
-                std::cout<< "Rodada as cegas" << std::endl;
+                rodada_as_cegas();
             }
-            if(checa_mao_de_11() == 0 && numero_de_jogadores() == 4){
+            else if(checa_mao_de_11() == 0){
                 resposta = mao_de_11();
 
                 if(resposta == false){
@@ -65,15 +68,14 @@ void Jogo_Truco::jogar(){
                         do{
                             incrementa_jog_atual();
                         }while(checa_fim_rodada() == false);
-
                         jogador_ganhou_rodada(jogador_ganhando);
                         fim_rodada(jogador_ganhando);
+
                     }
                     break;
                 }
             }
-
-            else if(checa_mao_de_11() == 1 && numero_de_jogadores() == 4){
+            else if(checa_mao_de_11() == 1 ){
                 if(ia_aceita_mao_11() == false){
                     jogador_ganhando = checa_mao_de_11() + 1;
                     while(!fim_turno()){
@@ -90,7 +92,13 @@ void Jogo_Truco::jogar(){
 			do{
                 interface->mostraVira(mostra_monte(1)[0].second);
                 if(posicao_jogador_atual() == 0){
-                    joga_jogador_posicao_0();
+                    if(checa_mao_de_11() == 2){
+                        joga_jogador_posicao0_11();
+
+                    }
+                    else{
+                        joga_jogador_posicao_0();
+                    }
                 }
 				else{
 					ia_joga();
@@ -102,7 +110,6 @@ void Jogo_Truco::jogar(){
 			jogador_ganhou_rodada(jogador_ganhando);
 			fim_rodada(jogador_ganhando);
             interface->comeca_nova_rodada();
-
 		}
 
         if(checa_mao_de_11() == -1 || (checa_mao_de_11() == 0 && resposta == false) ||
@@ -124,6 +131,7 @@ void Jogo_Truco::jogar(){
 		comeca_novo_turno();
 		fim_jogo();
     }
+    interface->fimDeJogo(jogador_vencedor());
 }
 
 void Jogo_Truco::fim_jogo(){
@@ -247,21 +255,55 @@ bool Jogo_Truco::ia_aceita_mao_11(){
 				mostra_mao_jogador_pos(1)[i].numero() == (mostra_monte(1)[0].second).numero() +1){
 			cartas_altas ++;
 		}
-	}
-	for(std::size_t i = 0 ; i < mostra_mao_jogador_pos(3).size(); i++){
-		if(mostra_mao_jogador_pos(3)[i].numero() <= 3 ||
-				mostra_mao_jogador_pos(3)[i].numero() == (mostra_monte(1)[0].second).numero() +1){
-			cartas_altas ++;
-		}
-	}
-	if(cartas_altas == 3){
-		return true;
-	}
-	else{
-		return false;
-	}
+    }
+    if(numero_de_jogadores() == 4){
+        for(std::size_t i = 0 ; i < mostra_mao_jogador_pos(3).size(); i++){
+            if(mostra_mao_jogador_pos(3)[i].numero() <= 3 ||
+                    mostra_mao_jogador_pos(3)[i].numero() == (mostra_monte(1)[0].second).numero() +1){
+                cartas_altas ++;
+            }
+        }
+        if(cartas_altas == 3){
+            return true;
+        }
+        return false;
+    }
+    else{
+        if(cartas_altas  == 1){
+            return true;
+        }
+        return false;
+    }
 }
 //Funcoes privadas
+unsigned int Jogo_Truco::jogador_vencedor(){
+    unsigned int vencedor = 0;
+    for(unsigned int i = 0; i < numero_de_jogadores(); i++){
+        if(_mesa.ver_jogador(i).pontuacao() >= 12){
+            vencedor = i;
+        }
+    }
+    return vencedor;
+}
+
+void Jogo_Truco::joga_jogador_posicao0_11(){
+    interface->mostraValorTruco();
+    interface->mostraMao();
+    interface->mostraMaooff();
+    int _carta = interface->cartaSelecionada();
+    joga_carta_cima(_carta);
+
+
+}
+
+void Jogo_Truco::rodada_as_cegas(){
+    for(unsigned int i = 0; i < mostra_mao_jogador_pos(0).size(); i++){
+        if(mostra_mao_jogador_pos(0)[i].mostra()){
+            _mesa.vira_carta_jogador(i,0);
+        }
+    }
+    interface->rodadaAsCegas(mostra_mao_jogador_pos(0));
+}
 
 void Jogo_Truco::joga_jogador_comeca(){
     interface->mostraMaooff();
@@ -338,26 +380,38 @@ std::vector<p3::Carta> Jogo_Truco::mostra_mao_jogador_pos(std::size_t _jogador){
 
 bool Jogo_Truco::mao_de_11(){
     bool resposta = false;
-    if(_jog_atual == 0 || _jog_atual == 2){
-        for(int i = 0; i < cartas_jogadores(); i++){
-            if(!(mostra_mao_jogador_pos(0)[i].mostra())){
-                _mesa.vira_carta_jogador(i,0);
+    if(numero_de_jogadores() == 4){
+        if(_jog_atual == 0 || _jog_atual == 2){
+            for(int i = 0; i < cartas_jogadores(); i++){
+                if(!(mostra_mao_jogador_pos(0)[i].mostra())){
+                    _mesa.vira_carta_jogador(i,0);
+                }
             }
-        }
-		for(int i = 0; i < cartas_jogadores(); i++){
-            if(!(mostra_mao_jogador_pos(2)[i].mostra())){
-                _mesa.vira_carta_jogador(i,2);
+            for(int i = 0; i < cartas_jogadores(); i++){
+                if(!(mostra_mao_jogador_pos(2)[i].mostra())){
+                    _mesa.vira_carta_jogador(i,2);
+                }
             }
-		}
-       resposta =  interface->maoDe11(mostra_mao_jogador_pos(0),mostra_mao_jogador_pos(2));
+           resposta =  interface->maoDe11(mostra_mao_jogador_pos(0),mostra_mao_jogador_pos(2));
 
-        for(int i = 0; i < cartas_jogadores(); i++){
-            if((mostra_mao_jogador_pos(2)[i].mostra())){
-                _mesa.vira_carta_jogador(i,2);
+           for(int i = 0; i < cartas_jogadores(); i++){
+               if((mostra_mao_jogador_pos(0)[i].mostra())){
+                   _mesa.vira_carta_jogador(i,0);
+               }
+           }
+
+            for(int i = 0; i < cartas_jogadores(); i++){
+                if((mostra_mao_jogador_pos(2)[i].mostra())){
+                    _mesa.vira_carta_jogador(i,2);
+                }
             }
         }
-	}
-    return resposta;
+        return resposta;
+    }
+    else{
+        resposta = interface->maoDe11_2();
+        return resposta;
+    }
 }
 
 void Jogo_Truco::comeca_novo_turno(){
@@ -503,10 +557,9 @@ void Jogo_Truco::fim_rodada(std::size_t _jogador_ganhou){
 
 
 void Jogo_Truco::joga_jogador_posicao_0(){
-//    interface->pedeTruco(valor_truco());
     interface->mostraValorTruco();
     interface->mostraMao();
-    interface->acao();
+    interface->acao(pontuacao(0));
 
     if((interface->statusTruco() && verifica_truco(posicao_jogador_atual()) == true)){
         interface->setTrucoFalse();

@@ -22,7 +22,7 @@ GetAcao::GetAcao(QWidget *parent) :
 
     text2->setFont(helvetica);
     text2->setPlainText("Mao do Parceiro");
-    text2->setPos(200,0);
+    text2->setPos(240,0);
 
     scene->addItem(text);
     scene->addItem(text2);
@@ -53,6 +53,7 @@ void GetAcao::addMao(std::vector<p3::Carta> mao1, std::vector<p3::Carta> mao2){
     if(!_mao2.empty()){
         _mao2.clear();
     }
+
     for(unsigned int i = 0; i < mao1.size(); i++){
         _mao1.emplace_back(new QCarta(mao1[i]));
         _mao1[i]->setPos(0 + i*40, 90);

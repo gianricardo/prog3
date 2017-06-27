@@ -21,7 +21,6 @@ SOURCES += main.cpp\
     qjogo.cpp \
     ../../regratruco.cpp \
     ../../jogo_truco.cpp \
-    ../../jogo_truco2.cpp \
     getacao.cpp
 
 HEADERS  += mainwindow.h \
@@ -32,7 +31,6 @@ HEADERS  += mainwindow.h \
     qjogo.h \
     ../../regratruco.h \
     ../../jogo_truco.h \
-    ../../jogo_truco2.h \
     getacao.h
 
 FORMS    += mainwindow.ui \

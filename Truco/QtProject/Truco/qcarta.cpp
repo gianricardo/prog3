@@ -151,6 +151,7 @@ QCarta::QCarta(p3::Carta c1)
 
     clickable = false;
     selected = false;
+    selectable = false;
     verso = verso.scaled(90,120);
     frente = frente.scaled(90,120);
     setFlag( QGraphicsItem::ItemIsFocusable );
@@ -183,6 +184,14 @@ bool QCarta::getClicked(){
     return clicked;
 }
 
+void QCarta::setSelectable(){
+    selectable = !selectable;
+}
+
+bool QCarta::getSelectable(){
+    return selectable;
+}
+
 void QCarta::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     if(!clicked){
@@ -197,13 +206,13 @@ void QCarta::mousePressEvent(QGraphicsSceneMouseEvent *event){
     if(event->button() == Qt::RightButton && clickable == true){
         clicked = !clicked;
     }
-    else if(event->button() == Qt::LeftButton){
+    else if(event->button() == Qt::LeftButton && selectable == true){
         if(getSelected()){
             this->setSelected(false);
+            this->setPos(this->x(), this->y() + 30);
         }
        else{
-            QGraphicsDropShadowEffect* dropShadowEffect = new QGraphicsDropShadowEffect();
-            this->setGraphicsEffect(dropShadowEffect);
+            this->setPos(this->x(), this->y() - 30);
             this->setSelected(true);
         }
     }

@@ -10,7 +10,6 @@
 #include "help.h"
 #include "../../Truco/jogo_truco.h"
 #include "../../Truco/regratruco.h"
-#include "../../Truco/jogo_truco2.h"
 
 
 namespace Ui {

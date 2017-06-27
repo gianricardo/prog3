@@ -24,6 +24,8 @@ public:
 
     void setClickable();
     bool getClickable();
+    void setSelectable();
+    bool getSelectable();
     void setSelected(bool status);
     bool getSelected();
     bool getClicked();
@@ -35,6 +37,7 @@ private:
     bool clicked;
     bool selected;
     bool clickable;
+    bool selectable;
     QPixmap verso;
     QPixmap frente;
 };

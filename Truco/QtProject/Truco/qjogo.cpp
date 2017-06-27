@@ -11,9 +11,18 @@ Qjogo::Qjogo(QWidget *parent, QString n_name) :
     _jogador = n_name;
     ui->setupUi(this);
 
+}
+
+Qjogo::~Qjogo()
+{
+    delete ui;
+}
+
+
+void Qjogo::iniciaScene(){
     mao11 = new GetAcao(this);
-    QBrush green(Qt::darkGreen);
     jogo_scene = new QGraphicsScene(this);
+    QBrush green(Qt::darkGreen);
     jogo_scene->setBackgroundBrush(green);
     ui->graphicsView->setScene(jogo_scene);
 
@@ -41,12 +50,6 @@ Qjogo::Qjogo(QWidget *parent, QString n_name) :
 
 
 }
-
-Qjogo::~Qjogo()
-{
-    delete ui;
-}
-
 
 void Qjogo::setPontuacao(QString pont, std::size_t pos){
     if(pos == 0){
@@ -94,6 +97,9 @@ void Qjogo::mostraMao(){
     for(unsigned int i = 0; i < qmao.size(); i++){
         if(qmao[i]->getClickable() == false){
              qmao[i]->setClickable();
+        }
+        if(qmao[i]->getSelectable() == false){
+            qmao[i]->setSelectable();
         }
     }
 }
@@ -189,6 +195,10 @@ bool Qjogo::maoDe11(std::vector<p3::Carta> mao1, std::vector<p3::Carta> mao2){
 
 }
 
+bool Qjogo::maoDe11_2(){
+    return true;
+}
+
 void Qjogo::setTrucoFalse(){
     _truco = false;
 }
@@ -199,7 +209,6 @@ bool Qjogo::getClick(unsigned int carta){
 
 unsigned int Qjogo::cartaSelecionada(){
     unsigned int cont = 0;
-    ui->pushButton->setEnabled(true);
     ui->pushButton_3->setEnabled(true);
     ui->pushButton_2->setDisabled(true);
     ui->pushButton_4->setDisabled(true);
@@ -302,20 +311,50 @@ void Qjogo::mostraValorTruco(unsigned int _valor){
     QFont helvetica("Times",18);
     ui->lineEdit_9->setEnabled(true);
     ui->lineEdit_9->setFont(helvetica);
-    ui->lineEdit_9->setText(QString::number(_valor));
+    ui->lineEdit_9->setText(QString::number(_valor + 3));
     ui->lineEdit_9->setDisabled(true);
 }
 
-void Qjogo::acao(){
+void Qjogo::acao(unsigned int pont){
     QEventLoop loop;
+
     ui->pushButton_2->setEnabled(true);
     ui->pushButton_4->setEnabled(true);
-    ui->pushButton->setDisabled(true);
     ui->pushButton_3->setDisabled(true);
+
+    if(pont == 11){
+        ui->pushButton_2->setDisabled(true);
+    }
 
     connect(ui->pushButton_2,SIGNAL(clicked(bool)),&loop,SLOT(quit()));
     connect(ui->pushButton_4,SIGNAL(clicked(bool)),&loop,SLOT(quit()));
 
     loop.exec();
+
+}
+
+void Qjogo::rodadaAsCegas(std::vector<p3::Carta> mao){
+    if(!qmao.empty()){
+        for(unsigned int i = 0; i < qmao.size(); i++){
+            jogo_scene->removeItem(qmao[i]);
+        }
+        qmao.clear();
+    }
+    for(unsigned int i = 0; i < mao.size(); i++){
+        qmao.emplace_back(new QCarta(mao[i]));
+        qmao[i]->setPos(200 + i*40,290);
+        jogo_scene->addItem(qmao[i]);
+    }
+
+}
+
+void Qjogo::fimDeJogo(unsigned int pos){
+    if(pos == 0 || pos == 2){
+        QMessageBox::information(this,"Ganhadores","Ganhadores: " +_jogador + " e Computer2");
+    }
+    else if(pos == 1 || pos == 3){
+        QMessageBox::information(this,"Ganhadores", "Ganhadores: Computer1 e Computer3");
+    }
+    QApplication::quit();
 
 }

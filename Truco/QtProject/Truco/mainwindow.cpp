@@ -61,17 +61,20 @@ void MainWindow::on_pushButton_clicked()
 
     if(nome.nome().size() > 0){
         if(nome.numero_jogadores() == 4){
+            _jogo= new Qjogo(0,nome.nome());
             _jogadores.emplace_back((nome.nome().toStdString()));
             _jogadores.emplace_back("Computer1");
             _jogadores.emplace_back("Computer2");
             _jogadores.emplace_back("Computer3");
-            game = new p4::Jogo_Truco(rule,jogadores());
+            game = new p4::Jogo_Truco(rule,jogadores(),_jogo);
             game->jogar();
         }
         else if(nome.numero_jogadores() == 2){
+            _jogo2 = new Jogo2(0,nome.nome());
             _jogadores.emplace_back((nome.nome().toStdString()));
             _jogadores.emplace_back("Computer1");
-            game = new p4::Jogo_Truco2(rule, jogadores());
+            game = new p4::Jogo_Truco(rule, jogadores(),_jogo2);
+            game->jogar();
         }
     }
 

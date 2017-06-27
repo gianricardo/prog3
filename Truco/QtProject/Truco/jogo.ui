@@ -297,25 +297,6 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>100</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Aceitar</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QPushButton" name="pushButton_3">
         <property name="maximumSize">
          <size>

@@ -15,6 +15,7 @@
 #include "../carteado/src/p3/jogador.h"
 #include "../carteado/src/p3/mesa.h"
 #include "qjogo.h"
+#include <memory>
 
 namespace p4 {
 
@@ -24,7 +25,7 @@ public:
 
 	void fim_jogo();
 
-	Jogo_Truco(p3::Regra *regra, std::vector<std::string> nomes);
+    Jogo_Truco(p3::Regra *regra, std::vector<std::string> nomes, Qjogo *_interface);
 	virtual ~Jogo_Truco();
 
 	void jogar();
@@ -55,6 +56,12 @@ public:
 
 
 protected:
+    unsigned int jogador_vencedor();
+
+    void joga_jogador_posicao0_11();
+
+    void rodada_as_cegas();
+
     void joga_jogador_comeca();
 
     void joga_carta_cima(unsigned int _carta);
@@ -89,7 +96,7 @@ protected:
 
 
 private:
-    Qjogo *interface;
+    std::unique_ptr<Qjogo> interface;
 };
 
 } /* namespace p4 */
