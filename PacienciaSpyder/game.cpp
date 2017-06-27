@@ -3,7 +3,7 @@
 
 OneSuitGame::OneSuitGame(std::string player, QGraphicsScene *scene /*= nullptr */) :
     JogoBasico<OneSuitCard, OneSuitTable>(new Rules(), std::vector<std::string>(1, player)), _scene(scene),
-    _selected(-1, -1) {
+    _selected(-1, -1), _handler(nullptr) {
     
     for(std::size_t i = 0; i < number_of_rows; i++) JogoBasico<OneSuitCard, OneSuitTable>::novo_monte();
     
@@ -13,16 +13,19 @@ OneSuitGame::OneSuitGame(std::string player, QGraphicsScene *scene /*= nullptr *
     
     _turn_all();
 
-    stack_image = new CardImage();
+    if(_scene != nullptr){
 
-    stack_image->setX(315);
-    stack_image->setY(180);
+        stack_image = new CardImage();
 
-    scene->addItem(stack_image);
+        stack_image->setX(315);
+        stack_image->setY(180);
 
-    stack_image->setDeck(-2);
+        _scene->addItem(stack_image);
 
-    stack_image->setMouseHandler(this);
+        stack_image->setDeck(-2);
+
+        stack_image->setMouseHandler(this);
+    }
 }
 
 OneSuitGame::~OneSuitGame(){
@@ -126,7 +129,7 @@ void OneSuitGame::show_ascii(){
 }
 
 bool OneSuitGame::move(std::size_t deck1, std::size_t deck2, std::size_t n_cards){
-    
+
     if(deck1 >= number_of_rows) return false;
     if(deck2 >= number_of_rows) return false;
     
@@ -181,7 +184,10 @@ bool OneSuitGame::move(std::size_t deck1, std::size_t deck2, std::size_t n_cards
         }
 
 
-        if(JogoBasico<OneSuitCard, OneSuitTable>::mostra_mao_jogador_atual().size() == 104) next_turn();
+        if(this->mostra_mao_jogador_atual().size() >= (std::size_t) this->cartas_inicial()){
+
+            if(_handler != nullptr) _handler->gameover_event(true);
+        }
     }
     
     //show_ascii();
@@ -192,6 +198,62 @@ bool OneSuitGame::move(std::size_t deck1, std::size_t deck2, std::size_t n_cards
 std::size_t OneSuitGame::turn() const {
     
     return JogoBasico<OneSuitCard, OneSuitTable>::rodada();
+}
+
+void OneSuitGame::click_event(int n_deck, int n_position) {
+
+    //std::cout << "clicked: " <<  n_deck << ", " << n_position << std::endl;
+
+    select(n_deck, n_position);
+
+    if(n_deck == -2) next_turn();
+}
+
+void OneSuitGame::select(int n_deck, int n_position){
+
+    if(_selected.first >= 0) unglow(_selected.first, _selected.second);
+
+    if(_selected.first == n_deck && _selected.second == n_position){
+
+        _selected.first = -1;
+
+        return;
+    }
+
+    if(n_deck < 0 || n_position < -1 || (std::size_t)n_deck >= number_of_rows) return;
+
+    if(n_position == -1 && _selected.first == -1) return;
+
+    int n_cards = this->_mesa.tamanho_monte(n_deck + 1) - n_position;
+
+    if(n_cards <= 0 && _selected.first == -1) return;
+
+    if(_selected.first >= 0 && n_deck != _selected.first){
+
+        if(std::size_t(n_position + 1) == this->_mesa.tamanho_monte(n_deck + 1)) {
+
+            move(_selected.first, n_deck,
+                 this->_mesa.tamanho_monte(_selected.first + 1) - _selected.second);
+        }
+
+        _selected.first = -1;
+    }
+    else if(_verify_sequence(this->mostra_monte(n_deck + 1), n_cards) != -1){
+
+        _selected.first = n_deck;
+        _selected.second = n_position;
+
+        glow(n_deck, n_position);
+    }
+    else{
+
+        _selected.first = -1;
+    }
+}
+
+void OneSuitGame::setEventHandler(GameEventHandler *handler){
+
+    _handler = handler;
 }
 
 void OneSuitGame::_distribute(int start, int end){
@@ -240,7 +302,7 @@ void OneSuitGame::_turn_all(){
         }
     }
 
-    show_ascii();
+    //show_ascii();
 }
 
 int OneSuitGame::_verify_sequence(const std::vector<std::pair<bool, OneSuitCard> >& deck, std::size_t n_cards){
@@ -259,6 +321,94 @@ int OneSuitGame::_verify_sequence(const std::vector<std::pair<bool, OneSuitCard>
     return aux;
 }
 
+void OneSuitGame::glow(int n_deck, int n_position){
 
+    auto start = _card_images[n_deck].begin() + n_position;
+    auto end = _card_images[n_deck].end();
 
+    for(auto it = start; it != end; it++){
 
+        (*it)->setTransparent(true);
+    }
+}
+
+void OneSuitGame::unglow(int n_deck, int n_position){
+
+    auto start = _card_images[n_deck].begin() + n_position;
+    auto end = _card_images[n_deck].end();
+
+    for(auto it = start; it != end; it++){
+
+        (*it)->setTransparent(false);
+    }
+}
+
+void OneSuitGame::_move_images(std::size_t deck1, std::size_t deck2, int n_cards){
+
+    auto& deck1_images = _card_images[deck1];
+    auto& deck2_images = _card_images[deck2];
+
+    if(deck2_images.size() == 1){
+
+        if(deck2_images[0]->deckPosition() == -1){
+
+            delete deck2_images[0];
+
+            deck2_images.clear();
+        }
+    }
+
+    int i = deck2_images.size(), aux_x = 35*deck2;
+
+    std::vector<CardImage *>::iterator start_it = deck1_images.end() - n_cards,
+            end_it = deck1_images.end();
+
+    deck2_images.insert(deck2_images.end(), start_it, end_it);
+
+    for(auto it = deck1_images.end() - n_cards; it != deck1_images.end(); it++){
+
+        (*it)->setX(aux_x);
+        (*it)->setY(10*i);
+        (*it)->setDeck(deck2);
+        (*it)->setDeckPosition(i);
+        (*it)->setZValue(i);
+
+        i++;
+    }
+
+    deck1_images.erase(start_it, end_it);
+
+    if(deck1_images.size() == 0) _gen_blank_image(deck1);
+}
+
+void OneSuitGame::_turn_card_image(int deck){
+
+    if(_scene != nullptr){
+
+        CardImage *img = _card_images[deck].back();
+        OneSuitCard card = this->_mesa.bottom_card(deck+1);
+
+        img->setCard(card.numero(), (int) card.naipe());
+
+        img->setUp(true);
+
+        img->update();
+    }
+}
+
+void OneSuitGame::_gen_blank_image(int deck){
+
+    CardImage *img = new BlankCardImage();
+
+    img->setX(35*deck);
+    img->setY(0);
+    img->setDeck(deck);
+    img->setDeckPosition(-1);
+    img->setZValue(0);
+
+    img->setMouseHandler(this);
+
+    _card_images[deck].push_back(img);
+
+    _scene->addItem(img);
+}

@@ -17,7 +17,7 @@ Estado_jogo::~Estado_jogo() {
 
 }
 
-bool Estado_jogo::inicia_jogo(std::string nome) : Jogo(new R_Paciencia(), std::vector<std::string>(1, nome)){
+static bool Estado_jogo::inicia_jogo(std::string nome) : Jogo(new R_Paciencia(), std::vector<std::string>(1, nome)){
 	for(int i = 0; i < 12; i++){
 		Jogo::novo_monte();
 	}
@@ -51,6 +51,9 @@ bool Estado_jogo::realiza_jogada(int p_m1, int p_m2){
 			}
 
 			Jogo::move_carta_mm(p_m1, p_m2);
+			Jogo::jogador_soma_pontos(1, 0);
+
+			Jogo::verifica_fim_de_jogo();
 
 			return true;
 
@@ -65,6 +68,17 @@ bool Estado_jogo::realiza_jogada(int p_m1, int p_m2){
 
 	return false;
 }
+
+
+bool Estado_jogo::fim_jogo(){
+
+	if(Jogo::_jogando == false)
+		return true;
+
+	return false;
+}
+
+
 
 bool Estado_jogo::distribuir(){
 
@@ -89,6 +103,13 @@ bool Estado_jogo::distribuir(){
 	return a;
 }
 
+/*
+int Estado_jogo::pontuacao(){
+
+	return Jogo::pontuacao_jogador_atual();
+}
+*/
+
 void Estado_jogo::restaura_monte_inicial(){
 
 	unsigned long int tam = _mesa.tamanho_monte((unsigned long int)1), i;
@@ -100,9 +121,9 @@ void Estado_jogo::restaura_monte_inicial(){
 
 }
 
-Carta Estado_jogo::_pega_monte(std::size_t m){
+Carta* Estado_jogo::_pega_monte(std::size_t m){
 
-	return _mesa.verifica_topo(m); //verificar
+	return Jogo::_mesa.verifica_topo(m); //verificar
 }
 
 

@@ -20,14 +20,14 @@ using namespace p3;
 
 class JogoPresidente : public Jogo{
 public:
-        JogoPresidente(p3::Regra *r,std::vector<std::string> p,TelaPresidente &ui);
+        JogoPresidente(Regra *r,std::vector<std::string> p,TelaPresidente &ui);
 	virtual ~JogoPresidente();
 	void play();
 private:
 	int acha_carta_jogavel(std::vector<Carta>,int,int);
 	int how_many_in_the_hand(std::vector<Carta>,int);
 	void joga_cartas(int,int);
-        void fim_jogada();
+  bool fim_jogada();
 	void add_position(int jogador);
 	void pass_card(std::vector<int> v, int pos1, int pos2);
 	std::vector<int> find_highest(int,std::size_t);

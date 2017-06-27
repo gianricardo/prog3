@@ -16,7 +16,6 @@ class CardImageMouseEventHandler {
 public:
 
     virtual void click_event(int n_deck, int n_position) = 0;
-    virtual void release_event(int n_deck, int n_postion) = 0;
 };
 
 class CardImage : public QGraphicsItem {
@@ -29,79 +28,27 @@ public:
     CardImage() : CardImage(-1, -1) {}
     CardImage(int num, int np);
 
-    void setCard(int num, int np){
+    void setCard(int num, int np);
 
-        std::string image_name = ":/PacienciaSpyder/img/" + std::to_string(np) + '_' +
-                std::to_string(num) + ".png";
+    void setUp(bool up);
 
-        if(!_front.load(QString::fromStdString(image_name))){
+    void setDeck(int deck);
 
-            std::cout << "CardImage - No image named\""  << image_name << '\"';
-        }
+    int deck() const ;
 
-        _front = _front.scaled(x_size, y_size);
-    }
+    void setDeckPosition(int deck_position);
 
-    void setUp(bool up){
+    int deckPosition() const ;
 
-        show_front = up;
-    }
+    void setMouseHandler(CardImageMouseEventHandler *handler);
 
-    void setDeck(int deck){
+    void setTransparent(bool op);
 
-        n_deck = deck;
-    }
+    QRectF boundingRect() const ;
 
-    int deck(){
+    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
-        return n_deck;
-    }
-
-    void setDeckPosition(int deck_position){
-
-        n_position = deck_position;
-    }
-
-    int deckPosition(){
-
-        return n_position;
-    }
-
-    void setMouseHandler(CardImageMouseEventHandler *handler){
-
-        _handler = handler;
-    }
-
-    void setTransparent(bool op){
-
-        if(op){
-
-            opacityeffect->setOpacity(0.8);
-        }
-        else{
-
-            opacityeffect->setOpacity(1);
-        }
-    }
-
-    QRectF boundingRect() const {
-        return QRectF(x(), y(), x_size, y_size);
-    }
-
-    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){
-
-        Q_UNUSED(option);
-        Q_UNUSED(widget);
-
-        painter->drawPixmap(x(),y(), (show_front) ? _front : _back);
-    }
-
-    void mousePressEvent(QGraphicsSceneMouseEvent *event){
-
-        if(event->button() != Qt::LeftButton) return;
-
-        if(_handler != nullptr) _handler->click_event(n_deck, n_position);
-    }
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
 private:
 
@@ -117,20 +64,9 @@ class BlankCardImage : public CardImage {
 
 public:
 
-    BlankCardImage(){
+    BlankCardImage();
 
-        blank_image.load(":/PacienciaSpyder/img/blank.png");
-
-        blank_image = blank_image.scaled(x_size, y_size);
-    }
-
-    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override {
-
-        Q_UNUSED(option);
-        Q_UNUSED(widget);
-
-        painter->drawPixmap(x(),y(), blank_image);
-    }
+    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override ;
 
 private:
 

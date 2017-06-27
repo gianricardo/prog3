@@ -33,48 +33,53 @@ TelaPresidente::TelaPresidente(QWidget *parent) :
 
     win = new WinnerWindow(this) ;
     select = 1;
+    select_max=13;
+    this->setWindowFlags((windowFlags() | Qt::CustomizeWindowHint)& ~Qt::WindowCloseButtonHint & ~Qt::WindowMinimizeButtonHint);
+    QObject::connect(ui->quit,SIGNAL(clicked()),this,SLOT(quiting()));
 }
 
 TelaPresidente::~TelaPresidente()
 {
     delete ui;
+    delete win;
+    delete sceneGame;
+    delete sceneMenu;
+    delete sceneInstructions;
 }
 
 void TelaPresidente::show_hand(std::vector<p3::Carta> v0,std::vector<p3::Carta> v1,std::vector<p3::Carta> v2,std::vector<p3::Carta> v3)
 {
-    select=1;
+    if(select==0) select=1;
+    else if(select>select_max) select=select_max;
+    select_max=v0.size();
     ui->titulo->show();
     ui->label->hide();
     qDeleteAll(sceneGame->items());
     QPen pen(Qt::red);
     QBrush redb(Qt::red);
-    cursor = sceneGame->addPolygon(QPolygonF({QPoint(150,480),QPoint(170,480),QPoint(160,490)}),pen,redb);
+    cursor = sceneGame->addPolygon(QPolygonF({QPoint(150+(select-1)*40,480),QPoint(170+(select-1)*40,480),QPoint(160+(select-1)*40,490)}),pen,redb);
     int k=0;
     ImgCarta *item;
     for(auto i : v0){
         item=new ImgCarta(i.numero(),(int)i.naipe(),true,74+20*k,250);
-        item->setFlag(QGraphicsItem::ItemIsSelectable);
         sceneGame->addItem(item);
         k++;
     }
     k=0;
     for(auto i : v1){
         item=new ImgCarta(i.numero(),(int)i.naipe(),false,0,39+15*k);
-        item->setFlag(QGraphicsItem::ItemIsSelectable);
         sceneGame->addItem(item);
         k++;
     }
     k=0;
     for(auto i : v2){
         item=new ImgCarta(i.numero(),(int)i.naipe(),false,74+20*k,10);
-        item->setFlag(QGraphicsItem::ItemIsSelectable);
         sceneGame->addItem(item);
         k++;
     }
     k=0;
     for(auto i : v3){
         item=new ImgCarta(i.numero(),(int)i.naipe(),false,385,39+15*k);
-        item->setFlag(QGraphicsItem::ItemIsSelectable);
         sceneGame->addItem(item);
         k++;
     }
@@ -86,7 +91,6 @@ void TelaPresidente::show_montes(std::vector<p3::Carta> montes)
     ImgCarta *item;
     for(unsigned int i=0;i<montes.size();i++){
         item=new ImgCarta(montes[i].numero(),(int)montes[i].naipe(),true,100+56*k,100);
-        item->setFlag(QGraphicsItem::ItemIsSelectable);
         sceneGame->addItem(item);
         k++;
     }
@@ -162,7 +166,7 @@ void TelaPresidente::on_esquerda_clicked()
 
 void TelaPresidente::on_direita_clicked()
 {
-    if(select<13){
+    if(select<select_max){
         select++;
         cursor->moveBy(40,0);
     }
@@ -218,4 +222,10 @@ void TelaPresidente::on_voltar_clicked()
     ui->lineEdit->show();
     ui->voltar->hide();
     ui->text->hide();
+}
+
+void TelaPresidente::quiting()
+{
+    QApplication::closeAllWindows();
+    QApplication::quit();
 }

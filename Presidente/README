@@ -1,0 +1,4 @@
+Para compilar o programa dirija-se ao diretório Presidente e execute os seguintes comandos no terminal:
+~$ qmake CONFIG+=c++14
+~$ make
+~$ ./Presidente

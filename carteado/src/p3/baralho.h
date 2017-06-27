@@ -43,7 +43,7 @@ public:
 	CARTA pega_baixo(void);
 
 	//retorna a primeira carta do vetor de cartas e nao remove ela do vetor
-	CARTA retorna_topo(void);
+	CARTA* retorna_topo(void);
 
 	//Coloca uma carta no topo do baralho
 	//a carta passada como argumento é colocada no inicio do vetor de cartas
@@ -129,8 +129,8 @@ template<class CARTA> CARTA BaralhoBasico<CARTA>::pega_baixo(void){
 	return c;
 }
 
-template<class CARTA> CARTA BaralhoBasico<CARTA>::retorna_topo(void){
-	CARTA c = _monte.front();
+template<class CARTA> CARTA* BaralhoBasico<CARTA>::retorna_topo(void){
+	CARTA *c = _monte.front();
 	return c;
 }
 
