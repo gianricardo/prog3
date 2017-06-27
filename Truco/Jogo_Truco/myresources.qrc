@@ -1,0 +1,46 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>Cartas/truco.jpg</file>
+        <file>Cartas/Q_paus.jpg</file>
+        <file>Cartas/Q_ouros.jpg</file>
+        <file>Cartas/Q_espadas.jpg</file>
+        <file>Cartas/Q_copas.jpg</file>
+        <file>Cartas/K_paus.jpg</file>
+        <file>Cartas/K_ouros.jpg</file>
+        <file>Cartas/K_espadas.jpg</file>
+        <file>Cartas/K_copas.jpg</file>
+        <file>Cartas/J_paus.jpg</file>
+        <file>Cartas/J_ouros.jpg</file>
+        <file>Cartas/J_espadas.jpg</file>
+        <file>Cartas/J_copas.jpg</file>
+        <file>Cartas/back.jpg</file>
+        <file>Cartas/A_paus.jpg</file>
+        <file>Cartas/A_ouros.jpg</file>
+        <file>Cartas/A_espadas.jpg</file>
+        <file>Cartas/A_Copas.jpg</file>
+        <file>Cartas/7_paus.jpg</file>
+        <file>Cartas/7_ouros.jpg</file>
+        <file>Cartas/7_espadas.jpg</file>
+        <file>Cartas/7_copas.jpg</file>
+        <file>Cartas/6_paus.jpg</file>
+        <file>Cartas/6_ouros.jpg</file>
+        <file>Cartas/6_espadas.jpg</file>
+        <file>Cartas/6_copas.jpg</file>
+        <file>Cartas/5_paus.jpg</file>
+        <file>Cartas/5_ouros.jpg</file>
+        <file>Cartas/5_espadas.jpg</file>
+        <file>Cartas/5_copas.jpg</file>
+        <file>Cartas/4_paus.jpg</file>
+        <file>Cartas/4_ouros.jpg</file>
+        <file>Cartas/4_espadas.jpg</file>
+        <file>Cartas/4_copas.jpg</file>
+        <file>Cartas/3_paus.jpg</file>
+        <file>Cartas/3_ouros.jpg</file>
+        <file>Cartas/3_espadas.jpg</file>
+        <file>Cartas/3_copas.jpg</file>
+        <file>Cartas/2_paus.jpg</file>
+        <file>Cartas/2_ouros.jpg</file>
+        <file>Cartas/2_espadas.jpg</file>
+        <file>Cartas/2_copas.jpg</file>
+    </qresource>
+</RCC>

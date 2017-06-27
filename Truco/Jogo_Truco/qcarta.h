@@ -7,7 +7,7 @@
 #include <QGraphicsItem>
 #include <QGraphicsSceneMouseEvent>
 #include <QGraphicsEffect>
-#include "../../../carteado/src/p3/carta.h"
+#include "../../carteado/src/p3/carta.h"
 
 
 

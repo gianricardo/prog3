@@ -57,6 +57,7 @@ void Jogo_Truco::jogar(){
             jogador_ganhando = 0;
 
             if(checa_mao_de_11() == 2){
+                interface->JogadoresAsCegas();
                 rodada_as_cegas();
             }
             else if(checa_mao_de_11() == 0){
@@ -70,12 +71,14 @@ void Jogo_Truco::jogar(){
                         }while(checa_fim_rodada() == false);
                         jogador_ganhou_rodada(jogador_ganhando);
                         fim_rodada(jogador_ganhando);
+                        interface->comeca_nova_rodada();
 
                     }
                     break;
                 }
             }
             else if(checa_mao_de_11() == 1 ){
+                interface->jogadoresMaode11();
                 if(ia_aceita_mao_11() == false){
                     jogador_ganhando = checa_mao_de_11() + 1;
                     while(!fim_turno()){
@@ -84,6 +87,7 @@ void Jogo_Truco::jogar(){
                         }while(checa_fim_rodada() == false);
                         jogador_ganhou_rodada(jogador_ganhando);
                         fim_rodada(jogador_ganhando);
+                        interface->comeca_nova_rodada();
                     }
                     break;
                 }
@@ -114,6 +118,9 @@ void Jogo_Truco::jogar(){
 
         if(checa_mao_de_11() == -1 || (checa_mao_de_11() == 0 && resposta == false) ||
 										(checa_mao_de_11() == 1 && !ia_aceita_mao_11()) || checa_mao_de_11() ==2){
+            if(checa_mao_de_11() == 1 && !ia_aceita_mao_11()){
+                interface->JogadoresCorreram();
+            }
 			jogador_soma_pontos(jogador_ganhou_turno(),valor_pontuacao());
             interface->setPontuacao(QString::number(pontuacao(jogador_ganhou_turno())),jogador_ganhou_turno());
 		}
@@ -215,9 +222,12 @@ bool Jogo_Truco::verifica_truco(std::size_t _jogador_trucou){
 		}
 	}
 
-	if(aceitou_truco == 2){
+    if(aceitou_truco == 2 && numero_de_jogadores() == 4){
 		return true;
 	}
+    else if(aceitou_truco == 1 && numero_de_jogadores() == 2){
+        return true;
+    }
 	else{
 		return false;
 	}
@@ -263,7 +273,7 @@ bool Jogo_Truco::ia_aceita_mao_11(){
                 cartas_altas ++;
             }
         }
-        if(cartas_altas == 3){
+        if(cartas_altas == 2){
             return true;
         }
         return false;
@@ -306,7 +316,6 @@ void Jogo_Truco::rodada_as_cegas(){
 }
 
 void Jogo_Truco::joga_jogador_comeca(){
-    interface->mostraMaooff();
     int _carta = interface->cartaSelecionada();
 
     vira_carta_jogador(_carta, posicao_jogador_atual());
@@ -534,7 +543,7 @@ void Jogo_Truco::fim_rodada(std::size_t _jogador_ganhou){
 	}
 	else{
 		_regra->jogador_comeca(_jogador_ganhou);
-		_jog_atual = _regra->jogador_comeca();
+        _jog_atual = _regra->jogador_comeca();
 	}
 
 	if(_regra->jogador_comeca() == 0){
@@ -558,8 +567,14 @@ void Jogo_Truco::fim_rodada(std::size_t _jogador_ganhou){
 
 void Jogo_Truco::joga_jogador_posicao_0(){
     interface->mostraValorTruco();
-    interface->mostraMao();
-    interface->acao(pontuacao(0));
+    if(posicao_jogador_atual() == jogador_comeca()){
+        interface->mostraMaooff();
+    }
+    else{
+        interface->mostraMao();
+    }
+
+    interface->acao(pontuacao_jogador_atual());
 
     if((interface->statusTruco() && verifica_truco(posicao_jogador_atual()) == true)){
         interface->setTrucoFalse();

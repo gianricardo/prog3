@@ -3,149 +3,149 @@
 QCarta::QCarta(p3::Carta c1)
 {
     clicked = c1.mostra();
-    verso.load(":/images/back.jpg");
+    verso.load(":/images/Cartas/back.jpg");
 
     if(c1.numero() == 0){
-        frente.load(":/images/truco.jpg");
+        frente.load(":/images/Cartas/truco.jpg");
     }
     if(c1.numero() == 1){
         if((int)c1.naipe() == 0){
-            frente.load(":/images/A_espadas.jpg");
+            frente.load(":/images/Cartas/A_espadas.jpg");
         }
         else if((int)c1.naipe() == 1){
-            frente.load(":/images/A_Copas.jpg");
+            frente.load(":/images/Cartas/A_Copas.jpg");
         }
         else if((int)c1.naipe() == 2){
-            frente.load(":/images/A_paus.jpg");
+            frente.load(":/images/Cartas/A_paus.jpg");
         }
         else if((int)c1.naipe() == 3){
-            frente.load(":/images/A_ouros.jpg");
+            frente.load(":/images/Cartas/A_ouros.jpg");
         }
     }
     if(c1.numero() == 2){
         if((int)c1.naipe() == 0){
-            frente.load(":/images/2_espadas.jpg");
+            frente.load(":/images/Cartas/2_espadas.jpg");
         }
         else if((int)c1.naipe() == 1){
-            frente.load(":/images/2_copas.jpg");
+            frente.load(":/images/Cartas/2_copas.jpg");
         }
         else if((int)c1.naipe() == 2){
-            frente.load(":/images/2_paus.jpg");
+            frente.load(":/images/Cartas/2_paus.jpg");
         }
         else if((int)c1.naipe() == 3){
-            frente.load(":/images/2_ouros.jpg");
+            frente.load(":/images/Cartas/2_ouros.jpg");
         }
     }
     if(c1.numero() == 3){
         if((int)c1.naipe() == 0){
-            frente.load(":/images/3_espadas.jpg");
+            frente.load(":/images/Cartas/3_espadas.jpg");
         }
         else if((int)c1.naipe() == 1){
-            frente.load(":/images/3_copas.jpg");
+            frente.load(":/images/Cartas/3_copas.jpg");
         }
         else if((int)c1.naipe() == 2){
-            frente.load(":/images/3_paus.jpg");
+            frente.load(":/images/Cartas/3_paus.jpg");
         }
         else if((int)c1.naipe() == 3){
-            frente.load(":/images/3_ouros.jpg");
+            frente.load(":/images/Cartas/3_ouros.jpg");
         }
     }
     if(c1.numero() == 4){
         if((int)c1.naipe() == 0){
-            frente.load(":/images/4_espadas.jpg");
+            frente.load(":/images/Cartas/4_espadas.jpg");
         }
         else if((int)c1.naipe() == 1){
-            frente.load(":/images/4_copas.jpg");
+            frente.load(":/images/Cartas/4_copas.jpg");
         }
         else if((int)c1.naipe() == 2){
-            frente.load(":/images/4_paus.jpg");
+            frente.load(":/images/Cartas/4_paus.jpg");
         }
         else if((int)c1.naipe() == 3){
-            frente.load(":/images/4_ouros.jpg");
+            frente.load(":/images/Cartas/4_ouros.jpg");
         }
     }
     if(c1.numero()== 5){
         if((int)c1.naipe() == 0){
-            frente.load(":/images/5_espadas.jpg");
+            frente.load(":/images/Cartas/5_espadas.jpg");
         }
         else if((int)c1.naipe() == 1){
-            frente.load(":/images/5_copas.jpg");
+            frente.load(":/images/Cartas/5_copas.jpg");
         }
         else if((int)c1.naipe() == 2){
-            frente.load(":/images/5_paus.jpg");
+            frente.load(":/images/Cartas/5_paus.jpg");
         }
         else if((int)c1.naipe() == 3){
-            frente.load(":/images/5_ouros.jpg");
+            frente.load(":/images/Cartas/5_ouros.jpg");
         }
     }
     if(c1.numero() == 6){
         if((int)c1.naipe() == 0){
-            frente.load(":/images/6_espadas.jpg");
+            frente.load(":/images/Cartas/6_espadas.jpg");
         }
         else if((int)c1.naipe() == 1){
-            frente.load(":/images/6_copas.jpg");
+            frente.load(":/images/Cartas/6_copas.jpg");
         }
         else if((int)c1.naipe() == 2){
-            frente.load(":/images/6_paus.jpg");
+            frente.load(":/images/Cartas/6_paus.jpg");
         }
         else if((int)c1.naipe() == 3){
-            frente.load(":/images/6_ouros.jpg");
+            frente.load(":/images/Cartas/6_ouros.jpg");
         }
     }
     if(c1.numero() == 7){
         if((int)c1.naipe() == 0){
-            frente.load(":/images/7_espadas.jpg");
+            frente.load(":/images/Cartas/7_espadas.jpg");
         }
         else if((int)c1.naipe() == 1){
-            frente.load(":/images/7_copas.jpg");
+            frente.load(":/images/Cartas/7_copas.jpg");
         }
         else if((int)c1.naipe() == 2){
-            frente.load(":/images/7_paus.jpg");
+            frente.load(":/images/Cartas/7_paus.jpg");
         }
         else if((int)c1.naipe()== 3){
-            frente.load(":/images/7_ouros.jpg");
+            frente.load(":/images/Cartas/7_ouros.jpg");
         }
     }
     if(c1.numero() == 8){
         if((int)c1.naipe() == 0){
-            frente.load(":/images/Q_espadas.jpg");
+            frente.load(":/images/Cartas/Q_espadas.jpg");
         }
         else if((int)c1.naipe() == 1){
-            frente.load(":/images/Q_copas.jpg");
+            frente.load(":/images/Cartas/Q_copas.jpg");
         }
         else if((int)c1.naipe()== 2){
-            frente.load(":/images/Q_paus.jpg");
+            frente.load(":/images/Cartas/Q_paus.jpg");
         }
         else if((int)c1.naipe() == 3){
-            frente.load(":/images/Q_ouros.jpg");
+            frente.load(":/images/Cartas/Q_ouros.jpg");
         }
     }
     if(c1.numero() == 9){
         if((int)c1.naipe() == 0){
-            frente.load(":/images/J_espadas.jpg");
+            frente.load(":/images/Cartas/J_espadas.jpg");
         }
         else if((int)c1.naipe() == 1){
-            frente.load(":/images/J_copas.jpg");
+            frente.load(":/images/Cartas/J_copas.jpg");
         }
         else if((int)c1.naipe() == 2){
-            frente.load(":/images/J_paus.jpg");
+            frente.load(":/images/Cartas/J_paus.jpg");
         }
         else if((int)c1.naipe() == 3){
-            frente.load(":/images/J_ouros.jpg");
+            frente.load(":/images/Cartas/J_ouros.jpg");
         }
     }
     if(c1.numero() == 10){
         if((int)c1.naipe() == 0){
-            frente.load(":/images/K_espadas.jpg");
+            frente.load(":/images/Cartas/K_espadas.jpg");
         }
         else if((int)c1.naipe() == 1){
-            frente.load(":/images/K_copas.jpg");
+            frente.load(":/images/Cartas/K_copas.jpg");
         }
         else if((int)c1.naipe() == 2){
-            frente.load(":/images/K_paus.jpg");
+            frente.load(":/images/Cartas/K_paus.jpg");
         }
         else if((int)c1.naipe() == 3){
-            frente.load(":/images/K_ouros.jpg");
+            frente.load(":/images/Cartas/K_ouros.jpg");
         }
     }
 

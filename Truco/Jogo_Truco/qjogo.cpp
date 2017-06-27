@@ -7,9 +7,9 @@ Qjogo::Qjogo(QWidget *parent, QString n_name) :
     QMainWindow(parent),
     ui(new Ui::Jogo)
 {
+    ui->setupUi(this);
     _truco = false;
     _jogador = n_name;
-    ui->setupUi(this);
 
 }
 
@@ -27,25 +27,16 @@ void Qjogo::iniciaScene(){
     ui->graphicsView->setScene(jogo_scene);
 
     ui->lineEdit->setText("Computer 1");
-    ui->lineEdit->setDisabled(true);
     ui->lineEdit_2->setText("Computer 2");
-    ui->lineEdit_2->setDisabled(true);
     ui->lineEdit_3->setText(_jogador);
-    ui->lineEdit_3->setDisabled(true);
     ui->lineEdit_4->setText("Computer 3");
-    ui->lineEdit_4->setDisabled(true);
-
 
 
 
     ui->lineEdit_5->setText("0");
-    ui->lineEdit_5->setDisabled(true);
     ui->lineEdit_6->setText("0");
-    ui->lineEdit_6->setDisabled(true);
     ui->lineEdit_7->setText("0");
-    ui->lineEdit_7->setDisabled(true);
     ui->lineEdit_8->setText("0");
-    ui->lineEdit_8->setDisabled(true);
 
 
 
@@ -53,25 +44,15 @@ void Qjogo::iniciaScene(){
 
 void Qjogo::setPontuacao(QString pont, std::size_t pos){
     if(pos == 0){
-        ui->lineEdit_6->setEnabled(true);
-        ui->lineEdit_8->setEnabled(true);
 
         ui->lineEdit_6->setText(pont);
         ui->lineEdit_8->setText(pont);
 
-        ui->lineEdit_6->setDisabled(true);
-        ui->lineEdit_8->setDisabled(true);
-
     }
     else if(pos == 1){
-        ui->lineEdit_5->setEnabled(true);
-        ui->lineEdit_7->setEnabled(true);
-
         ui->lineEdit_5->setText(pont);
         ui->lineEdit_7->setText(pont);
 
-        ui->lineEdit_5->setDisabled(true);
-        ui->lineEdit_7->setDisabled(true);
 
 
     }
@@ -115,7 +96,10 @@ void Qjogo::mostraMaoInicio(std::vector<p3::Carta> _mao){
 
 void Qjogo::mostraMaooff(){
     for(unsigned int i = 0; i < qmao.size();i++){
-        if(qmao[i]->getClickable()){
+        if(qmao[i]->getSelectable() == false){
+            qmao[i]->setSelectable();
+        }
+        if(qmao[i]->getClickable() == true){
             qmao[i]->setClickable();
         }
     }
@@ -214,6 +198,7 @@ unsigned int Qjogo::cartaSelecionada(){
     ui->pushButton_4->setDisabled(true);
 
     QEventLoop loop;
+    connect(ui->pushButton,SIGNAL(clicked(bool)),&loop,SLOT(quit()));
     connect(ui->pushButton_3,SIGNAL(clicked(bool)),&loop,SLOT(quit()));
     loop.exec();
         for(unsigned int i = 0; i < qmao.size(); i++ ){
@@ -273,23 +258,83 @@ void Qjogo::jogadorGanhouRodada(p3::Carta carta,unsigned int pos){
     }
     else{
         if(carta.naipe() == p3::Carta::Naipe::Paus){
-             QMessageBox::information(this,"Ganhou Rodada", "Jogador: " + QString::number(pos) + " ganhou a rodada com a Carta: " +
-                                  QString::number(carta.numero()) + " de Paus");
+            if(carta.numero() == 10){
+                QMessageBox::information(this,"Ganhou Rodada", "Jogador: " + QString::number(pos) + " ganhou a rodada com a Carta: " +
+                                " K de Paus");
+            }
+            else if(carta.numero() == 9){
+                QMessageBox::information(this,"Ganhou Rodada", "Jogador: " + QString::number(pos) + " ganhou a rodada com a Carta: " +
+                                " J de Paus");
+
+             }
+            else if(carta.numero() == 8){
+                QMessageBox::information(this,"Ganhou Rodada", "Jogador: " + QString::number(pos) + " ganhou a rodada com a Carta: " +
+                                " Q de Paus");
+            }
+            else{
+                 QMessageBox::information(this,"Ganhou Rodada", "Jogador: " + QString::number(pos) + " ganhou a rodada com a Carta: " +
+                                      QString::number(carta.numero()) + " de Paus");
+            }
 
         }
         if(carta.naipe() == p3::Carta::Naipe::Copas){
-             QMessageBox::information(this,"Ganhou Rodada", "Jogador: " + QString::number(pos) + " ganhou a rodada com a Carta: " +
-                                  QString::number(carta.numero()) + " de Copas");
+            if(carta.numero() == 10){
+                QMessageBox::information(this,"Ganhou Rodada", "Jogador: " + QString::number(pos) + " ganhou a rodada com a Carta: " +
+                                " K de Copas");
+            }
+            else if(carta.numero() == 9){
+                QMessageBox::information(this,"Ganhou Rodada", "Jogador: " + QString::number(pos) + " ganhou a rodada com a Carta: " +
+                                " J de Copas");
+
+             }
+            else if(carta.numero() == 8){
+                QMessageBox::information(this,"Ganhou Rodada", "Jogador: " + QString::number(pos) + " ganhou a rodada com a Carta: " +
+                                " Q de Copas");
+            }
+            else{
+                 QMessageBox::information(this,"Ganhou Rodada", "Jogador: " + QString::number(pos) + " ganhou a rodada com a Carta: " +
+                                      QString::number(carta.numero()) + " de Copas");
+            }
 
         }
         if(carta.naipe() == p3::Carta::Naipe::Espadas){
-             QMessageBox::information(this,"Ganhou Rodada", "Jogador: " + QString::number(pos) + " ganhou a rodada com a Carta: " +
-                                  QString::number(carta.numero()) + " de Espadas");
+            if(carta.numero() == 10){
+                QMessageBox::information(this,"Ganhou Rodada", "Jogador: " + QString::number(pos) + " ganhou a rodada com a Carta: " +
+                                " K de Espadas");
+            }
+            else if(carta.numero() == 9){
+                QMessageBox::information(this,"Ganhou Rodada", "Jogador: " + QString::number(pos) + " ganhou a rodada com a Carta: " +
+                                " J de Espadas");
+
+             }
+            else if(carta.numero() == 8){
+                QMessageBox::information(this,"Ganhou Rodada", "Jogador: " + QString::number(pos) + " ganhou a rodada com a Carta: " +
+                                " Q de Espadas");
+            }
+            else{
+                 QMessageBox::information(this,"Ganhou Rodada", "Jogador: " + QString::number(pos) + " ganhou a rodada com a Carta: " +
+                                      QString::number(carta.numero()) + " de Espadas");
+            }
 
         }
         if(carta.naipe() == p3::Carta::Naipe::Ouros){
-             QMessageBox::information(this,"Ganhou Rodada", "Jogador: " + QString::number(pos) + " ganhou a rodada com a Carta: " +
-                                  QString::number(carta.numero()) + " de Ouros");
+            if(carta.numero() == 10){
+                QMessageBox::information(this,"Ganhou Rodada", "Jogador: " + QString::number(pos) + " ganhou a rodada com a Carta: " +
+                                " K de Ouros");
+            }
+            else if(carta.numero() == 9){
+                QMessageBox::information(this,"Ganhou Rodada", "Jogador: " + QString::number(pos) + " ganhou a rodada com a Carta: " +
+                                " J de Ouros");
+
+             }
+            else if(carta.numero() == 8){
+                QMessageBox::information(this,"Ganhou Rodada", "Jogador: " + QString::number(pos) + " ganhou a rodada com a Carta: " +
+                                " Q de Ouros");
+            }
+            else{
+                 QMessageBox::information(this,"Ganhou Rodada", "Jogador: " + QString::number(pos) + " ganhou a rodada com a Carta: " +
+                                      QString::number(carta.numero()) + " de Ouros");
+            }
 
         }
     }
@@ -309,10 +354,8 @@ void Qjogo::on_pushButton_2_clicked()
 
 void Qjogo::mostraValorTruco(unsigned int _valor){
     QFont helvetica("Times",18);
-    ui->lineEdit_9->setEnabled(true);
     ui->lineEdit_9->setFont(helvetica);
     ui->lineEdit_9->setText(QString::number(_valor + 3));
-    ui->lineEdit_9->setDisabled(true);
 }
 
 void Qjogo::acao(unsigned int pont){
@@ -325,7 +368,7 @@ void Qjogo::acao(unsigned int pont){
     if(pont == 11){
         ui->pushButton_2->setDisabled(true);
     }
-
+    connect(ui->pushButton,SIGNAL(clicked(bool)),&loop,SLOT(quit()));
     connect(ui->pushButton_2,SIGNAL(clicked(bool)),&loop,SLOT(quit()));
     connect(ui->pushButton_4,SIGNAL(clicked(bool)),&loop,SLOT(quit()));
 
@@ -355,6 +398,19 @@ void Qjogo::fimDeJogo(unsigned int pos){
     else if(pos == 1 || pos == 3){
         QMessageBox::information(this,"Ganhadores", "Ganhadores: Computer1 e Computer3");
     }
-    QApplication::quit();
+    close();
+}
 
+void Qjogo::jogadoresMaode11(){
+    QMessageBox::information(this,"Jogadores Mao 11", "Jogadores Computer1 e Computer3 estao na mao de 11");
+}
+
+
+void Qjogo::JogadoresAsCegas(){
+    QMessageBox::information(this,"Jogo as Cegas", "Turno As Cegas");
+}
+
+void Qjogo::on_pushButton_clicked()
+{
+    close();
 }

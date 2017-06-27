@@ -30,7 +30,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     for(int i = 0 ;i < 10; i++){
        for(int j = 0; j < 4; j++){
-           QCarta *card = new QCarta(p3::Carta(i+1,(p3::Carta::Naipe)j,true));
+           QCarta *card = new QCarta(p3::Carta(i+1,(p3::Carta::Naipe)j,false));
            card->setPos(cont*4,150);
            scene->addItem(card);
            cont++;
@@ -51,7 +51,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
-    hide();
     Name nome;
     nome.setModal(true);
     nome.exec();
@@ -68,6 +67,7 @@ void MainWindow::on_pushButton_clicked()
             _jogadores.emplace_back("Computer3");
             game = new p4::Jogo_Truco(rule,jogadores(),_jogo);
             game->jogar();
+
         }
         else if(nome.numero_jogadores() == 2){
             _jogo2 = new Jogo2(0,nome.nome());
@@ -98,4 +98,9 @@ std::vector<std::string> MainWindow::jogadores(){
 
 int MainWindow::numero_jogadores(){
     return _numero_jogadores;
+}
+
+void MainWindow::on_pushButton_3_clicked()
+{
+    close();
 }

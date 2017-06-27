@@ -1,6 +1,8 @@
 #ifndef JOGO_H
 #define JOGO_H
 
+#include <QtCore>
+#include <QtGui>
 #include <QMainWindow>
 #include <QGraphicsScene>
 #include <QMessageBox>
@@ -44,10 +46,13 @@ public:
     virtual void acao(unsigned int pont);
     virtual void rodadaAsCegas(std::vector<p3::Carta> mao);
     virtual void fimDeJogo(unsigned int pos);
+    void jogadoresMaode11();
+    void JogadoresAsCegas();
 
 private slots:
 
     void on_pushButton_2_clicked();
+    void on_pushButton_clicked();
 
 protected:
     Ui::Jogo *ui;

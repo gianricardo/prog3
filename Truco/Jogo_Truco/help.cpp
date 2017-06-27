@@ -6,7 +6,6 @@ Help::Help(QWidget *parent) :
     ui(new Ui::Help)
 {
     ui->setupUi(this);
-    ui->plainTextEdit->setDisabled(true);
 }
 
 Help::~Help()

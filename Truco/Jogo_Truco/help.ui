@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Help</class>
+ <widget class="QDialog" name="Help">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>591</width>
+    <height>460</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="3" column="0">
+    <widget class="QPlainTextEdit" name="plainTextEdit">
+     <property name="maximumSize">
+      <size>
+       <width>500</width>
+       <height>600</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="undoRedoEnabled">
+      <bool>true</bool>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+     <property name="plainText">
+      <string>    	
+    VIRA - Carta virada após a distrubuição das cartas. A manilha é a próxima carta na sequência, após esta.
+    MANILHAS - São as cartas mais fortes do jogo, na seguinte ordem: paus, copas, espadas e ouros.
+    RODADA - São necessárias 3 rodadas para vencer um turno. Em cada rodada, um jogador baixa uma carta. A carta mais forte da rodada, ganha a rodada para sua dupla
+    TURNO - Vale um ponto e pode ser aumentado para 3, 6, 9 e 12 pontos. É disputado em melhor de 3 rodadas
+    PARTIDA - Vence a partida a dupla que atingir 12 pontos. Os pontos são conquistados em cada turno (de 3 rodadas cada).
+    TRUCO - Truco é um pedido de aumento de aposta. Pode ser feito apenas na sua vez. Caso a dupla adversária aceite o turno passa a valer 3 pontos, caso contrário a dupla desafiadora ganha 1 ponto.
+    SEIS - Aumento da aposta de truco, passando a valer 6 pontos caso o adversário aceite. Se o adversário não aceitar o pedido, o desafiador ganha 3 pontos.
+    NOVE - Aumento da aposta de 6, passando a valer 9 pontos caso o adversário aceite. Se o adversário não aceitar o pedido, o desafiador ganha 6 pontos.
+    DOZE - Aumento da aposta de 9, passando a valer o jogo caso o adversário aceite. Se o adversário não aceitar o pedido, o desafiador ganha 9 pontos.
+    MÃO DE ONZE - A dupla que chegar a 11 pontos tem o direito de olhar as cartas um do outro e analisar se irão ou não aceitar a partida. Caso a dupla aceite, a Mão de Onze já começa valendo 3 pontos, caso contrário o turno acaba dando 1 ponto à dupla adversária.
+    MÃO DE FERRO - É a Mão de Onze especial, quando as duas duplas conseguem chegar a 11 pontos na partida.
+    ESCONDER CARTA - Na sua vez de jogar, é possível esconder a carta ao invés de baixar na mesa, como tática de blefe. Não é permitido esconder a carta na primeira rodada.
+
+</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QPushButton" name="pushButton">
+     <property name="text">
+      <string>Retornar ao Menu</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

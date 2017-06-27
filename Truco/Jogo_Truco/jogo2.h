@@ -28,19 +28,17 @@ public:
     void mostraValorTruco(unsigned int _valor = 0) override;
     void comeca_novo_turno() override;
     void comeca_nova_rodada() override;
-    void mostraMaoInicio(std::vector<p3::Carta> _mao);
-    void mostraBaralho(std::vector<std::pair<bool, p3::Carta> > _monte);
-    void mostraVira(p3::Carta _carta);
+    void mostraMaoInicio(std::vector<p3::Carta> _mao) override;
+    void mostraBaralho(std::vector<std::pair<bool, p3::Carta> > _monte) override;
+    void mostraVira(p3::Carta _carta) override;
     void fimDeJogo(unsigned int pos) override;
 
 private slots:
     void on_pushButton_clicked();
 
-    void on_pushButton_3_clicked();
 
 private:
-    Ui::Jogo2 *ui;
-    QGraphicsScene *jogo2_scene;
+    Ui::Jogo2 *ui2;
 
 };
 
