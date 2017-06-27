@@ -3,64 +3,79 @@
 #include <QString>
 
 
-Qjogo::Qjogo(QWidget *parent, QString n_name) :
+Qjogo::Qjogo(QWidget *parent, QString n_name, unsigned int n_jogadores) :
     QMainWindow(parent),
     ui(new Ui::Jogo)
 {
     ui->setupUi(this);
     _truco = false;
     _jogador = n_name;
+    numero_jogador = n_jogadores;
 
-}
-
-Qjogo::~Qjogo()
-{
-    qmao.clear();
-    qmao1.clear();
-    qmao2.clear();
-    qmao3.clear();
-    qbaralho.clear();
-    delete vira;
-    delete ui;
-}
-
-
-void Qjogo::iniciaScene(){
-    mao11 = new GetAcao(this);
     jogo_scene = new QGraphicsScene(this);
     QBrush green(Qt::darkGreen);
     jogo_scene->setBackgroundBrush(green);
     ui->graphicsView->setScene(jogo_scene);
 
-    ui->lineEdit->setText("Computer 1");
-    ui->lineEdit_2->setText("Computer 2");
-    ui->lineEdit_3->setText(_jogador);
-    ui->lineEdit_4->setText("Computer 3");
+}
+
+Qjogo::~Qjogo()
+{
+    delete ui;
+}
+
+
+void Qjogo::iniciaScene(){
+
+    if(numero_jogador == 4){
+        ui->lineEdit->setText("Computer 1");
+        ui->lineEdit_2->setText("Computer 2");
+        ui->lineEdit_3->setText(_jogador);
+        ui->lineEdit_4->setText("Computer 3");
 
 
 
-    ui->lineEdit_5->setText("0");
-    ui->lineEdit_6->setText("0");
-    ui->lineEdit_7->setText("0");
-    ui->lineEdit_8->setText("0");
+        ui->lineEdit_5->setText("0");
+        ui->lineEdit_6->setText("0");
+        ui->lineEdit_7->setText("0");
+        ui->lineEdit_8->setText("0");
+    }
+    else if(numero_jogador == 2){
+        ui->lineEdit->setText("Computer 1");
+        ui->lineEdit_2->setText(_jogador);
+        ui->lineEdit_3->setDisabled(true);
+        ui->lineEdit_4->setDisabled(true);
+
+        ui->lineEdit_5->setText("0");
+        ui->lineEdit_6->setText("0");
+
+        ui->lineEdit_7->setDisabled(true);
+        ui->lineEdit_8->setDisabled(true);
+    }
 
 
 
 }
 
 void Qjogo::setPontuacao(QString pont, std::size_t pos){
-    if(pos == 0){
+    if(numero_jogador == 4){
+        if(pos == 0){
+            ui->lineEdit_6->setText(pont);
+            ui->lineEdit_8->setText(pont);
+        }
+        else if(pos == 1){
+            ui->lineEdit_5->setText(pont);
+            ui->lineEdit_7->setText(pont);
 
-        ui->lineEdit_6->setText(pont);
-        ui->lineEdit_8->setText(pont);
-
+        }
     }
-    else if(pos == 1){
-        ui->lineEdit_5->setText(pont);
-        ui->lineEdit_7->setText(pont);
-
-
-
+    else if(numero_jogador == 2){
+        if(pos == 0){
+            ui->lineEdit_6->setText(pont);
+        }
+        else if(pos == 1){
+            ui->lineEdit_5->setText(pont);
+        }
     }
 }
 
@@ -77,7 +92,6 @@ void Qjogo::mostraVira(p3::Carta _carta){
     vira = new QCarta(_carta);
     vira->setPos(225+40,150);
     jogo_scene->addItem(vira);
-
 }
 
 void Qjogo::mostraMao(){
@@ -112,62 +126,95 @@ void Qjogo::mostraMaooff(){
 }
 
 void Qjogo::outrasMaos(unsigned int pos,std::vector<p3::Carta> _mao){
-    if(pos == 1){
-        for(unsigned int i = 0; i < _mao.size(); i++){
-            qmao1.emplace_back(new QCarta(_mao[i]));
-            qmao1[i]->setPos(0,180 -i*30);
-            jogo_scene->addItem(qmao1[i]);
+    if(numero_jogador == 4){
+        if(pos == 1){
+            for(unsigned int i = 0; i < _mao.size(); i++){
+                qmao1.emplace_back(new QCarta(_mao[i]));
+                qmao1[i]->setPos(0,180 -i*30);
+                jogo_scene->addItem(qmao1[i]);
+            }
         }
-    }
 
-    else if(pos == 2){
-        for(unsigned int i = 0; i < _mao.size(); i++){
-            qmao2.emplace_back(new QCarta(_mao[i]));
-            qmao2[i]->setPos(200 +i*40,0);
-            jogo_scene->addItem(qmao2[i]);
+        else if(pos == 2){
+            for(unsigned int i = 0; i < _mao.size(); i++){
+                qmao2.emplace_back(new QCarta(_mao[i]));
+                qmao2[i]->setPos(200 +i*40,0);
+                jogo_scene->addItem(qmao2[i]);
+            }
+        }
+        else if(pos  == 3){
+            for(unsigned int i = 0; i < _mao.size(); i++){
+                qmao3.emplace_back(new QCarta(_mao[i]));
+                qmao3[i]->setPos(515,180 -i*30);
+                jogo_scene->addItem(qmao3[i]);
+            }
+        }
+        else{
+            return;
         }
     }
-    else if(pos  == 3){
-        for(unsigned int i = 0; i < _mao.size(); i++){
-            qmao3.emplace_back(new QCarta(_mao[i]));
-            qmao3[i]->setPos(515,180 -i*30);
-            jogo_scene->addItem(qmao3[i]);
+    else if(numero_jogador == 2){
+        if(pos == 1){
+            for(unsigned int i = 0; i < _mao.size(); i++){
+                qmao1.emplace_back(new QCarta(_mao[i]));
+                qmao1[i]->setPos(200 +i*40,0);
+                jogo_scene->addItem(qmao1[i]);
+            }
         }
-    }
-    else{
-        return;
+        else{
+            return;
+        }
     }
 
 }
 
 void Qjogo::jogaCarta(unsigned int pos, unsigned int pos_carta, p3::Carta carta){
-    if(pos == 0){
-        jogo_scene->removeItem(qmao[pos_carta]);
-        qmao.erase(qmao.begin() + pos_carta);
-        qmesa.emplace(qmesa.begin(),new QCarta(carta));
-        qmesa[0]->setPos(255, 220);
-        jogo_scene->addItem(qmesa[0]);
+    if(numero_jogador == 4){
+        if(pos == 0){
+            jogo_scene->removeItem(qmao[pos_carta]);
+            qmao.erase(qmao.begin() + pos_carta);
+            qmesa.emplace(qmesa.begin(),new QCarta(carta));
+            qmesa[0]->setPos(255, 220);
+            jogo_scene->addItem(qmesa[0]);
+        }
+        else if(pos == 1){
+            jogo_scene->removeItem(qmao1[pos_carta]);
+            qmao1.erase(qmao1.begin() + pos_carta);
+            qmesa.emplace(qmesa.begin(),new QCarta(carta));
+            qmesa[0]->setPos(60,180-30);
+            jogo_scene->addItem(qmesa[0]);
+        }
+        else if(pos == 2){
+            jogo_scene->removeItem(qmao2[pos_carta]);
+            qmao2.erase(qmao2.begin() + pos_carta);
+            qmesa.emplace(qmesa.begin(),new QCarta(carta));
+            qmesa[0]->setPos(255,70);
+            jogo_scene->addItem(qmesa[0]);
+        }
+        else if(pos == 3){
+            jogo_scene->removeItem(qmao3[pos_carta]);
+            qmao3.erase(qmao3.begin() + pos_carta);
+            qmesa.emplace(qmesa.begin(),new QCarta(carta));
+            qmesa[0]->setPos(455,180 -30);
+            jogo_scene->addItem(qmesa[0]);
+        }
     }
-    else if(pos == 1){
-        jogo_scene->removeItem(qmao1[pos_carta]);
-        qmao1.erase(qmao1.begin() + pos_carta);
-        qmesa.emplace(qmesa.begin(),new QCarta(carta));
-        qmesa[0]->setPos(60,180-30);
-        jogo_scene->addItem(qmesa[0]);
-    }
-    else if(pos == 2){
-        jogo_scene->removeItem(qmao2[pos_carta]);
-        qmao2.erase(qmao2.begin() + pos_carta);
-        qmesa.emplace(qmesa.begin(),new QCarta(carta));
-        qmesa[0]->setPos(255,70);
-        jogo_scene->addItem(qmesa[0]);
-    }
-    else if(pos == 3){
-        jogo_scene->removeItem(qmao3[pos_carta]);
-        qmao3.erase(qmao3.begin() + pos_carta);
-        qmesa.emplace(qmesa.begin(),new QCarta(carta));
-        qmesa[0]->setPos(455,180 -30);
-        jogo_scene->addItem(qmesa[0]);
+    else if(numero_jogador == 2){
+        if(pos == 0){
+            jogo_scene->removeItem(qmao[pos_carta]);
+            qmao.erase(qmao.begin() + pos_carta);
+            qmesa.emplace(qmesa.begin(),new QCarta(carta));
+            qmesa[0]->setPos(255, 220);
+            jogo_scene->addItem(qmesa[0]);
+        }
+        else if(pos == 1){
+            jogo_scene->removeItem(qmao1[pos_carta]);
+            qmao1.erase(qmao1.begin() + pos_carta);
+            qmesa.emplace(qmesa.begin(),new QCarta(carta));
+            qmesa[0]->setPos(255,70);
+            jogo_scene->addItem(qmesa[0]);
+        }
+
     }
 
 }
@@ -177,15 +224,25 @@ bool Qjogo::statusTruco(){
 }
 
 bool Qjogo::maoDe11(std::vector<p3::Carta> mao1, std::vector<p3::Carta> mao2){
-    mao11->show();
-    mao11->addMao(mao1,mao2);
+    mao11 = new GetAcao(this);
 
+    if(numero_jogador == 4){
+        mao11->show();
+        mao11->addMao(mao1,mao2);
+
+    }
+    else{
+        mao11->show();
+    }
     return mao11->getAcao();
 
 
 }
 
 bool Qjogo::maoDe11_2(){
+    mao11->show();
+
+    return mao11->getAcao();
     return true;
 }
 
@@ -207,6 +264,7 @@ unsigned int Qjogo::cartaSelecionada(){
     connect(ui->pushButton,SIGNAL(clicked(bool)),&loop,SLOT(quit()));
     connect(ui->pushButton_3,SIGNAL(clicked(bool)),&loop,SLOT(quit()));
     loop.exec();
+
         for(unsigned int i = 0; i < qmao.size(); i++ ){
             if(qmao[i]->getSelected()){
                 cont = i;
@@ -219,6 +277,7 @@ unsigned int Qjogo::cartaSelecionada(){
 void Qjogo::comeca_novo_turno(){
     comeca_nova_rodada();
     unsigned int tamanho = 0;
+
     tamanho = qmao.size();
     for(unsigned int i = 0; i < tamanho; i++){
         jogo_scene->removeItem(qmao[0]);
@@ -227,17 +286,7 @@ void Qjogo::comeca_novo_turno(){
     tamanho = qmao1.size();
     for(unsigned int i = 0; i < tamanho; i++){
         jogo_scene->removeItem(qmao1[0]);
-         qmao1.erase(qmao1.begin());
-    }
-    tamanho = qmao2.size();
-    for(unsigned int i = 0; i < tamanho; i++){
-        jogo_scene->removeItem(qmao2[0]);
-        qmao2.erase(qmao2.begin());
-    }
-    tamanho = qmao3.size();
-    for(unsigned int i = 0; i < tamanho; i++){
-        jogo_scene->removeItem(qmao3[0]);
-        qmao3.erase(qmao3.begin());
+        qmao1.erase(qmao1.begin());
     }
     tamanho = qbaralho.size();
     for(unsigned int i = 0; i < tamanho; i++){
@@ -245,6 +294,20 @@ void Qjogo::comeca_novo_turno(){
         qbaralho.erase(qbaralho.begin());
     }
     delete(vira);
+
+
+    if(numero_jogador == 4){
+        tamanho = qmao2.size();
+        for(unsigned int i = 0; i < tamanho; i++){
+            jogo_scene->removeItem(qmao2[0]);
+            qmao2.erase(qmao2.begin());
+        }
+        tamanho = qmao3.size();
+        for(unsigned int i = 0; i < tamanho; i++){
+            jogo_scene->removeItem(qmao3[0]);
+            qmao3.erase(qmao3.begin());
+        }
+    }
 
 }
 
@@ -398,17 +461,32 @@ void Qjogo::rodadaAsCegas(std::vector<p3::Carta> mao){
 }
 
 void Qjogo::fimDeJogo(unsigned int pos){
-    if(pos == 0 || pos == 2){
-        QMessageBox::information(this,"Ganhadores","Ganhadores: " +_jogador + " e Computer2");
+    if(numero_jogador == 4){
+        if(pos == 0 || pos == 2){
+            QMessageBox::information(this,"Ganhadores","Ganhadores: " +_jogador + " e Computer2");
+        }
+        else if(pos == 1 || pos == 3){
+            QMessageBox::information(this,"Ganhadores", "Ganhadores: Computer1 e Computer3");
+        }
     }
-    else if(pos == 1 || pos == 3){
-        QMessageBox::information(this,"Ganhadores", "Ganhadores: Computer1 e Computer3");
+    else{
+        if(pos == 0){
+            QMessageBox::information(this,"Ganhador","Ganhador: " +_jogador);
+        }
+        else if(pos == 1){
+            QMessageBox::information(this,"Ganhador", "Ganhador: Computer1");
+        }
     }
-    close();
+    QApplication::quit();
 }
 
 void Qjogo::jogadoresMaode11(){
-    QMessageBox::information(this,"Jogadores Mao 11", "Jogadores Computer1 e Computer3 estao na mao de 11");
+    if(numero_jogador == 4 ){
+        QMessageBox::information(this,"Jogadores Mao 11", "Jogadores Computer1 e Computer3 estao na mao de 11");
+    }
+    else{
+        QMessageBox::information(this,"Jogador Mao 11", "Jogador Computer1 esta na mao de 11");
+    }
 }
 
 
@@ -418,5 +496,6 @@ void Qjogo::JogadoresAsCegas(){
 
 void Qjogo::on_pushButton_clicked()
 {
+    QApplication::closeAllWindows();
     QApplication::quit();
 }
