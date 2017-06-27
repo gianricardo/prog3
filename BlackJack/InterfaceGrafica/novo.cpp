@@ -11,10 +11,7 @@ novo::novo(QWidget *parent) :
 
 novo::~novo()
 {
-    delete ui->lineEdit;
-    delete ui->buttonBox;
-    delete ui->label;
-    delete ui->label_2;
+
     delete ui;
 }
 
