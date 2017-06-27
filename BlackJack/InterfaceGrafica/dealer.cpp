@@ -15,8 +15,6 @@ dealer::dealer(QWidget *parent) :
 
 dealer::~dealer()
 {
-    delete ui->buttonBox;
-    delete ui->label;
-    delete ui->label_2;
+
     delete ui;
 }

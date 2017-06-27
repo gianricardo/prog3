@@ -9,7 +9,7 @@
 #include "banco_21.h"
 
 Banco21::Banco21(){
-    d_cassino=30000;
+    d_cassino=999999999;
     d_jogador=10000;
     aposta=0;
 }
@@ -17,6 +17,7 @@ Banco21::Banco21(){
 bool Banco21::set_aposta(int a){
     if(a>d_jogador) a=d_jogador;
     if(a<5)a=5;
+    if(a>1000000) a=1000000;
     aposta=a;
     return true;
 }
@@ -40,6 +41,7 @@ void Banco21::resultado(bool a){
         d_jogador= d_jogador-aposta;
         d_cassino=d_cassino+aposta;
     }
+    if (d_jogador > 99999999) d_jogador = 999999999;
     aposta=0;
 }
 

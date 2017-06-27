@@ -11,8 +11,6 @@ continua::continua(QWidget *parent) :
 
 continua::~continua()
 {
-    delete ui->buttonBox;
-    delete ui->label;
-    delete ui->label_2;
+
     delete ui;
 }
