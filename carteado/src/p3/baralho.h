@@ -130,7 +130,7 @@ template<class CARTA> CARTA BaralhoBasico<CARTA>::pega_baixo(void){
 }
 
 template<class CARTA> CARTA* BaralhoBasico<CARTA>::retorna_topo(void){
-	CARTA *c = _monte.front();
+	CARTA *c = &(_monte.front());
 	return c;
 }
 

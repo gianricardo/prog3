@@ -17,20 +17,29 @@ namespace p3 {
 
 class Estado_jogo : private p3::Jogo {
 public:
-	Estado_jogo();
+	Estado_jogo(std::string nome);
 	virtual ~Estado_jogo();
 
-	static bool inicia_jogo(std::string nome);
+	//static bool inicia_jogo(std::string nome);
 	bool realiza_jogada(int p_m1, int p_m2);
 	bool fim_jogo();
 
 	bool distribuir();
 	//int pontuacao();
 
-	void restaura_monte_inicial() override;
+	int pontuacao_jogador();
+	std::string nome_jogador();
 
-	Carta* _pega_monte(std::size_t m) override;
+	void restaura_monte_inicial(); //override;
 
+	Carta* _pega_monte_v(std::size_t m);
+
+	int verifica_sequencia(int m1);
+
+
+private:
+	
+	R_Paciencia _r_paciencia;
 };
 
 } /* namespace p3 */

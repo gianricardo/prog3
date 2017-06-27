@@ -12,13 +12,12 @@ using namespace p3;
 
 int main(){
 
-	Paciencia pac;
 	std::string nome;
 
 	std::cout << "Nome Jogador: ";
 	std::cin >> nome;
 
-	Estado_jogo::inicia_jogo(nome);
+	Paciencia pac(nome);
 
 	do{
 
@@ -26,6 +25,7 @@ int main(){
 
 	}while(pac.verifica_jogada());
 
+	pac.fim();
 
 	return 0;
 }

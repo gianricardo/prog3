@@ -25,8 +25,11 @@ public:
 	void pontuacao_tela(Estado_jogo *jogo);
 	void nome_jogador(Estado_jogo *jogo);
 
-
 	void tela_jogo(Estado_jogo *jogo);
+
+	void vitoria();
+	void derrota();
+
 };
 
 } /* namespace p3 */
