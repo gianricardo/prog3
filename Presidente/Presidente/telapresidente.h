@@ -36,6 +36,7 @@ private slots:
     void on_novo_jogo_clicked();
     void on_instructions_clicked();
     void on_voltar_clicked();
+    void quiting();
 
 private:
     Ui::TelaPresidente *ui;
@@ -46,6 +47,7 @@ private:
     QString playername;
     QGraphicsPolygonItem *cursor;
     int select;
+    int select_max;
 };
 
 #endif // TELAPRESIDENTE_H

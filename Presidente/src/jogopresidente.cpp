@@ -48,8 +48,8 @@ int JogoPresidente::how_many_in_the_hand(std::vector<Carta> v,int valor){
 	return count;
 }
 
-void JogoPresidente::fim_jogada(){
-	if(!_jogando) return;
+bool JogoPresidente::fim_jogada(){
+        if(!_jogando) return false;
 	if(numero_jogadores_aptos()==0){
 		jogador_soma_pontos(3,_positions[0]);
 		jogador_soma_pontos(2,_positions[1]);
@@ -81,8 +81,9 @@ void JogoPresidente::fim_jogada(){
 		_rodada++;
 		muda_jogador_atual(retorna_pres());
 		_positions.clear();
-        ;
+    return true;
 	}
+	return false;
 }
 
 void JogoPresidente::add_position(int jogador){
@@ -222,7 +223,7 @@ void JogoPresidente::play(){
     int card=0;
 	int last_played_card=-1;
 	int number_of_cards_played=0;
-	int wining;
+    int wining=0;
 	int count;
     int time_wait=500;
 	unsigned int pass_count=0;
@@ -291,7 +292,6 @@ void JogoPresidente::play(){
 			number_of_cards_played=0;
 		}
         verifica_jogador_unico();
-        if(numero_jogadores_aptos()==0) time_wait=500;
-        fim_jogada();
+        if(fim_jogada()) time_wait=500;
 	}
 }

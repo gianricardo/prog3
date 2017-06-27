@@ -28,7 +28,6 @@ SOURCES += \
         telapresidente.cpp \
     imgcarta.cpp \
     ../../carteado/src/p3/carta.cpp \
-    ../src/regrapresidente.cpp \
     ../src/jogopresidente.cpp \
     ../../carteado/src/p3/regra.cpp \
     ../../carteado/src/p3/mesa.cpp \

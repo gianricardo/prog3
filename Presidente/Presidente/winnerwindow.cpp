@@ -14,6 +14,7 @@ WinnerWindow::WinnerWindow(QWidget *parent) :
 WinnerWindow::~WinnerWindow()
 {
     delete ui;
+    delete scene;
 }
 
 void WinnerWindow::mostra_vencedor(int pos)
