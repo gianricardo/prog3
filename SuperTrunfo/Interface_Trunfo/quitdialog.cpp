@@ -11,6 +11,13 @@ quitDialog::quitDialog(QWidget *parent) :
 quitDialog::~quitDialog()
 {
     delete ui;
+    answer = false;
+}
+
+bool quitDialog::quit()
+{
+    exec();
+    return answer;
 }
 
 void quitDialog::on_yesButton_clicked()
@@ -18,6 +25,7 @@ void quitDialog::on_yesButton_clicked()
     qApp->closeAllWindows();
     qApp->quit();
     qApp->quitOnLastWindowClosed();
+    answer = true;
 }
 
 void quitDialog::on_noButton_clicked()

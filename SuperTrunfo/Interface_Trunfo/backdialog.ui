@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>quitDialog</class>
- <widget class="QDialog" name="quitDialog">
+ <class>backDialog</class>
+ <widget class="QDialog" name="backDialog">
   <property name="windowModality">
    <enum>Qt::NonModal</enum>
   </property>
@@ -13,35 +13,21 @@
     <height>100</height>
    </rect>
   </property>
-  <property name="sizePolicy">
-   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-    <horstretch>0</horstretch>
-    <verstretch>0</verstretch>
-   </sizepolicy>
-  </property>
-  <property name="minimumSize">
-   <size>
-    <width>300</width>
-    <height>100</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>300</width>
-    <height>100</height>
-   </size>
-  </property>
   <property name="windowTitle">
-   <string>Sair</string>
+   <string>Voltar</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>Tem certeza que deseja sair?</string>
+      <string>Você perderá seu progresso.</string>
      </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Tem certeza que deseja voltar?</string>
      </property>
     </widget>
    </item>
