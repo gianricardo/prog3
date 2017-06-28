@@ -86,7 +86,7 @@ void Tela::pergunta_turnos(int pos) {
         _nap->define_declarante(pos);
         w->informacao("**Como todos declararam 0, voce eh obrigado a declarar 1 ou mais");
     }
-    w->informacao("Jogador " + _nap->nome_jogador_atual() + ", insira o numero de rodadas que voce acha que vai fazer: ");
+    w->informacao("Jogador " + _nap->nome_jogador_atual() + ", insira o numero de turnos que voce acha que vai fazer: ");
     int trunfo_atual = _nap->pergunta_turnos(pos, zero);
 
     if(trunfo_atual == -1) {
