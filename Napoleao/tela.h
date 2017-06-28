@@ -11,7 +11,7 @@
 #include "napoleao.h"
 #include "mainwindow.h"
 #define MAO 5
-#define SIMULACAO false
+#define SIMULACAO true
 #define MOSTRA false
 
 class Tela {
