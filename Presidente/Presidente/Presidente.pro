@@ -34,16 +34,19 @@ SOURCES += \
     ../../carteado/src/p3/jogo.cpp \
     ../../carteado/src/p3/jogador.cpp \
     ../../carteado/src/p3/baralho.cpp \
-    winnerwindow.cpp
+    winnerwindow.cpp \
+    rounds.cpp
 
 HEADERS += \
         telapresidente.h \
     imgcarta.h \
-    winnerwindow.h
+    winnerwindow.h \
+    rounds.h
 
 FORMS += \
         telapresidente.ui \
-    winnerwindow.ui
+    winnerwindow.ui \
+    rounds.ui
 
 RESOURCES += \
     resource.qrc

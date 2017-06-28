@@ -49,27 +49,27 @@ int JogoPresidente::how_many_in_the_hand(std::vector<Carta> v,int valor){
 }
 
 bool JogoPresidente::fim_jogada(){
-        if(!_jogando) return false;
+    if(!_jogando) return false;
 	if(numero_jogadores_aptos()==0){
 		jogador_soma_pontos(3,_positions[0]);
 		jogador_soma_pontos(2,_positions[1]);
-		jogador_soma_pontos(1,_positions[2]);
+        jogador_soma_pontos(1,_positions[2]);
 		limpa_outros_montes();
 		restaurar_monte_inicial();
 		embaralhar_monte_principal();
-		distribuir();
+        distribuir();
 		muda_aptidao(0);
 		muda_aptidao(1);
 		muda_aptidao(2);
-		muda_aptidao(3);
-		pass_card(find_highest(2,retorna_bobo()),retorna_bobo(),retorna_pres());
+        muda_aptidao(3);
+        pass_card(find_highest(2,retorna_bobo()),retorna_bobo(),retorna_pres());
 		pass_card(find_lowest(2,retorna_pres()),retorna_pres(),retorna_bobo());
 		pass_card(find_highest(1,retorna_vicebobo()),retorna_vicebobo(),retorna_vicepres());
-		pass_card(find_lowest(1,retorna_vicepres()),retorna_vicepres(),retorna_vicebobo());
-		ordena_mao_jogador();
-		for(std::size_t i=0;i<13;i++){
-			vira_carta_jogador(i,0);
-		}
+        pass_card(find_lowest(1,retorna_vicepres()),retorna_vicepres(),retorna_vicebobo());
+        ordena_mao_jogador();
+        for(std::size_t i=0;i<13;i++){
+            vira_carta_jogador(i,0);
+        }
         std::vector<int> pts;
         for(int i=0;i<4;i++){
             muda_jogador_atual(i);
@@ -78,10 +78,10 @@ bool JogoPresidente::fim_jogada(){
         _ui->show_position(_positions);
         _ui->show_pontuation(pts);
         verifica_fim_de_jogo();
-		_rodada++;
+        _rodada++;
 		muda_jogador_atual(retorna_pres());
-		_positions.clear();
-    return true;
+        _positions.clear();
+        return true;
 	}
 	return false;
 }
@@ -182,21 +182,21 @@ void JogoPresidente::declara_vencedor(std::size_t j){
 }
 
 void JogoPresidente::verifica_jogador_unico(){
-	int jog_aptos = 0;
-	int last = 0;
-	for(unsigned int i = 0; i < _mesa.numero_jogadores(); i++){
-		if(_mesa.ver_jogador(i).esta_apto()){
-			jog_aptos++;
-			last = i;
-		}
-	}
-	if(jog_aptos > 1) return;
-	std::vector<Carta> cards = mostra_mao_jogador_consulta(last);
-	for(auto c : cards){
-		_mesa.jogador_tira_carta(c,last);
-	}
-	add_position(last);
-	muda_aptidao(last);
+    int jog_aptos = 0;
+    int last = 0;
+    for(unsigned int i = 0; i < _mesa.numero_jogadores(); i++){
+        if(_mesa.ver_jogador(i).esta_apto()){
+            jog_aptos++;
+            last = i;
+        }
+    }
+    if(jog_aptos > 1) return;
+    std::vector<Carta> cards = mostra_mao_jogador_consulta(last);
+    for(auto c : cards){
+        _mesa.jogador_tira_carta(c,last);
+    }
+    add_position(last);
+    muda_aptidao(last);
 }
 
 void JogoPresidente::ordena_mao_jogador(){
@@ -225,6 +225,7 @@ void JogoPresidente::play(){
 	int number_of_cards_played=0;
     int wining=0;
 	int count;
+    int players=0;
     int time_wait=500;
 	unsigned int pass_count=0;
 	for(std::size_t i=0;i<13;i++){
@@ -232,6 +233,7 @@ void JogoPresidente::play(){
 	}
     while(!_ui->tela_inicio()){}
 	while(jogando()){
+        players=numero_jogadores_aptos();
         for(int i=1;i<=number_of_cards_played;i++) montes.push_back(_pega_monte(i,true));
         _ui->show_hand(mostra_mao_jogador_consulta(0),mostra_mao_jogador_consulta(1),mostra_mao_jogador_consulta(2),mostra_mao_jogador_consulta(3));
         _ui->show_montes(montes);
@@ -270,6 +272,7 @@ void JogoPresidente::play(){
 			}else pass_count++;
 		}
         for(int i=1;i<=number_of_cards_played;i++) montes.push_back(_pega_monte(i,true));
+        verifica_jogador_unico();
         _ui->show_hand(mostra_mao_jogador_consulta(0),mostra_mao_jogador_consulta(1),mostra_mao_jogador_consulta(2),mostra_mao_jogador_consulta(3));
         _ui->show_montes(montes);
         i=1;
@@ -278,8 +281,9 @@ void JogoPresidente::play(){
         QEventLoop espera;
         QTimer::singleShot(time_wait,&espera,SLOT(quit()));
         espera.exec();
-		if(last_played_card==13 || pass_count==(numero_jogadores_aptos()-1)){
+        if(last_played_card==13 || (int)pass_count==(players-1)){
             if(esta_apto(wining))	muda_jogador_atual(wining);
+            limpa_outros_montes();
 			last_played_card=-1;
 			number_of_cards_played=0;
 		}
@@ -291,7 +295,6 @@ void JogoPresidente::play(){
 			last_played_card=-1;
 			number_of_cards_played=0;
 		}
-        verifica_jogador_unico();
         if(fim_jogada()) time_wait=500;
 	}
 }

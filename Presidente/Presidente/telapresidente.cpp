@@ -18,10 +18,10 @@ TelaPresidente::TelaPresidente(QWidget *parent) :
     ui->titulo->show();
     ui->voltar->hide();
     ui->text->hide();
-    QBrush gameb(Qt::darkGreen);
-    sceneGame = new QGraphicsScene ;
-    sceneInstructions = new QGraphicsScene ;
-    sceneMenu = new QGraphicsScene ;
+    QBrush gameb(Qt::darkCyan);
+    sceneGame = new QGraphicsScene(this) ;
+    sceneInstructions = new QGraphicsScene(this) ;
+    sceneMenu = new QGraphicsScene(this) ;
     sceneGame->setBackgroundBrush(gameb);
     sceneInstructions->setBackgroundBrush(gameb);
     sceneMenu->setBackgroundBrush(gameb);
@@ -49,15 +49,13 @@ TelaPresidente::~TelaPresidente()
 
 void TelaPresidente::show_hand(std::vector<p3::Carta> v0,std::vector<p3::Carta> v1,std::vector<p3::Carta> v2,std::vector<p3::Carta> v3)
 {
-    if(select==0) select=1;
-    else if(select>select_max) select=select_max;
-    select_max=v0.size();
-    ui->titulo->show();
-    ui->label->hide();
     qDeleteAll(sceneGame->items());
+    select_max=(int)v0.size();
+    select=1;
+    ui->label->hide();
     QPen pen(Qt::red);
     QBrush redb(Qt::red);
-    cursor = sceneGame->addPolygon(QPolygonF({QPoint(150+(select-1)*40,480),QPoint(170+(select-1)*40,480),QPoint(160+(select-1)*40,490)}),pen,redb);
+    cursor = sceneGame->addPolygon(QPolygonF({QPoint(150,480),QPoint(170,480),QPoint(160,490)}),pen,redb);
     int k=0;
     ImgCarta *item;
     for(auto i : v0){
@@ -90,7 +88,7 @@ void TelaPresidente::show_montes(std::vector<p3::Carta> montes)
     int k=0;
     ImgCarta *item;
     for(unsigned int i=0;i<montes.size();i++){
-        item=new ImgCarta(montes[i].numero(),(int)montes[i].naipe(),true,100+56*k,100);
+        item=new ImgCarta(montes[i].numero(),(int)montes[i].naipe(),true,100+60*k,100);
         sceneGame->addItem(item);
         k++;
     }
@@ -141,6 +139,14 @@ void TelaPresidente::show_position(std::vector<int> p)
         QMessageBox::about(this,"","Você é o bobo");
     }
 
+}
+
+int TelaPresidente::get_rounds()
+{
+    Rounds r;
+    r.show();
+    r.move(580,332);
+    return r.rodadas();
 }
 
 

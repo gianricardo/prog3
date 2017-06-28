@@ -27,7 +27,7 @@ private:
 	int acha_carta_jogavel(std::vector<Carta>,int,int);
 	int how_many_in_the_hand(std::vector<Carta>,int);
 	void joga_cartas(int,int);
-  bool fim_jogada();
+  bool fim_jogada() override;
 	void add_position(int jogador);
 	void pass_card(std::vector<int> v, int pos1, int pos2);
 	std::vector<int> find_highest(int,std::size_t);
@@ -40,7 +40,7 @@ private:
 	void verifica_vitoria() override;
 	void verifica_jogador_pontuacao_maxima() override;
 	void declara_vencedor(std::size_t j) override;
-	void verifica_jogador_unico() override;
+        void verifica_jogador_unico() override;
 	void ordena_mao_jogador();
 	std::vector<int> _positions;
         TelaPresidente *_ui;

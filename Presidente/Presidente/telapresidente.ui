@@ -1383,7 +1383,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Instructions</string>
+     <string>Instruções</string>
     </property>
    </widget>
    <widget class="QPushButton" name="voltar">

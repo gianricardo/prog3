@@ -6,8 +6,8 @@ WinnerWindow::WinnerWindow(QWidget *parent) :
     ui(new Ui::WinnerWindow)
 {
     ui->setupUi(this);
-    scene = new QGraphicsScene;
-    scene->setBackgroundBrush(Qt::green);
+    scene = new QGraphicsScene(this);
+    scene->setBackgroundBrush(Qt::darkCyan);
     ui->graphicsView->setScene(scene);
 }
 

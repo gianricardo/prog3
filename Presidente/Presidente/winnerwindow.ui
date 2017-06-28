@@ -10,6 +10,11 @@
     <height>200</height>
    </rect>
   </property>
+  <property name="font">
+   <font>
+    <family>Waree</family>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>Presidente</string>
   </property>
