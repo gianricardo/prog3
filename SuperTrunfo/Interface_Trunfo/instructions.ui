@@ -33,7 +33,7 @@
 - Ganha a rodada quem tiver o atributo de maior valor.
 - O vencedor da rodada recebe mantém sua carta e recebe a carta do oponente.
 - As cartas recebidas vão para a última posição de sua mão.
-- No caso de empate, ambos jogam novamente com a próxima carta de sua mão. O vencedor recebe as  cartas atuais junto com todas as cartas de empates anteriores.
+- No caso de empate, ambos jogam novamente com a próxima carta de sua mão. O vencedor recebe as  cartas atuais junto com todas as cartas de empates anteriores. Se um jogador possuir apenas uma carta, ele continuará com esta até que haja desempate.
 - A carta Super Trunfo perde apenas para cartas &quot;C&quot;.
 - O jogo acaba quando algum jogador ficar sem cartas na mão.</string>
      </property>

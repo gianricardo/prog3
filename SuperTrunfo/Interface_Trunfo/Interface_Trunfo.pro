@@ -12,7 +12,7 @@ TARGET = Interface_Trunfo
 TEMPLATE = app
 
 
-SOURCES += main.cpp\
+SOURCES +=\
         trunfoui.cpp \
     card.cpp \
     quitdialog.cpp \

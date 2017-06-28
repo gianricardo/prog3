@@ -12,6 +12,8 @@ TrunfoUI::TrunfoUI(QWidget *parent) :
 
 {
     ui->setupUi(this);
+    _card_1 = nullptr;
+    _card_2 = nullptr;
 
     _window_closed = false;
 
@@ -29,8 +31,8 @@ TrunfoUI::TrunfoUI(QWidget *parent) :
 
 TrunfoUI::~TrunfoUI()
 {
-    delete _card_1;
-    delete _card_2;
+    if(_card_1 != nullptr) delete _card_1;
+    if(_card_1 != nullptr) delete _card_2;
     delete ui;
 }
 
