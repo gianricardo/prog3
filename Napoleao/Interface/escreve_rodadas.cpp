@@ -16,8 +16,3 @@ escreve_rodadas::~escreve_rodadas()
 QString escreve_rodadas::num(){
     return ui->lineEdit->text();
 }
-
-void escreve_rodadas::on_lineEdit_textChanged(const QString &arg1)
-{
-    //fazer apagar se for invalido
-}

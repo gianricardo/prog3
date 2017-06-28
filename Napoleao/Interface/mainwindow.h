@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QPixmap>
 
+
 class Tela;
 namespace Ui {
 class MainWindow;
@@ -24,7 +25,10 @@ public:
     void informacao(std::string msg);
     void rodada_atual(int x);
     void aposta_max(int n);
+    void turnos_vencidos(int n);
     void construindo();
+    void inicio_rodada();
+    void inicio_turno();
     void imprime_carta(std::string card, bool mostra,int pos, int jog);
     void carta_monte(std::string card);
     int pergunta_turnos();
@@ -33,6 +37,11 @@ public:
     void trunfo_rodada(int n);
     void atualiza_cartas(int jog);
     void declarante(std::string nome);
+    void sleep(unsigned int n);
+    void rodada_fim(int pos, int pontos, bool win);
+    void pontos_jogador(int n);
+    void pontos_adversario(int n);
+    void fim_do_jogo();
 
 private slots:
     void on_actionInicio_jogo_triggered();

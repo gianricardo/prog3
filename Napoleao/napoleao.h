@@ -33,6 +33,7 @@ public:
 	Carta::Naipe _naipe_inicial = Carta::Naipe::Ouros;
 	int _declarante_turnos = 0;
 	int _vencedor_turno = 0;
+    bool sim;
 
 	int numero_de_jogadores();
 	std::string nome_jogador_atual();
@@ -43,6 +44,7 @@ public:
 	void define_naipe(int naipe);
 	int pergunta_turnos(int pos, bool zero);
 	std::vector<Carta> mostra_mao_jogador_atual();
+    int turno_atual();
 	int posicao_jogador_atual();
 	int posicao_declarante();
 	int declarante_escolhe_trunfo();
@@ -60,14 +62,12 @@ public:
 	void jogo_conf_inicio();
 	void rodada_conf_inicio();
 	void define_trunfo(Carta::Naipe trunfo); // define qual vai ser o trunfo do turno
-	//void pergunta_turnos(int pos); //pergunta pros jogadores qual a qtd de turnos que eles irão fazer
 	void imprime_mao_atual(); //imprime a mao do jogador atual.
 	int napoleao_jogada(int pos);
 	Carta carta_jogador_atual(int pos);
 	Carta carta_maior();
 	bool compara_cartas(Carta topo, Carta nova);
 	std::vector<int> vetor_pontuacao();
-	void fim_do_jogo();
 	void limpa_mao();
 };
 

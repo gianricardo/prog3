@@ -16,9 +16,6 @@ public:
     ~escreve_rodadas();
     QString num();
 
-private slots:
-    void on_lineEdit_textChanged(const QString &arg1);
-
 private:
     Ui::escreve_rodadas *ui;
 };

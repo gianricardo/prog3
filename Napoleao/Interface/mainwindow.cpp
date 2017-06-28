@@ -3,10 +3,15 @@
 #include "escreve_nome.h"
 #include "escreve_nome_adversario.h"
 #include "escreve_rodadas.h"
+#include "fim_rodada.h"
 #include "../tela.h"
+#include "fim_de_jogo.h"
 #include <iostream>
 #include <QEventLoop>
 #include <QObject>
+#include <QThread>
+#include <QTimer>
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -19,6 +24,12 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::sleep(unsigned int n){
+    QEventLoop loop;
+    QTimer::singleShot(n, &loop, SLOT(quit()));
+    loop.exec();
 }
 
 void MainWindow::set_tela(Tela *tel){
@@ -53,6 +64,14 @@ void MainWindow::rodada_atual(int x){
     ui->l_rodada_atual->setText(QString::number(x));
 }
 
+void MainWindow::aposta_max(int n){
+    ui->l_aposta_maxima->setText(QString::number(n));
+}
+
+void MainWindow::turnos_vencidos(int n){
+    ui->l_turnos_vencidos->setText(QString::number(n));
+}
+
 void MainWindow::construindo(){
     ui->layout_jogador->hide();
     ui->layout_adversario->hide();
@@ -76,6 +95,22 @@ void MainWindow::construindo(){
     ui->i_carta_monte->show();
 }
 
+void MainWindow::inicio_rodada(){
+    ui->l_aposta_maxima->setText("-");
+    ui->l_trunfo_rodada->setText("-");
+    ui->l_nome_declarante->setText("-");
+    ui->l_turnos_vencidos->setText("-");
+    inicio_turno();
+}
+
+void MainWindow::inicio_turno(){
+    QPixmap img;
+    img.load(":/baralho/backx.jpg");
+    int w = ui->i_carta_monte->width();
+    int h = ui->i_carta_monte->height();
+    ui->i_carta_monte->setPixmap(img.scaled(w,h,Qt::KeepAspectRatio));
+}
+
 void MainWindow::imprime_carta(std::string card, bool mostra, int pos, int jog){
     QString filename = QString::fromStdString(card);
     QPixmap img;
@@ -92,7 +127,7 @@ void MainWindow::imprime_carta(std::string card, bool mostra, int pos, int jog){
         case 4: ui->i_carta_j4->setPixmap(img.scaled(w,h,Qt::KeepAspectRatio)); break;
         case 5: ui->i_carta_j5->setPixmap(img.scaled(w,h,Qt::KeepAspectRatio)); break;
         default:
-            std::cout << "IMPRIME CARTA MAIN WINDOWS Nao era pra ter chego aqui" << std::endl;
+            w = w;
         }
     }
     if (jog == 1) {
@@ -103,7 +138,7 @@ void MainWindow::imprime_carta(std::string card, bool mostra, int pos, int jog){
         case 4: ui->i_carta_a4->setPixmap(img.scaled(w,h,Qt::KeepAspectRatio)); break;
         case 5: ui->i_carta_a5->setPixmap(img.scaled(w,h,Qt::KeepAspectRatio)); break;
         default:
-            std::cout << "IMPRIME CARTA MAIN WINDOWS Nao era pra ter chego aqui" << std::endl;
+            w = w;
         }
     }
 
@@ -211,7 +246,6 @@ void MainWindow::on_b_ouros_clicked()
 
 int MainWindow::pergunta_carta(){
     ui->layout_jogador->show();
-    ui->l_informacao->setText("Jogador, escolha a carta a ser jogada!");
     QEventLoop loop;
     QObject::connect(ui->i_carta_j1,SIGNAL(clicked()),&loop,SLOT(quit()));
     QObject::connect(ui->i_carta_j2,SIGNAL(clicked()),&loop,SLOT(quit()));
@@ -220,9 +254,7 @@ int MainWindow::pergunta_carta(){
     QObject::connect(ui->i_carta_j5,SIGNAL(clicked()),&loop,SLOT(quit()));
     loop.exec();
     loop.quit();
-    ui->l_carta_escolhida->setText(QString::number(carta));
     int retorno = carta;
-   // ui->layout_jogador->hide();
     return retorno;
 }
 
@@ -275,11 +307,51 @@ void MainWindow::atualiza_cartas(int jog){
         ui->i_carta_a4->setPixmap(img.scaled(w,h,Qt::KeepAspectRatio));
         ui->i_carta_a5->setPixmap(img.scaled(w,h,Qt::KeepAspectRatio));
     }
-
 }
 
 void MainWindow::declarante(std::string nome){
     ui->l_nome_declarante->setText(QString::fromStdString(nome));
 
 }
+
+void MainWindow::rodada_fim(int pos, int pontos, bool win){
+    fim_rodada end;
+    if((pos == 0 && win == true ) || (pos == 1 && win == false)) {
+        end.texto("Parabens, você ganhou essa rodada, ganhando " + std::to_string(pontos) + " pontos! Continue assim!");
+    } else {
+        end.texto("Voce perdeu a rodada. Seu adversario ganhou " + std::to_string(pontos) + " pontos!");
+    }
+    end.show();
+    end.exec();
+}
+
+void MainWindow::pontos_jogador(int n){
+    ui->l_pontuacao_jogador->setText(QString::number(n));
+}
+void MainWindow::pontos_adversario(int n){
+    ui->l_pontuacao_adversario->setText(QString::number(n));
+}
+void MainWindow::fim_do_jogo(){
+    QString qs = ui->l_pontuacao_jogador->text();
+    int jog = qs.toInt();
+    QString qs2 = ui->l_pontuacao_adversario->text();
+    int adv = qs2.toInt();
+
+    fim_de_jogo end;
+
+    if(jog > adv) {
+        end.texto("Parabens! Você conseguiu ganhar o jogo! Espero que tenha gostado da experiência.");
+    } else if (jog == adv){
+        end.texto("Um empate! Algo difícil de se acontecer! Espero que tenha gostado da experiência.");
+    } else {
+        end.texto("Que pena, você perdeu ): Aprenda com seus erros e melhore na próxima vez! Espero que tenha gostado da experiência.");
+    }
+    end.show();
+    end.exec();
+    exit(0);
+}
+
+
+
+
 

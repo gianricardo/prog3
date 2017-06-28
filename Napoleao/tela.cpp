@@ -25,59 +25,54 @@ void Tela::define(MainWindow *m){
     rodadas = w->numero_rodadas();
     w->informacao("Comecando o jogo!");
     w->rodada_atual(0);
-
     Regra *Rules = new Regra(jogadores,MAO,rodadas,rodadas*10,0,52, (Regra::modo_fim::rodadas));
     _nap = std::make_unique<Napoleao>(Rules, nomes, jogadores, SIMULACAO);
 }
 
 void Tela::inicia_jogo() {
-  //  std::cout << "TELA: Inicio inicia jogo" << std::endl;
     _nap->jogo_conf_inicio();
     for(int rodada = 0; rodada < _nap->max_rodadas(); rodada++){
-        std::cout << "@@@@@@@@@@@@@@ INICIO DA RODADA " << rodada <<  "@@@@@@@@@@@@@@@@@" << std::endl;
         w->rodada_atual(rodada+1);
         tela_inicia_rodada();
         if(_nap->declarante_venceu_rodada()) {
-            std::cout << "O declarante venceu a rodada! Ele ganhou " <<_nap->aposta_maxima() << " pontos!" << std::endl;
+            w->rodada_fim(_nap->posicao_declarante(), _nap->aposta_maxima(), true);
         } else {
-            std::cout << "O declarante perdeu a rodada! Todos, menos ele, ganharam " <<_nap->aposta_maxima() << " pontos!" << std::endl;
+            w->rodada_fim(_nap->posicao_declarante(), _nap->aposta_maxima(), false);
         }
-
-        std::cout << "A pontuacao ate agora eh:" << std::endl;
         imprime_pontuacao();
-        std::cout << "@@@@@@ FIM DA RODADA @@@@@@" << std::endl;
     }
-    _nap->muda_jogador_atual(_nap->numero_de_jogadores()-1);
-    std::cout << "$$$ PONTUACAO FINAL $$$" << std::endl;;
-    imprime_pontuacao();
+    w->fim_do_jogo();
 
 }
 
 void Tela::tela_inicia_rodada() {
-    //std::cout << "TELA: Inicio inicia rodada" << std::endl;
     _nap->rodada_conf_inicio();
+    w->inicio_rodada();
+    w->sleep(1000);
     int declarante = escolhe_declarante();
+    w->aposta_max(_nap->aposta_maxima());
     _nap->muda_jogador_atual(declarante);
-    std::cout << "O declarante sera " << _nap->nome_jogador_atual() << "!" << std::endl;
     w->declarante(_nap->nome_jogador_atual());
-
+    w->sleep(1000);
     declarante_escolhe_trunfo();
-
+    w->turnos_vencidos(0);
     int winner = _nap->posicao_declarante();
 
     for(unsigned int i = 0; i < 5; i++){
-        std::cout << "=========== TURNO " << i+1 << " ===========" << std::endl;
-        std::cout << "A rodada iniciara com o " << _nap->nome_jogador_atual() << "." << std::endl;
+        w->informacao("O turno iniciara com o " + _nap->nome_jogador_atual() + ".");
+        w->sleep(1000);
         inicio_turno(winner);
         winner = _nap->posicao_vencedor_turno();
         _nap->muda_jogador_atual(winner);
-        std::cout << "O vencedor da rodada " << i+1 << " foi o " << _nap->nome_jogador_atual() << std::endl;
+        w->informacao("O vencedor do turno " + std::to_string(i+1) + " foi o " + _nap->nome_jogador_atual());
 
         if(_nap->declarante_venceu_turno()) {
-            std::cout << "->O declarante fez a rodada, totalizando " << _nap->declarante_turnos_feitos() << " rodadas ganhas!" << std::endl;
+            w->informacao("->O declarante fez o turno, totalizando " + std::to_string(_nap->declarante_turnos_feitos()) + " rodadas ganhas!");
+            w->turnos_vencidos(_nap->declarante_turnos_feitos());
         } else {
-            std::cout << "->O declarante nao venceu a rodada! Ele esta com " << _nap->declarante_turnos_feitos() << " ganhas!" << std::endl;
+            w->turnos_vencidos(_nap->declarante_turnos_feitos());
         }
+        w->sleep(1000);
     }
 
 }
@@ -85,16 +80,12 @@ void Tela::tela_inicia_rodada() {
 void Tela::pergunta_turnos(int pos) {
     imprime_mao_atual();
     bool zero = true;
-    std::cout << "-> A aposta maxima ate agora eh " << _nap->aposta_maxima() << std::endl;
-
+    w->sleep(1000);
     if(pos == _nap->numero_de_jogadores() - 1 && _nap->aposta_maxima() == 0) {
         zero = false;
         _nap->define_declarante(pos);
-        std::cout << "**Como todos declararam 0, voce eh obrigado a declarar 1 ou mais" << std::endl;
         w->informacao("**Como todos declararam 0, voce eh obrigado a declarar 1 ou mais");
     }
-
-    std::cout << "Insira o numero de rodadas que voce acha que vai fazer: ";
     w->informacao("Jogador " + _nap->nome_jogador_atual() + ", insira o numero de rodadas que voce acha que vai fazer: ");
     int trunfo_atual = _nap->pergunta_turnos(pos, zero);
 
@@ -103,12 +94,9 @@ void Tela::pergunta_turnos(int pos) {
         _nap->set_aposta_maxima(aposta);
         _nap->define_declarante(0);
     }
-
     while(trunfo_atual == 0) {
-        std::cout << "Entrada invalida, insira outra entrada: ";
         trunfo_atual = _nap->pergunta_turnos(pos, zero);
     }
-    std::cout << std::endl;
 }
 
 void Tela::imprime_mao_atual() {
@@ -119,9 +107,7 @@ void Tela::imprime_mao_atual() {
     for(auto i:aux) {
         std::string card = imprime_carta(i);
         w->imprime_carta(card, mostra || MOSTRA ,++cont, _nap->posicao_jogador_atual() );
-        std::cout << "\t--> " << cont << "-) "<< imprime_carta(i) << std::endl;
     }
-    std::cout << std::endl;
 }
 
 std::string Tela::imprime_carta(Carta card) {
@@ -167,12 +153,6 @@ std::string Tela::imprime_naipe(int card) {
 int Tela::escolhe_declarante(){
     for(int i = 0; i < _nap->numero_de_jogadores(); i++){
         _nap->muda_jogador_atual(i);
-        std::cout << "Jogador "<< _nap->nome_jogador_atual() << std::endl;
-//        std::string inf;
-//        inf.append("Jogador ");
-//        inf.append(_nap->nome_jogador_atual());
-        //w->informacao("Jogador " + _nap->nome_jogador_atual());
-
         pergunta_turnos(i);
         if(_nap->aposta_maxima() == 5) break;
     }
@@ -182,26 +162,23 @@ int Tela::escolhe_declarante(){
 
 void Tela::declarante_escolhe_trunfo() {
     w->informacao("Declarante " + _nap->nome_jogador_atual() + ", escolha o naipe de trunfo:");
-    std::cout << "\nDeclarante " << _nap->nome_jogador_atual() << ", escolha o naipe de trunfo:" << std::endl;
     int escolha = _nap->declarante_escolhe_trunfo();
 
     if (escolha == -1) {
         int naipe = w->pergunta_naipe();
         _nap->define_naipe(naipe);
-        w->trunfo_rodada(naipe);
     }
 
-    while(escolha == 0){
-        std::cout << "DECLARANTE ESCOLHE TRUNFO Entrada Invalida" << std::endl;
+    while(escolha == 0){;
         escolha = _nap->declarante_escolhe_trunfo();
     }
     Carta::Naipe trunfo = _nap->naipe_trunfo();
-    std::cout << "O trunfo escolhido foi: " << imprime_naipe(trunfo) << "!!" << std::endl;
+    w->trunfo_rodada((int) trunfo);
+    w->sleep(1000);
 }
 
 void Tela::inicio_turno(unsigned int primeiro){
-    std::cout << "@@@@@@ INICIO DO TURNO @@@@@@" << std::endl;
-
+    w->inicio_turno();
     primeira_jogada(primeiro); // pergunta a posicao da carta que a pessoa escolheu
 
     for(int i = primeiro+1; i != (int)primeiro; i++){
@@ -210,41 +187,41 @@ void Tela::inicio_turno(unsigned int primeiro){
             continue;
         }
         Carta topo = _nap->carta_maior();
-
         w->carta_monte(imprime_carta(topo));
-        std::cout << "A maior carta ate agora eh: " << imprime_carta(topo) << std::endl;
         _nap->muda_jogador_atual(i);
+        w->sleep(1000);
         jogada_normal(i);
     }
-    std::cout << "A maior carta desse turno foi: " << imprime_carta(_nap->carta_maior()) << std::endl;
-    std::cout << "@@@@@@ FIM DO TURNO @@@@@@" << std::endl;
+    Carta topo = _nap->carta_maior();
+    w->carta_monte(imprime_carta(topo));
+    w->sleep(1500);
 
 }
 
 void Tela::primeira_jogada(int primeiro) {
-    std::cout << "Jogador " << _nap->nome_jogador_atual() << std::endl;
+    w->informacao("Jogador " + _nap->nome_jogador_atual() + ", escolha a carta a ser jogada!");
     imprime_mao_atual();
     int escolha = _nap->primeira_jogada(primeiro);
     if(escolha == -1){
         int card = w->pergunta_carta();
+        while(card > 5 - (int)_nap->turno_atual()){
+            card = w->pergunta_carta();
+        }
         _nap->first_move(card);
-
         w->atualiza_cartas(0);
         imprime_mao_atual();
     }
     while(escolha == 0) {
-        std::cout << "Escolha invalida!" << std::endl;
         escolha = _nap->primeira_jogada(primeiro);
     }
     if(escolha != -1) { w->atualiza_cartas(1); imprime_mao_atual();}
+    if(SIMULACAO && primeiro == 0) {w->atualiza_cartas(1); imprime_mao_atual();}
+    w->sleep(1000);
     Carta first = _nap->carta_maior();
-    std::cout << "->A carta escolhida foi: " << imprime_carta(first) << std::endl;
-    std::cout << "O naipe inicial desse turno eh o " << imprime_naipe(first.naipe()) << std::endl;
-
 }
 
 void Tela::jogada_normal(unsigned int pos) {
-    std::cout << "Jogador " << _nap->nome_jogador_atual() << std::endl;
+    w->informacao("Jogador " + _nap->nome_jogador_atual() + ", escolha a carta a ser jogada!");
     imprime_mao_atual();
     Carta escolha = _nap->jogada_normal(pos);
     if(escolha.numero() == 14) { //aqui vai a entrada do usuario
@@ -252,10 +229,10 @@ void Tela::jogada_normal(unsigned int pos) {
         _nap->executa_jogada(pos_carta);
         w->atualiza_cartas(0);
         imprime_mao_atual();
+        w->sleep(1000);
     }
 
     while(escolha.numero() == 0){
-        std::cout << "Escolha invalida!" << std::endl;
         escolha = _nap->jogada_normal(pos);
     }
     if(escolha.numero() != 14) {
@@ -263,22 +240,14 @@ void Tela::jogada_normal(unsigned int pos) {
         w->atualiza_cartas(1);
         imprime_mao_atual();
     }
-
-    std::cout << "->A carta escolhida foi: " << imprime_carta(escolha) << std::endl;
-
+    if(SIMULACAO && pos == 0) {w->atualiza_cartas(1); imprime_mao_atual();}
+    w->sleep(1000);
 }
 
 void Tela::imprime_pontuacao() {
     std::vector<int> pontos = _nap->vetor_pontuacao();
-    int atual = _nap->posicao_jogador_atual();
-    int i;
-    for(i = atual+1; i != atual; i++){
-        if(i == (int)_nap->numero_de_jogadores()) { i = -1; continue;}
-        _nap->muda_jogador_atual(i);
-        std::cout << "Pontos: " << _nap->nome_jogador_atual() << " = " << pontos[i] << std::endl;
-    }
-    _nap->muda_jogador_atual(i);
-    std::cout << "Pontos: " << _nap->nome_jogador_atual() << " = " << pontos[i] << std::endl;
+    w->pontos_jogador(pontos[0]);
+    w->pontos_adversario(pontos[1]);
 }
 
 

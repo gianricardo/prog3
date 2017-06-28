@@ -8,10 +8,8 @@
 #include "napoleao.h"
 
 Napoleao::Napoleao(Regra *Rules, std::vector<std::string> nomes, int jogadores, bool SIMULACAO) {
-	std::cout << "Inicio do construtor Napoleao" << std::endl;
-
 	_jogadores.resize(jogadores);
-
+    sim = SIMULACAO;
 	if(SIMULACAO) _jogadores[0] = std::make_unique<NapoleaoIA>(nomes[0]);
 	else _jogadores[0] = std::make_unique<NapoleaoPessoa>(nomes[0]);
 
@@ -21,8 +19,6 @@ Napoleao::Napoleao(Regra *Rules, std::vector<std::string> nomes, int jogadores, 
 	}
 
 	_jogo = std::make_unique<Jogo>(Rules, nomes);
-	std::cout << "Fim do construtor Napoleao" << std::endl;
-
 	_jogo->novo_monte();
 }
 
@@ -59,7 +55,7 @@ void Napoleao::define_naipe(int naipe) {
 }
 
 int Napoleao::pergunta_turnos(int pos, bool zero) {
-	if(pos == 0) return -1;
+    if(pos == 0 && sim == false) return -1;
 	int trunfo_atual = _jogadores[pos]->jogador_pergunta_turnos();
 	if(trunfo_atual != 0 && zero) {
 		if(trunfo_atual < _aposta_max || trunfo_atual > 5) return 0;
@@ -74,6 +70,10 @@ int Napoleao::pergunta_turnos(int pos, bool zero) {
 
 std::vector<Carta> Napoleao::mostra_mao_jogador_atual(){
 	return _jogo->mostra_mao_jogador_atual();
+}
+
+int Napoleao::turno_atual(){
+    return _turno;
 }
 
 int Napoleao::posicao_jogador_atual(){
@@ -144,7 +144,6 @@ void Napoleao::jogo_conf_inicio() {
 
 void Napoleao::rodada_conf_inicio(){
 	while(_jogo->move_carta_mm(1,0)){}
-	//_jogo->restaurar_monte_inicial();
 	_jogo->embaralhar_monte_principal();
 	_aposta_max = 0;
 	_declarante = 0;
@@ -212,10 +211,8 @@ int Napoleao::napoleao_jogada(int pos){
 	int jogada = _jogadores[pos]->jogador_jogada();
     if(jogada == -1) return -2;
 	if(jogada < 0 || jogada > (int)_jogo->cartas_jogadores() - (int)_turno) {
-		std::cout << "NAPOLEAO JOGADA Carta invalida" << std::endl;
 		return -1;
 	}
-	std::cout << "NAPOLEAO JOGADA Carta valida" << std::endl;
 	return jogada;
 
 }
@@ -274,24 +271,6 @@ std::vector<int> Napoleao::vetor_pontuacao() {
 }
 
 
-void Napoleao::fim_do_jogo() {
-	std::cout << "$$$$$$$$$$$$$$$$$$$$ FIM DE JOGO $$$$$$$$$$$$$$$" << std::endl;
-	int num = (int)_jogo->numero_de_jogadores();
-	std::vector<int> pontuacao(num);
-	for(int i = 0; (int)i < num; i++) {
-		_jogo->muda_jogador_atual(i);
-		pontuacao[i] = _jogo->pontuacao_jogador_atual();
-	}
-	auto max = std::max_element(pontuacao.begin(),pontuacao.end());
-	int qtd = std::count(pontuacao.begin(),pontuacao.end(),*max);
-
-	if(qtd == 1) {
-		std::cout << "Temos um unico vencedor!!" << std::endl;
-	} else {
-		std::cout << "Tivemos um empate com " << qtd << " jogadores!" << std::endl;
-	}
-
-}
 
 void Napoleao::limpa_mao() {
 		for(unsigned i = 0; i < _jogo->numero_de_jogadores(); i++) _jogo->esvazia_mao(i);
