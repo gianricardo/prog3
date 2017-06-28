@@ -22,15 +22,7 @@ Qjogo::Qjogo(QWidget *parent, QString n_name, unsigned int n_jogadores) :
 
 Qjogo::~Qjogo()
 {
-	qmao.clear();
-	qmao1.clear();
-	qmao2.clear();
-	qmao3.clear();
-	qbaralho.clear();
-	qmesa.clear();
-	if(vira != nullptr){
-		delete vira;
-	}	
+	
     delete ui;
 }
 
