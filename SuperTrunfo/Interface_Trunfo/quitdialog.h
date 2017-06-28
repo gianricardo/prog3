@@ -15,9 +15,10 @@ class quitDialog : public QDialog
 public:
     explicit quitDialog(QWidget *parent = 0);
     ~quitDialog();
+    bool quit();
 
 public slots:
-//    void close();
+
 
 private slots:
     void on_yesButton_clicked();
@@ -26,7 +27,9 @@ private slots:
 
 private:
     Ui::quitDialog *ui;
-//    Ui::TrunfoUI *trunfoui;
+    bool answer;
+
+
 };
 
 #endif // QUITDIALOG_H

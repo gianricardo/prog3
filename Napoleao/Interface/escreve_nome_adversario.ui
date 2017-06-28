@@ -6,16 +6,27 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>232</width>
+    <width>265</width>
     <height>101</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Adversario</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color:lightblue</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="1" column="0">
     <widget class="QLineEdit" name="e_escreve_nome_adversario">
+     <property name="font">
+      <font>
+       <family>MathJax_Typewriter</family>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color:white</string>
+     </property>
      <property name="text">
       <string>Opponent</string>
      </property>
@@ -33,6 +44,11 @@
    </item>
    <item row="0" column="0">
     <widget class="QLabel" name="l_escreve_nome_adversario">
+     <property name="font">
+      <font>
+       <family>MathJax_Typewriter</family>
+      </font>
+     </property>
      <property name="text">
       <string>Insira o nome do seu adversario</string>
      </property>

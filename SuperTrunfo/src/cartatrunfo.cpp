@@ -11,13 +11,18 @@ Carta_trunfo::Carta_trunfo(	int numero, Carta::Naipe naipe, bool frente ) :
 							Carta(numero,naipe,frente)
 {
 	//Pegar o indice da lista de atributos baseado no numero e naipe
-	int index_lista = (numero * (numero_naipe() + 1)) - 1;
+    int index_lista = (numero + (numero_naipe()*8)) - 1;
 	set_atributos(lista_atributos[index_lista]);
 }
 
 int Carta_trunfo::gps_com_podios()
 {
-	return _gps_com_podios;
+    return _gps_com_podios;
+}
+
+int Carta_trunfo::index()
+{
+    return (numero() + (numero_naipe()*8)) - 1;
 }
 
 int Carta_trunfo::participacao_gps()
@@ -51,7 +56,7 @@ void Carta_trunfo::set_atributos(Atributos attr)
 
 int Carta_trunfo::numero_naipe()
 {
-	int num;
+	int num = 0;
 
 	switch(naipe())
 	{
@@ -68,8 +73,5 @@ int Carta_trunfo::numero_naipe()
 	break;
 	}
 
-	return num;
+    return num;
 }
-
-
-

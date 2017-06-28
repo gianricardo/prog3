@@ -11,7 +11,10 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Nome</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color:lightblue</string>
   </property>
   <property name="sizeGripEnabled">
    <bool>true</bool>
@@ -19,6 +22,14 @@
   <layout class="QGridLayout" name="gridLayout">
    <item row="1" column="0">
     <widget class="QLineEdit" name="e_insira_nome">
+     <property name="font">
+      <font>
+       <family>MathJax_Typewriter</family>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color:white</string>
+     </property>
      <property name="text">
       <string>Player</string>
      </property>
@@ -39,6 +50,11 @@
    </item>
    <item row="0" column="0">
     <widget class="QLabel" name="l_insira_nome">
+     <property name="font">
+      <font>
+       <family>MathJax_Typewriter</family>
+      </font>
+     </property>
      <property name="text">
       <string>Insira seu nome:</string>
      </property>

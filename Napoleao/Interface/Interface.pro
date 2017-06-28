@@ -6,8 +6,9 @@
 
 QT       += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-
+#greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QT += widgets
+VERSION = 5.6.1
 TARGET = Interface
 TEMPLATE = app
 
@@ -28,7 +29,9 @@ SOURCES += main.cpp\
     ../../carteado/src/p3/mesa.cpp \
     ../../carteado/src/p3/regra.cpp \
     escreve_rodadas.cpp \
-    clickablelabel.cpp
+    clickablelabel.cpp \
+    fim_rodada.cpp \
+    fim_de_jogo.cpp
 
 HEADERS  += mainwindow.h \
     escreve_nome.h \
@@ -45,12 +48,16 @@ HEADERS  += mainwindow.h \
     ../../carteado/src/p3/mesa.h \
     ../../carteado/src/p3/regra.h \
     escreve_rodadas.h \
-    clickablelabel.h
+    clickablelabel.h \
+    fim_rodada.h \
+    fim_de_jogo.h
 
 FORMS    += mainwindow.ui \
     escreve_nome.ui \
     escreve_nome_adversario.ui \
-    escreve_rodadas.ui
+    escreve_rodadas.ui \
+    fim_rodada.ui \
+    fim_de_jogo.ui
 
 RESOURCES += \
     baralho.qrc

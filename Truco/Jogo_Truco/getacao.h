@@ -5,6 +5,9 @@
 #include <QGraphicsItem>
 #include <QGraphicsScene>
 #include <vector>
+#include <QApplication>
+#include <QGraphicsItem>
+#include <QEventLoop>
 #include "../../carteado/src/p3/carta.h"
 #include "qcarta.h"
 
@@ -20,7 +23,7 @@ public:
     explicit GetAcao(QWidget *parent = 0);
     ~GetAcao();
     bool getAcao();
-    void addMao(std::vector<p3::Carta> mao1, std::vector<p3::Carta> mao2);
+    void addMao(std::vector<p3::Carta> mao1, std::vector<p3::Carta> mao2, p3::Carta _vira);
 
 private slots:
 

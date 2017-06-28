@@ -10,7 +10,7 @@
 
 #include <vector>
 
-#include "carta.h"
+#include "../../carteado/src/p3/carta.h"
 
 class Carta_trunfo : public p3::Carta {
 public:
@@ -22,6 +22,7 @@ public:
 	int vitorias();
 	int pole_positions();
 	int gps_com_podios();
+    int index();
 
 private:
 

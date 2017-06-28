@@ -11,7 +11,10 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Rodadas</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color:lightblue</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="2" column="0">
@@ -26,6 +29,9 @@
    </item>
    <item row="1" column="0">
     <widget class="QLineEdit" name="lineEdit">
+     <property name="styleSheet">
+      <string notr="true">background-color:white</string>
+     </property>
      <property name="inputMethodHints">
       <set>Qt::ImhDialableCharactersOnly|Qt::ImhFormattedNumbersOnly</set>
      </property>

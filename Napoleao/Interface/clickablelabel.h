@@ -1,8 +1,8 @@
 #ifndef CLICKABLELABEL_H
 #define CLICKABLELABEL_H
 
-#include <QLabel>
-#include <QWidget>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QWidget>
 #include <Qt>
 
 class ClickableLabel : public QLabel {

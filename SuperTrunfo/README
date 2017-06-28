@@ -1,0 +1,10 @@
+SUPER TRUNFO
+----------------------------
+
+Para jogar, abra a pasta Interface_Trunfo e execute o comando, no terminal, ./Interface_Trunfo.
+Caso deseje compilar o projeto novamente, utilize os comandos "make distclean", "qmake" e "make". Basta executar Interface_Trunfo novamente após feito.
+
+Para jogar, forneça os nomes do jogador um e jogador dois (o computador) e clique no botão "Jogar" na tela inicial.
+Quando for sua vez, escolha o atributo que considera melhor e clique no botão referente a ele.
+
+O main se encontra em ~/SuperTrunfo/src/trunfo.cpp.

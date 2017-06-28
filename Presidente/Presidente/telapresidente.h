@@ -6,7 +6,9 @@
 #include <QString>
 #include "winnerwindow.h"
 #include "imgcarta.h"
+#include "rounds.h"
 #include "../../carteado/src/p3/carta.h"
+
 
 namespace Ui {
 class TelaPresidente;
@@ -19,7 +21,6 @@ class TelaPresidente : public QMainWindow
 public:
     explicit TelaPresidente(QWidget *parent = 0);
     ~TelaPresidente();
-    TelaPresidente(const TelaPresidente&);
     void show_hand(std::vector<p3::Carta> v0,std::vector<p3::Carta> v1,std::vector<p3::Carta> v2,std::vector<p3::Carta> v3);
     void show_montes(std::vector<p3::Carta> montes);
     int get_play();
@@ -27,6 +28,7 @@ public:
     void show_winner(int pos);
     void show_pontuation(std::vector<int>);
     void show_position(std::vector<int> p);
+    int get_rounds();
 
 private slots:
     void on_play_clicked();
@@ -44,7 +46,6 @@ private:
     QGraphicsScene *sceneGame;
     QGraphicsScene *sceneMenu;
     QGraphicsScene *sceneInstructions;
-    QString playername;
     QGraphicsPolygonItem *cursor;
     int select;
     int select_max;

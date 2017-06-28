@@ -18,7 +18,6 @@ SOURCES += main.cpp\
     ../regratruco.cpp \
     getacao.cpp \
     help.cpp \
-    jogo2.cpp \
     name.cpp \
     qcarta.cpp \
     qjogo.cpp
@@ -28,7 +27,6 @@ HEADERS  += mainwindow.h \
     ../regratruco.h \
     getacao.h \
     help.h \
-    jogo2.h \
     name.h \
     qcarta.h \
     qjogo.h
@@ -38,7 +36,6 @@ FORMS    += mainwindow.ui \
     getcarta.ui \
     help.ui \
     jogo.ui \
-    jogo2.ui \
     name.ui
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../carteado/Lib/release/ -lcarteado

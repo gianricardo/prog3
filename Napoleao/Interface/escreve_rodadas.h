@@ -1,7 +1,7 @@
 #ifndef ESCREVE_RODADAS_H
 #define ESCREVE_RODADAS_H
 
-#include <QDialog>
+#include <QtWidgets/QDialog>
 
 namespace Ui {
 class escreve_rodadas;
@@ -15,9 +15,6 @@ public:
     explicit escreve_rodadas(QWidget *parent = 0);
     ~escreve_rodadas();
     QString num();
-
-private slots:
-    void on_lineEdit_textChanged(const QString &arg1);
 
 private:
     Ui::escreve_rodadas *ui;
