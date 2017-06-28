@@ -1,7 +1,7 @@
 #ifndef FIM_DE_JOGO_H
 #define FIM_DE_JOGO_H
 
-#include <QDialog>
+#include <QtWidgets/QDialog>
 
 namespace Ui {
 class fim_de_jogo;

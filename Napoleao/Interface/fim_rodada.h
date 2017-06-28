@@ -1,7 +1,7 @@
 #ifndef FIM_RODADA_H
 #define FIM_RODADA_H
 
-#include <QDialog>
+#include <QtWidgets/QDialog>
 
 namespace Ui {
 class fim_rodada;

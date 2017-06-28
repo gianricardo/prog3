@@ -1,7 +1,7 @@
 #ifndef ESCREVE_RODADAS_H
 #define ESCREVE_RODADAS_H
 
-#include <QDialog>
+#include <QtWidgets/QDialog>
 
 namespace Ui {
 class escreve_rodadas;

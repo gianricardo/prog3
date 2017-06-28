@@ -1,7 +1,7 @@
 #ifndef ESCREVE_NOME_H
 #define ESCREVE_NOME_H
 
-#include <QDialog>
+#include <QtWidgets/QDialog>
 #include <QString>
 namespace Ui {
 class escreve_nome;

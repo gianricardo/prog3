@@ -1,7 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 #include <string>
-#include <QMainWindow>
+#include <QtWidgets/QMainWindow>
 #include <QPixmap>
 
 

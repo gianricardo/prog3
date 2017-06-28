@@ -1,7 +1,7 @@
 #ifndef ESCREVE_NOME_ADVERSARIO_H
 #define ESCREVE_NOME_ADVERSARIO_H
 
-#include <QDialog>
+#include <QtWidgets/QDialog>
 #include <QString>
 namespace Ui {
 class escreve_nome_adversario;

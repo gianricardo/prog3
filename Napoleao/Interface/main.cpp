@@ -1,8 +1,7 @@
 #include "../tela.h"
 #include "mainwindow.h"
 
-#include <QApplication>
-#include <QPixmap>
+#include <QtWidgets/QApplication>
 
 int main(int argc, char *argv[])
 {
