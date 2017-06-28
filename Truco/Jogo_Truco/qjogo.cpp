@@ -223,12 +223,12 @@ bool Qjogo::statusTruco(){
     return _truco;
 }
 
-bool Qjogo::maoDe11(std::vector<p3::Carta> mao1, std::vector<p3::Carta> mao2){
+bool Qjogo::maoDe11(std::vector<p3::Carta> mao1, std::vector<p3::Carta> mao2,p3::Carta _vira){
     mao11 = new GetAcao(this);
 
     if(numero_jogador == 4){
         mao11->show();
-        mao11->addMao(mao1,mao2);
+        mao11->addMao(mao1,mao2,_vira);
 
     }
     else{
@@ -340,6 +340,10 @@ void Qjogo::jogadorGanhouRodada(p3::Carta carta,unsigned int pos){
                 QMessageBox::information(this,"Ganhou Rodada", "Jogador: " + QString::number(pos) + " ganhou a rodada com a Carta: " +
                                 " Q de Paus");
             }
+            else if(carta.numero() == 1){
+                QMessageBox::information(this,"Ganhou Rodada", "Jogador: " + QString::number(pos) + " ganhou a rodada com a Carta: " +
+                                " A de Paus");
+            }
             else{
                  QMessageBox::information(this,"Ganhou Rodada", "Jogador: " + QString::number(pos) + " ganhou a rodada com a Carta: " +
                                       QString::number(carta.numero()) + " de Paus");
@@ -359,6 +363,10 @@ void Qjogo::jogadorGanhouRodada(p3::Carta carta,unsigned int pos){
             else if(carta.numero() == 8){
                 QMessageBox::information(this,"Ganhou Rodada", "Jogador: " + QString::number(pos) + " ganhou a rodada com a Carta: " +
                                 " Q de Copas");
+            }
+            else if(carta.numero() == 1){
+                QMessageBox::information(this,"Ganhou Rodada", "Jogador: " + QString::number(pos) + " ganhou a rodada com a Carta: " +
+                                " A de Copas");
             }
             else{
                  QMessageBox::information(this,"Ganhou Rodada", "Jogador: " + QString::number(pos) + " ganhou a rodada com a Carta: " +
@@ -380,6 +388,10 @@ void Qjogo::jogadorGanhouRodada(p3::Carta carta,unsigned int pos){
                 QMessageBox::information(this,"Ganhou Rodada", "Jogador: " + QString::number(pos) + " ganhou a rodada com a Carta: " +
                                 " Q de Espadas");
             }
+            else if(carta.numero() == 1){
+                QMessageBox::information(this,"Ganhou Rodada", "Jogador: " + QString::number(pos) + " ganhou a rodada com a Carta: " +
+                                " A de Espadas");
+            }
             else{
                  QMessageBox::information(this,"Ganhou Rodada", "Jogador: " + QString::number(pos) + " ganhou a rodada com a Carta: " +
                                       QString::number(carta.numero()) + " de Espadas");
@@ -399,6 +411,10 @@ void Qjogo::jogadorGanhouRodada(p3::Carta carta,unsigned int pos){
             else if(carta.numero() == 8){
                 QMessageBox::information(this,"Ganhou Rodada", "Jogador: " + QString::number(pos) + " ganhou a rodada com a Carta: " +
                                 " Q de Ouros");
+            }
+            else if(carta.numero() == 1){
+                QMessageBox::information(this,"Ganhou Rodada", "Jogador: " + QString::number(pos) + " ganhou a rodada com a Carta: " +
+                                " A de Ouros");
             }
             else{
                  QMessageBox::information(this,"Ganhou Rodada", "Jogador: " + QString::number(pos) + " ganhou a rodada com a Carta: " +

@@ -70,17 +70,7 @@ void MainWindow::on_pushButton_clicked()
             game.jogar();
 
         }
-        else if(nome.numero_jogadores() == 2){
-            rule = new p4::Regra_Truco(_numero_jogadores,3,3,12,0,40);
-            _jogo = new Qjogo(this,nome.nome(),_numero_jogadores);
-            _jogadores.emplace_back((nome.nome().toStdString()));
-            _jogadores.emplace_back("Computer1");
-            p4::Jogo_Truco game(rule, jogadores(),_jogo);
-            game.jogar();
-
-        }
     }
-
 
 }
 

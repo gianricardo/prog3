@@ -37,17 +37,3 @@ QString Name::nome(){
 int Name::numero_jogadores(){
     return _jogadores;
 }
-
-void Name::on_pushButton_2_clicked()
-{
-    _nome = ui->lineEdit->displayText();
-    _jogadores = 2;
-   if(_nome.size() == 0){
-       QMessageBox::warning(this,"incorrect Name","Invalid Name");
-   }
-   else{
-       QMessageBox::information(this, "Name", _nome);
-       close();
-   }
-
-}

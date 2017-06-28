@@ -39,6 +39,7 @@ Jogo_Truco::~Jogo_Truco() {
 
 void Jogo_Truco::jogar(){
     bool resposta = false;
+    bool mao_11 = false;
 	novo_monte();
 	//Cria o monte em que as cartas serão jogadas
 	novo_monte();
@@ -47,7 +48,7 @@ void Jogo_Truco::jogar(){
 	move_carta_mm(0,1,true,true);
 	vira_carta_monte(1,true);
 
-
+    jogador_soma_pontos(0,11);
     while(jogando()){
         resposta = false;
         while(!fim_turno() && _turno == true){
@@ -57,7 +58,10 @@ void Jogo_Truco::jogar(){
             jogador_ganhando = 0;
 
             if(checa_mao_de_11() == 2){
-                interface->JogadoresAsCegas();
+                if(mao_11 == false){
+                    interface->JogadoresAsCegas();
+                    mao_11 = true;
+                }
                 rodada_as_cegas();
             }
             else if(checa_mao_de_11() == 0 && resposta == false){
@@ -112,7 +116,7 @@ void Jogo_Truco::jogar(){
 			jogador_ganhou_rodada(jogador_ganhando);
 			fim_rodada(jogador_ganhando);
             interface->comeca_nova_rodada();
-		}
+        }
 
         if(checa_mao_de_11() == -1 || (checa_mao_de_11() == 0 && resposta == false) ||
 										(checa_mao_de_11() == 1 && !ia_aceita_mao_11()) || checa_mao_de_11() ==2){
@@ -399,7 +403,7 @@ bool Jogo_Truco::mao_de_11(){
                     _mesa.vira_carta_jogador(i,2);
                 }
             }
-           resposta =  interface->maoDe11(mostra_mao_jogador_pos(0),mostra_mao_jogador_pos(2));
+           resposta =  interface->maoDe11(mostra_mao_jogador_pos(0),mostra_mao_jogador_pos(2), mostra_monte(1)[0].second);
 
            for(int i = 0; i < cartas_jogadores(); i++){
                if((mostra_mao_jogador_pos(0)[i].mostra())){

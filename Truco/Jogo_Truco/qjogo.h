@@ -32,7 +32,7 @@ public:
     void outrasMaos(unsigned int pos, std::vector<p3::Carta> _mao);
     void jogaCarta(unsigned int pos, unsigned int pos_carta, p3::Carta carta);
     bool statusTruco();
-    bool maoDe11(std::vector<p3::Carta> mao1, std::vector<p3::Carta> mao2);
+    bool maoDe11(std::vector<p3::Carta> mao1, std::vector<p3::Carta> mao2, p3::Carta _vira);
     bool maoDe11_2();
     void setTrucoFalse();
     bool getClick(unsigned int carta);
