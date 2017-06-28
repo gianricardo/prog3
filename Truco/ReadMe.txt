@@ -4,7 +4,7 @@ utilizando o eclipse e o gedit, e a segunda foi a implementacao grafica, feita u
 estara contido todos os arquivos necessarios para apresentar jogo com a interface grafica.
 
 	Comandos para compilar e executar o projeto:
-	$ cd ~/git/gianricardo/prog3/Truco/Jogo_truco
+	Abra o repósitório na pasta Jogo_Truco
 	$ qmake
 	$ make
 	$ ./Jogo_Truco
