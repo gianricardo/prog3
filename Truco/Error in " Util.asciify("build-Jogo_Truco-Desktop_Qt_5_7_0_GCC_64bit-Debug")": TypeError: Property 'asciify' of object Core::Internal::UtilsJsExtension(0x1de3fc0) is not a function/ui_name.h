@@ -25,7 +25,6 @@ class Ui_Name
 public:
     QLineEdit *lineEdit;
     QPushButton *pushButton;
-    QPushButton *pushButton_2;
 
     void setupUi(QDialog *Name)
     {
@@ -38,10 +37,7 @@ public:
         lineEdit->setDragEnabled(false);
         pushButton = new QPushButton(Name);
         pushButton->setObjectName(QStringLiteral("pushButton"));
-        pushButton->setGeometry(QRect(80, 170, 80, 22));
-        pushButton_2 = new QPushButton(Name);
-        pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
-        pushButton_2->setGeometry(QRect(240, 170, 80, 22));
+        pushButton->setGeometry(QRect(140, 170, 80, 22));
 
         retranslateUi(Name);
 
@@ -51,8 +47,7 @@ public:
     void retranslateUi(QDialog *Name)
     {
         Name->setWindowTitle(QApplication::translate("Name", "Dialog", 0));
-        pushButton->setText(QApplication::translate("Name", "4 jogadores ", 0));
-        pushButton_2->setText(QApplication::translate("Name", "2 jogadores", 0));
+        pushButton->setText(QApplication::translate("Name", "Enter", 0));
     } // retranslateUi
 
 };

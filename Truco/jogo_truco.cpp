@@ -48,7 +48,6 @@ void Jogo_Truco::jogar(){
 	move_carta_mm(0,1,true,true);
 	vira_carta_monte(1,true);
 
-    jogador_soma_pontos(0,11);
     while(jogando()){
         resposta = false;
         while(!fim_turno() && _turno == true){
