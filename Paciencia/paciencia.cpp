@@ -9,18 +9,20 @@
 
 namespace p3 {
 
-Paciencia::Paciencia() {
+Paciencia::Paciencia(std::string nome_jogador){
 
+	_estado_jogo = new Estado_jogo(nome_jogador); // vazamento
 }
 
 Paciencia::~Paciencia() {
+
+	delete(_estado_jogo);
 
 }
 
 void Paciencia::rodada(){
 
-	_tela.pontuacao_tela(&_estado_jogo);
-	_tela.tela_jogo(&_estado_jogo);
+	_tela.tela_jogo(_estado_jogo);
 
 	Paciencia::set_jogada();
 }
@@ -38,20 +40,40 @@ std::string Paciencia::get_jogada(){
 bool Paciencia::verifica_jogada(){
 
 	int m1, m2 = 1;
-	m1 = std::atoi(std::strtok((char *)_jogada, " "));
+  	std::istringstream iss(_jogada);
+	std::string token;
 
-	if(m1 != 0)
-		m2 = std::atoi(std::strtok(NULL, " "));
+	std::getline(iss, token, ' ');
 
-	if(!(_estado_jogo.realiza_jogada(m1, m2))){
+	m1 = std::atoi(token.c_str());
+
+	std::getline(iss, token, ' ');
+	m2 = std::atoi(token.c_str());
+
+	if(!(_estado_jogo->realiza_jogada(m1, m2))){
 
 		_tela.jogada_invalida();
 	}
 
-	if(_estado_jogo.fim_jogo())
+	if(_estado_jogo->fim_jogo()){
+
+		_jogada = "Vitoria";
 		return false;
+	}
 
 	return true;
+}
+
+void Paciencia::fim(){
+
+	if(_jogada == "Vitoria"){
+
+		_tela.vitoria();
+	}
+	else{
+
+		_tela.derrota();
+	}
 }
 
 

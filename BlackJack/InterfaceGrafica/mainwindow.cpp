@@ -131,6 +131,11 @@ void MainWindow::placar_rodada(int saldo, int aposta){
 
 void MainWindow::mostra_maos(std::vector<p3::Carta> d, std::vector<p3::Carta> p){
     qDeleteAll(scene->items());
+    delete scene;
+    QBrush blueb(Qt::darkGreen);
+    scene = new QGraphicsScene(this);
+    scene->setBackgroundBrush(blueb);
+    ui->graphicsView->setScene(scene);
     int xd=-100;
     int yd=-50;
     int xp=-100;

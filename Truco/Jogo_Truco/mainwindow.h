@@ -6,7 +6,6 @@
 #include <QGraphicsScene>
 #include "name.h"
 #include "qjogo.h"
-#include "jogo2.h"
 #include "help.h"
 #include "../../Truco/jogo_truco.h"
 #include "../../Truco/regratruco.h"
@@ -38,7 +37,6 @@ private:
     int _numero_jogadores;
     Ui::MainWindow *ui;
     Qjogo *_jogo;
-    Jogo2 *_jogo2;
     QGraphicsScene *scene;
     QGraphicsTextItem *text;
     QGraphicsRectItem *rect;

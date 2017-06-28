@@ -10,7 +10,8 @@
 #ifndef PACIENCIA_H_
 #define PACIENCIA_H_
 
-#include <cstring>
+#include <string>
+#include <sstream>
 #include <stdlib.h>
 #include "estadojogo.h"
 #include "tela.h"
@@ -19,18 +20,19 @@ namespace p3 {
 
 class Paciencia {
 public:
-	Paciencia();
+	Paciencia(std::string nome_jogador);
 	virtual ~Paciencia();
 	void rodada();
 	void set_jogada();
 	std::string get_jogada();
 	bool verifica_jogada();
+	void fim();
 
 private:
 
 	std::string _jogada;
 	Tela _tela;
-	Estado_jogo _estado_jogo;
+	Estado_jogo *_estado_jogo;
 };
 
 } /* namespace p3 */

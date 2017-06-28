@@ -19,7 +19,8 @@ Regra_Truco::Regra_Truco(std::size_t numero_de_jogadores,
 				  menor_pontuacao,cartas_inicial){
 
 	if(numero_de_jogadores != 4 && numero_de_jogadores != 2){
-		throw std::invalid_argument("Numero de jogadores invalido");
+        _numero_de_jogadores = 4;
+
 	}
 
 	for(auto i = 0; i < max_rodadas(); i++){
@@ -84,12 +85,14 @@ std::size_t  Regra_Truco::jogador_ganhou_turno(){
 
 	if(_jogadores_ganharam[0] == 2 && _jogadores_ganharam[1] != 2 && _jogadores_ganharam[1] != 3){
 		vencedor = _jogadores_ganharam[1];
+        return vencedor;
 
 	}
 	else if(_jogadores_ganharam[0] == 2 && _jogadores_ganharam[1] == 2 && _jogadores_ganharam[2]!= 2 &&
 						_jogadores_ganharam[2] != 3){
 
 		vencedor = _jogadores_ganharam[2];
+        return vencedor;
 	}
 	else{
 		for(int i = 0; i < (int)_jogadores_ganharam.size();i++){

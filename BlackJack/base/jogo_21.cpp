@@ -152,6 +152,7 @@ void BlackJack::play(MainWindow &iu){
         r=true;
         inicia_rodada_21();
         iu.placar(saldo());
+        int ndapostas=0;
         if(!pode_apostar()){ //verifica se esta apto a apostar;
             iu.naposta();
             continuar = false;
@@ -163,9 +164,10 @@ void BlackJack::play(MainWindow &iu){
                 iu.placar_rodada(saldo(), aposta());
                 iu.mostra_maos(mao_dealer(),mao_jogador());
                 int j = iu.jogue();
-                r =jogada(j);
+                if (j!=2 || ndapostas<3) {r=jogada(j);}
                 if (j==1) cartas++;
-                if(cartas>30) {r=false;}
+                if (j==2) ndapostas++;
+                if(cartas>29) {r=false;}
             }
             iu.vez_dealer();
             revela_mao_dealer();

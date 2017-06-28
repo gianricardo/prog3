@@ -21,26 +21,50 @@ std::string Tela::jogada_atual(){
 	std::string jogada;
 
 	std::cout << "Jogada :";
-	std::cin >> jogada;
+	std::getline(std::cin, jogada);
+
+	std::cout << "\n\n\n\n\n\n\n\n\n";
 
 	return jogada;
 }
 
 void Tela::mostra_carta(Carta *c){
 
-	std::cout << c->numero() << " " << c->Naipe() << "\n";
+	Carta::Naipe np = c->naipe();
+	std::string a;
 
+	switch(np){
+
+		case Carta::Naipe::Espadas:
+			a = "Espadas";
+			break;
+		case Carta::Naipe::Copas:
+			a = "Copas";
+			break;
+		case Carta::Naipe::Paus:
+			a = "Paus";
+			break;
+		case Carta::Naipe::Ouros:
+			a = "Ouros";
+			break;
+	}
+	
+	if(c->numero() > 0)
+		std::cout << c->numero() << " " << a << " - " << c->mostra();
+
+	else 
+		std::cout << c->numero();
 }
 
 void Tela::pontuacao_tela(Estado_jogo *jogo){
 
-	std::cout << jogo->pontuacao_jogador_atual();
+	std::cout << jogo->pontuacao_jogador();
 
 }
 
 void Tela::nome_jogador(Estado_jogo *jogo){
 
-	std::cout << jogo->nome_jogador_atual();
+	std::cout << jogo->nome_jogador();
 
 }
 
@@ -48,20 +72,51 @@ void Tela::tela_jogo(Estado_jogo *jogo){
 
 	int i;
 
-	std::cout << Tela::nome_jogador(jogo) << "\t\t" << Tela::pontuacao_tela(jogo) << std::endl;
+	std::cout << "\n";
+	Tela::nome_jogador(jogo);
+	std::cout << "\t\t";
+	Tela::pontuacao_tela(jogo);
+	std::cout << std::endl;
 
-	std::cout << "\n\n" << Tela::mostra_carta(jogo->_pega_monte(0)) << "\t" << Tela::mostra_carta(jogo->_pega_monte(1)) << "\t\t";
+	std::cout << "\n";
+	
+	std::cout << "(0) ";
+	Tela::mostra_carta(jogo->_pega_monte_v(0));
+	std::cout << "   |   ";
+	std::cout << "(1) ";
+	Tela::mostra_carta(jogo->_pega_monte_v(1));
+	std::cout << "\t\t";
 
-	for(i = 2; i <= 5; i++)
-		std::cout << Tela::mostra_carta(jogo->_pega_monte(i)) << "\t";
+	for(i = 2; i <= 5; i++){
+		
+		std::cout << "(" << i << ") ";
+		Tela::mostra_carta(jogo->_pega_monte_v(i));
+		std::cout << "   |   ";
+	}
 
 	std::cout << "\n\n\n\n" << std::endl;
 
-	for(i = 6; i <= 12; i++)
-		std::cout << Tela::mostra_carta(jogo->_pega_monte(i)) << "\t";
+	for(i = 6; i <= 12; i++){
+
+		std::cout << "(" << i << ") ";
+		Tela::mostra_carta(jogo->_pega_monte_v(i));
+		std::cout << "  |  ";
+	}
 
 	std::cout << "\n\n" << std::endl;
 
 }
+
+
+void Tela::vitoria(){
+
+	std::cout << "\n\nVoce Ganhou!" << std::endl;
+}
+
+void Tela::derrota(){
+
+	std::cout << "\n\nVoce Perdeu, Noob!" << std::endl;
+}
+
 
 } /* namespace p3 */

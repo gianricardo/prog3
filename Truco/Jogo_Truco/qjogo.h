@@ -20,32 +20,32 @@ class Qjogo : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit Qjogo(QWidget *parent = 0, QString n_name = "");
+    explicit Qjogo(QWidget *parent = 0, QString n_name = "", unsigned int n_jogadores = 4);
     ~Qjogo();
-    virtual void iniciaScene();
-    virtual void setPontuacao(QString = "0", std::size_t pos = 0);
-    virtual void mostraBaralho(std::vector<std::pair<bool, p3::Carta> > _monte);
-    virtual void mostraVira(p3::Carta _carta);
+    void iniciaScene();
+    void setPontuacao(QString = "0", std::size_t pos = 0);
+    void mostraBaralho(std::vector<std::pair<bool, p3::Carta> > _monte);
+    void mostraVira(p3::Carta _carta);
     void mostraMao();
-    virtual void mostraMaoInicio(std::vector<p3::Carta> _mao);
+    void mostraMaoInicio(std::vector<p3::Carta> _mao);
     void mostraMaooff();
-    virtual void outrasMaos(unsigned int pos, std::vector<p3::Carta> _mao);
-    virtual void jogaCarta(unsigned int pos, unsigned int pos_carta, p3::Carta carta);
+    void outrasMaos(unsigned int pos, std::vector<p3::Carta> _mao);
+    void jogaCarta(unsigned int pos, unsigned int pos_carta, p3::Carta carta);
     bool statusTruco();
-    bool maoDe11(std::vector<p3::Carta> mao1, std::vector<p3::Carta> mao2);
-    virtual bool maoDe11_2();
+    bool maoDe11(std::vector<p3::Carta> mao1, std::vector<p3::Carta> mao2, p3::Carta _vira);
+    bool maoDe11_2();
     void setTrucoFalse();
     bool getClick(unsigned int carta);
-    virtual unsigned int cartaSelecionada();
-    virtual void comeca_novo_turno();
-    virtual void comeca_nova_rodada();
+    unsigned int cartaSelecionada();
+    void comeca_novo_turno();
+    void comeca_nova_rodada();
     void jogadorGanhouRodada(p3::Carta carta,unsigned int pos);
     void JogadorGanhouTurno(unsigned int pos);
     void JogadoresCorreram();
-    virtual void mostraValorTruco(unsigned int _valor = 0);
-    virtual void acao(unsigned int pont);
-    virtual void rodadaAsCegas(std::vector<p3::Carta> mao);
-    virtual void fimDeJogo(unsigned int pos);
+    void mostraValorTruco(unsigned int _valor = 0);
+    void acao(unsigned int pont);
+    void rodadaAsCegas(std::vector<p3::Carta> mao);
+    void fimDeJogo(unsigned int pos);
     void jogadoresMaode11();
     void JogadoresAsCegas();
 
@@ -66,6 +66,7 @@ protected:
     std::vector<QCarta *> qmesa;
     QCarta *vira;
     GetAcao *mao11;
+    unsigned int numero_jogador;
     bool _truco;
 };
 
