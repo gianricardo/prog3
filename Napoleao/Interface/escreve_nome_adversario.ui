@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Adversario</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color:lightblue</string>
+  </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="1" column="0">
     <widget class="QLineEdit" name="e_escreve_nome_adversario">
@@ -20,6 +23,9 @@
       <font>
        <family>MathJax_Typewriter</family>
       </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color:white</string>
      </property>
      <property name="text">
       <string>Opponent</string>

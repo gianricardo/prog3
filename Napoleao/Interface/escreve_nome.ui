@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Nome</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color:lightblue</string>
+  </property>
   <property name="sizeGripEnabled">
    <bool>true</bool>
   </property>
@@ -23,6 +26,9 @@
       <font>
        <family>MathJax_Typewriter</family>
       </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color:white</string>
      </property>
      <property name="text">
       <string>Player</string>

@@ -18,6 +18,9 @@
   <property name="windowTitle">
    <string>Napoleao</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color:green</string>
+  </property>
   <property name="tabShape">
    <enum>QTabWidget::Rounded</enum>
   </property>
@@ -227,6 +230,9 @@
     <property name="autoFillBackground">
      <bool>false</bool>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:white</string>
+    </property>
     <property name="frameShape">
      <enum>QFrame::Box</enum>
     </property>
@@ -256,6 +262,9 @@
     </property>
     <property name="acceptDrops">
      <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:white</string>
     </property>
     <property name="inputMethodHints">
      <set>Qt::ImhNone</set>
@@ -296,6 +305,9 @@
       <family>MathJax_Typewriter</family>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:white</string>
+    </property>
     <property name="text">
      <string>-1</string>
     </property>
@@ -314,6 +326,9 @@
       <family>MathJax_Typewriter</family>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:white</string>
+    </property>
     <property name="text">
      <string>0</string>
     </property>
@@ -331,6 +346,9 @@
      <font>
       <family>MathJax_Typewriter</family>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:white</string>
     </property>
     <property name="html">
      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -353,6 +371,9 @@ p, li { white-space: pre-wrap; }
      <font>
       <family>MathJax_Typewriter</family>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:white</string>
     </property>
     <property name="html">
      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -611,6 +632,9 @@ p, li { white-space: pre-wrap; }
       <family>MathJax_Typewriter</family>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:white</string>
+    </property>
     <property name="text">
      <string>-</string>
     </property>
@@ -629,6 +653,9 @@ p, li { white-space: pre-wrap; }
       <family>MathJax_Typewriter</family>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:white</string>
+    </property>
     <property name="html">
      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -643,7 +670,7 @@ p, li { white-space: pre-wrap; }
      <rect>
       <x>800</x>
       <y>540</y>
-      <width>141</width>
+      <width>161</width>
       <height>31</height>
      </rect>
     </property>
@@ -651,6 +678,9 @@ p, li { white-space: pre-wrap; }
      <font>
       <family>MathJax_Typewriter</family>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:white</string>
     </property>
     <property name="html">
      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -664,15 +694,18 @@ p, li { white-space: pre-wrap; }
     <property name="geometry">
      <rect>
       <x>920</x>
-      <y>540</y>
+      <y>550</y>
       <width>41</width>
-      <height>31</height>
+      <height>21</height>
      </rect>
     </property>
     <property name="font">
      <font>
       <family>MathJax_Typewriter</family>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:white</string>
     </property>
     <property name="text">
      <string>-</string>
@@ -692,6 +725,9 @@ p, li { white-space: pre-wrap; }
       <family>MathJax_Typewriter</family>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:white</string>
+    </property>
     <property name="html">
      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -706,13 +742,16 @@ p, li { white-space: pre-wrap; }
       <x>930</x>
       <y>500</y>
       <width>91</width>
-      <height>31</height>
+      <height>20</height>
      </rect>
     </property>
     <property name="font">
      <font>
       <family>MathJax_Typewriter</family>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:white</string>
     </property>
     <property name="text">
      <string>-</string>
@@ -756,6 +795,9 @@ p, li { white-space: pre-wrap; }
       <family>MathJax_Typewriter</family>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:white</string>
+    </property>
     <property name="html">
      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -769,15 +811,18 @@ p, li { white-space: pre-wrap; }
     <property name="geometry">
      <rect>
       <x>710</x>
-      <y>170</y>
+      <y>180</y>
       <width>121</width>
-      <height>41</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
      <font>
       <family>MathJax_Typewriter</family>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:white</string>
     </property>
     <property name="text">
      <string>-</string>
@@ -799,6 +844,9 @@ p, li { white-space: pre-wrap; }
     </property>
     <property name="autoFillBackground">
      <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:white</string>
     </property>
     <property name="frameShape">
      <enum>QFrame::Box</enum>
@@ -826,6 +874,9 @@ p, li { white-space: pre-wrap; }
      <font>
       <family>MathJax_Typewriter</family>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:white</string>
     </property>
     <property name="frameShape">
      <enum>QFrame::WinPanel</enum>
@@ -857,6 +908,9 @@ p, li { white-space: pre-wrap; }
       <family>MathJax_Typewriter</family>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:white</string>
+    </property>
     <property name="html">
      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -870,15 +924,18 @@ p, li { white-space: pre-wrap; }
     <property name="geometry">
      <rect>
       <x>750</x>
-      <y>290</y>
+      <y>300</y>
       <width>121</width>
-      <height>41</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
      <font>
       <family>MathJax_Typewriter</family>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:white</string>
     </property>
     <property name="text">
      <string>-</string>
@@ -897,6 +954,9 @@ p, li { white-space: pre-wrap; }
      <font>
       <family>MathJax_Typewriter</family>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:white</string>
     </property>
     <property name="frameShape">
      <enum>QFrame::WinPanel</enum>
@@ -927,6 +987,9 @@ p, li { white-space: pre-wrap; }
      <font>
       <family>MathJax_Typewriter</family>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:white</string>
     </property>
     <property name="frameShape">
      <enum>QFrame::WinPanel</enum>
