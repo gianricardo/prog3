@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1171</width>
-    <height>721</height>
+    <width>1161</width>
+    <height>716</height>
    </rect>
   </property>
   <property name="font">
@@ -406,7 +406,7 @@ p, li { white-space: pre-wrap; }
         </font>
        </property>
        <property name="cursor">
-        <cursorShape>ArrowCursor</cursorShape>
+        <cursorShape>CrossCursor</cursorShape>
        </property>
        <property name="text">
         <string/>
