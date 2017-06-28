@@ -12,6 +12,7 @@ Qjogo::Qjogo(QWidget *parent, QString n_name, unsigned int n_jogadores) :
     _jogador = n_name;
     numero_jogador = n_jogadores;
 
+	mao11 = new GetAcao(this);
     jogo_scene = new QGraphicsScene(this);
     QBrush green(Qt::darkGreen);
     jogo_scene->setBackgroundBrush(green);
@@ -21,6 +22,15 @@ Qjogo::Qjogo(QWidget *parent, QString n_name, unsigned int n_jogadores) :
 
 Qjogo::~Qjogo()
 {
+	qmao.clear();
+	qmao1.clear();
+	qmao2.clear();
+	qmao3.clear();
+	qbaralho.clear();
+	qmesa.clear();
+	if(vira != nullptr){
+		delete vira;
+	}	
     delete ui;
 }
 
@@ -224,8 +234,6 @@ bool Qjogo::statusTruco(){
 }
 
 bool Qjogo::maoDe11(std::vector<p3::Carta> mao1, std::vector<p3::Carta> mao2,p3::Carta _vira){
-    mao11 = new GetAcao(this);
-
     if(numero_jogador == 4){
         mao11->show();
         mao11->addMao(mao1,mao2,_vira);
@@ -512,6 +520,5 @@ void Qjogo::JogadoresAsCegas(){
 
 void Qjogo::on_pushButton_clicked()
 {
-    QApplication::closeAllWindows();
     QApplication::quit();
 }
