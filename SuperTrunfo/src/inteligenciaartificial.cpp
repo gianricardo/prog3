@@ -6,12 +6,16 @@
  */
 
 #include "inteligenciaartificial.h"
+#include <QDebug>
+#include <QtCore>
 
 Jogada Inteligencia_artificial::escolhe_jogada()
 {
 	auto const seed = std::random_device()();
 	std::mt19937 rg(seed);
-	std::uniform_int_distribution<> dist(1, 5);
+    std::uniform_int_distribution<> dist(0, 4);
 
-	return Jogada((Jogada::Atributos)dist(rg));
+    int jogada = dist(rg);
+
+    return Jogada((Jogada::Atributos)jogada);
 }
