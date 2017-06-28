@@ -6,7 +6,7 @@
 
 QT       += core gui
 
-VERSION = 5.6.1
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = Interface
 TEMPLATE = app
 
